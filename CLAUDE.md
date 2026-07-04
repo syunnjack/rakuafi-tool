@@ -15,7 +15,9 @@
 
 ## デプロイ先
 
-https://syunnjack.github.io/task-board/
+https://syunnjack.github.io/task-dashboard/
+
+GitHub Actions（`.github/workflows/deploy.yml`）により、`main` ブランチへのpush時に自動でビルド & デプロイされる。
 
 ## 技術スタック
 
