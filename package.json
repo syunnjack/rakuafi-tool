@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy:cloudflare": "npx wrangler pages deploy",
     "lint": "oxlint",
     "preview": "vite preview"
   },
