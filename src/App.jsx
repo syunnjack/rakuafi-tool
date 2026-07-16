@@ -1,4 +1,6 @@
+import { useMemo, useState } from 'react'
 import './App.css'
+import actressRecords from './data/actresses.json'
 
 const featuredCreators = [
   {
@@ -39,6 +41,29 @@ const faqItems = [
 ]
 
 function App() {
+  const [query, setQuery] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  const results = useMemo(() => {
+    const keyword = query.trim().toLowerCase()
+    if (!keyword) return actressRecords
+    return actressRecords.filter((record) => {
+      const haystack = [
+        record.name,
+        record.work,
+        record.code,
+        record.maker,
+        ...record.tags,
+      ].join(' ').toLowerCase()
+      return haystack.includes(keyword)
+    })
+  }, [query])
+
+  const submitUgc = (event) => {
+    event.preventDefault()
+    setSubmitted(true)
+  }
+
   return (
     <main className="site-shell">
       <section className="hero">
@@ -49,10 +74,15 @@ function App() {
             気になった出演女優の名前を、作品名・品番・メーカー・ジャンル・公開クレジットから探せる
             女優名検索サイト。
           </p>
-          <div className="search-panel" aria-label="クリエイター検索">
-            <input type="search" placeholder="作品名、品番、メーカー、特徴タグで検索" />
-            <button type="button">探す</button>
-          </div>
+          <form className="search-panel" aria-label="女優名検索" onSubmit={(event) => event.preventDefault()}>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="作品名、品番、メーカー、特徴タグで検索"
+            />
+            <button type="submit">探す</button>
+          </form>
           <div className="quick-tags" aria-label="人気タグ">
             {categories.map((category) => (
               <a href="#creators" key={category}>{category}</a>
@@ -72,6 +102,37 @@ function App() {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="results-band" aria-live="polite">
+        <div className="section-heading">
+          <p className="eyebrow">Search results</p>
+          <h2>候補一覧</h2>
+        </div>
+        <div className="result-list">
+          {results.map((record) => (
+            <article key={record.code}>
+              <div>
+                <p className="result-code">{record.code}</p>
+                <h3>{record.name}</h3>
+                <p>{record.work} / {record.maker}</p>
+              </div>
+              <div className="result-tags">
+                {record.tags.map((tag) => (
+                  <button type="button" key={tag} onClick={() => setQuery(tag)}>
+                    #{tag}
+                  </button>
+                ))}
+              </div>
+              <a href={record.sourceUrl} target="_blank" rel="noreferrer">
+                {record.source}
+              </a>
+            </article>
+          ))}
+          {results.length === 0 && (
+            <p className="no-results">該当候補がありません。UGC投稿から情報提供できます。</p>
+          )}
         </div>
       </section>
 
@@ -126,10 +187,11 @@ function App() {
             女優プロフィールへ反映します。
           </p>
         </div>
-        <form className="ugc-form">
-          <input type="text" placeholder="作品名または品番" />
-          <input type="url" placeholder="証拠URL" />
-          <button type="button">候補を投稿</button>
+        <form className="ugc-form" onSubmit={submitUgc}>
+          <input type="text" placeholder="作品名または品番" required />
+          <input type="url" placeholder="証拠URL" required />
+          <button type="submit">候補を投稿</button>
+          {submitted && <p className="form-note">投稿候補を受け付けました。確認後に反映します。</p>}
         </form>
       </section>
 

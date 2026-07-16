@@ -1,0 +1,38 @@
+[
+  {
+    "name": "三上悠亜",
+    "work": "タレント / インフルエンサー / 元セクシー女優",
+    "code": "YUA-MIKAMI",
+    "maker": "Miss / 公式サイト",
+    "tags": ["三上悠亜", "元アイドル", "タレント", "プロデュース", "ファンクラブ"],
+    "source": "公式サイト",
+    "sourceUrl": "https://miss.co.jp/"
+  },
+  {
+    "name": "明日花キララ",
+    "work": "タレント / モデル / 女優",
+    "code": "ASUKA-KIRARA",
+    "maker": "LaSwan / 公式プロフィール",
+    "tags": ["明日花キララ", "モデル", "タレント", "女優", "北海道"],
+    "source": "公式プロフィール",
+    "sourceUrl": "https://laswan.jp/profile/"
+  },
+  {
+    "name": "深田えいみ",
+    "work": "タレント / インフルエンサー / 女優",
+    "code": "EIMI-FUKADA",
+    "maker": "マインズ / 所属プロフィール",
+    "tags": ["深田えいみ", "インフルエンサー", "女優", "SNS", "ファンクラブ"],
+    "source": "所属プロフィール",
+    "sourceUrl": "https://mines-pro.jp/model/10953"
+  },
+  {
+    "name": "高橋しょう子",
+    "work": "女優 / グラビアアイドル",
+    "code": "SHOKO-TAKAHASHI",
+    "maker": "国立国会図書館典拠 / 公開プロフィール",
+    "tags": ["高橋しょう子", "高崎聖子", "女優", "グラビア", "旧名義"],
+    "source": "NDL典拠",
+    "sourceUrl": "https://id.ndl.go.jp/auth/ndlna/032309977"
+  }
+]
