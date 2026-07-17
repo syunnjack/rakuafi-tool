@@ -50,9 +50,11 @@ function App() {
     return actressRecords.filter((record) => {
       const haystack = [
         record.name,
+        ...(record.aliases ?? []),
         record.work,
         record.code,
         record.maker,
+        record.source,
         ...record.tags,
       ].join(' ').toLowerCase()
       return haystack.includes(keyword)
@@ -116,6 +118,9 @@ function App() {
               <div>
                 <p className="result-code">{record.code}</p>
                 <h3>{record.name}</h3>
+                {record.aliases?.length > 0 && (
+                  <p className="result-aliases">旧名・別名: {record.aliases.join(' / ')}</p>
+                )}
                 <p>{record.work} / {record.maker}</p>
               </div>
               <div className="result-tags" aria-label={`${record.name}のタグ`}>

@@ -230,6 +230,12 @@
   font-weight: 800;
 }
 
+.result-aliases {
+  color: #22624f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .result-tags {
   display: flex;
   flex-wrap: wrap;
