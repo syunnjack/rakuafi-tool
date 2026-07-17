@@ -118,7 +118,7 @@ function App() {
                 <h3>{record.name}</h3>
                 <p>{record.work} / {record.maker}</p>
               </div>
-              <div className="result-tags">
+              <div className="result-tags" aria-label={`${record.name}のタグ`}>
                 {record.tags.map((tag) => (
                   <button type="button" key={tag} onClick={() => setQuery(tag)}>
                     #{tag}

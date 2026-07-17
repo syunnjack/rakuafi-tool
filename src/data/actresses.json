@@ -34,5 +34,41 @@
     "tags": ["高橋しょう子", "高崎聖子", "女優", "グラビア", "旧名義"],
     "source": "NDL典拠",
     "sourceUrl": "https://id.ndl.go.jp/auth/ndlna/032309977"
+  },
+  {
+    "name": "上原亜衣",
+    "work": "YouTuber / モデル / 経営者 / 元セクシー女優",
+    "code": "AI-UEHARA",
+    "maker": "集英社オンライン / 人物プロフィール",
+    "tags": ["上原亜衣", "レジェンド", "引退", "YouTuber", "経営者", "投資家"],
+    "source": "集英社オンライン",
+    "sourceUrl": "https://shueisha.online/list/persons/65aa194c8ce1159272000e3c"
+  },
+  {
+    "name": "蒼井そら",
+    "work": "女優 / 歌手 / タレント",
+    "code": "SOLA-AOI",
+    "maker": "蒼井そらオフィシャルサイト",
+    "tags": ["蒼井そら", "レジェンド", "女優", "歌手", "タレント", "中国"],
+    "source": "公式サイト",
+    "sourceUrl": "https://aoisola.jp/"
+  },
+  {
+    "name": "吉沢明歩",
+    "work": "女優 / タレント / 元恵比寿マスカッツ",
+    "code": "AKIHO-YOSHIZAWA",
+    "maker": "ビクターエンタテインメント / プロフィール",
+    "tags": ["吉沢明歩", "レジェンド", "引退", "恵比寿マスカッツ", "女優"],
+    "source": "ビクター公式プロフィール",
+    "sourceUrl": "https://www.jvcmusic.co.jp/-/Profile/A025018.html"
+  },
+  {
+    "name": "麻美ゆま",
+    "work": "タレント / 歌手 / 女優 / 元恵比寿マスカッツ",
+    "code": "YUMA-ASAMI",
+    "maker": "公開プロフィール / TV出演情報",
+    "tags": ["麻美ゆま", "レジェンド", "引退", "歌手", "タレント", "恵比寿マスカッツ"],
+    "source": "プロフィール情報",
+    "sourceUrl": "https://www.tv-ranking.com/detail/5823/profile/"
   }
 ]
