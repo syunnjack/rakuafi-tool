@@ -6,6 +6,7 @@ const TASKS_KEY = 'task-dashboard.rakutenTasks'
 const CONTENT_KEY = 'task-dashboard.rakutenContent'
 const AUTOPILOT_KEY = 'task-dashboard.rakutenAutopilot'
 const ROOM_FLOWS_KEY = 'task-dashboard.roomFlows'
+const AFFILIATE_SETTINGS_KEY = 'task-dashboard.rakutenAffiliateSettings'
 
 const defaultReports = [
   { id: 'sample-1', date: '2026-07-15', clicks: 42, orders: 2, sales: 8600, reward: 172, memo: 'レビュー記事から初成果。商品ボタンを上部にも追加。' },
@@ -88,6 +89,12 @@ const emptyRoomFlow = {
   maxActions: 10,
   spanMinutes: 10,
   memo: '',
+}
+
+const defaultAffiliateSettings = {
+  affiliateLink: '',
+  campaignName: '楽天ROOM導線',
+  targetMemo: '成果が出ている記事、SNS投稿、ROOM投稿にこのリンクを優先して配置',
 }
 
 function readStorage(key, fallback) {
@@ -200,11 +207,15 @@ function App() {
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
   const [contents, setContents] = useState(() => readStorage(CONTENT_KEY, defaultContent))
   const [roomFlows, setRoomFlows] = useState(() => readStorage(ROOM_FLOWS_KEY, defaultRoomFlows))
+  const [affiliateSettings, setAffiliateSettings] = useState(() =>
+    readStorage(AFFILIATE_SETTINGS_KEY, defaultAffiliateSettings),
+  )
   const [autopilot, setAutopilot] = useState(() => readStorage(AUTOPILOT_KEY, true))
   const [reportForm, setReportForm] = useState(emptyReport)
   const [taskForm, setTaskForm] = useState(emptyTask)
   const [contentForm, setContentForm] = useState(emptyContent)
   const [roomForm, setRoomForm] = useState(emptyRoomFlow)
+  const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
   const [automationMessage, setAutomationMessage] = useState('自動運転はオンです。数字を入れると改善タスクを自動で作ります。')
 
   useEffect(() => {
@@ -222,6 +233,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem(ROOM_FLOWS_KEY, JSON.stringify(roomFlows))
   }, [roomFlows])
+
+  useEffect(() => {
+    localStorage.setItem(AFFILIATE_SETTINGS_KEY, JSON.stringify(affiliateSettings))
+  }, [affiliateSettings])
 
   useEffect(() => {
     localStorage.setItem(AUTOPILOT_KEY, JSON.stringify(autopilot))
@@ -281,6 +296,8 @@ function App() {
     const running = roomFlows.filter((flow) => flow.status === 'running').length
     return { totalLimit, doneTotal, running }
   }, [roomFlows])
+
+  const affiliateReady = affiliateSettings.affiliateLink.trim().startsWith('http')
 
   const runAutomation = () => {
     setTasks((current) => {
@@ -423,6 +440,15 @@ function App() {
     setContents((current) => current.filter((content) => content.id !== contentId))
   }
 
+  const saveAffiliateSettings = (event) => {
+    event.preventDefault()
+    setAffiliateSettings({
+      affiliateLink: affiliateForm.affiliateLink.trim(),
+      campaignName: affiliateForm.campaignName.trim() || '楽天ROOM導線',
+      targetMemo: affiliateForm.targetMemo.trim(),
+    })
+  }
+
   return (
     <main className="app-shell">
       <section className="hero">
@@ -504,6 +530,48 @@ function App() {
             ))}
             {todayTasks.length === 0 && <li>未完了タスクはありません。自動生成を押すと候補を作れます。</li>}
           </ol>
+        </article>
+      </section>
+
+      <section className="affiliate-section">
+        <article className="affiliate-panel">
+          <div>
+            <p className="eyebrow">Affiliate link</p>
+            <h2>あなたの楽天リンクを使う</h2>
+            <p>
+              楽天アフィリエイトで作ったリンクを保存して、ROOM運用・記事改善・SNS再投稿の共通導線として使います。
+            </p>
+            <span className={`link-status ${affiliateReady ? 'ready' : ''}`}>
+              {affiliateReady ? 'リンク設定済み' : 'リンク未設定'}
+            </span>
+          </div>
+          <form className="affiliate-form" onSubmit={saveAffiliateSettings}>
+            <input
+              type="url"
+              value={affiliateForm.affiliateLink}
+              onChange={(event) => setAffiliateForm({ ...affiliateForm, affiliateLink: event.target.value })}
+              placeholder="楽天アフィリエイトで作成したURL"
+            />
+            <input
+              value={affiliateForm.campaignName}
+              onChange={(event) => setAffiliateForm({ ...affiliateForm, campaignName: event.target.value })}
+              placeholder="導線名"
+            />
+            <input
+              value={affiliateForm.targetMemo}
+              onChange={(event) => setAffiliateForm({ ...affiliateForm, targetMemo: event.target.value })}
+              placeholder="使う場所のメモ"
+            />
+            <button type="submit">保存</button>
+            <a
+              className={!affiliateReady ? 'disabled-link' : ''}
+              href={affiliateReady ? affiliateSettings.affiliateLink : undefined}
+              target="_blank"
+              rel="noreferrer sponsored"
+            >
+              リンクを開く
+            </a>
+          </form>
         </article>
       </section>
 
@@ -655,7 +723,7 @@ function App() {
                 <div>
                   <span className={`status-pill ${flow.status}`}>{flow.status}</span>
                   <h3>{roomModeLabel(flow.mode)} / {flow.keyword}</h3>
-                  <p>{flow.memo || 'メモなし'}</p>
+                  <p>{flow.memo || affiliateSettings.targetMemo || 'メモなし'}</p>
                 </div>
                 <div className="room-progress">
                   <div>
@@ -667,6 +735,14 @@ function App() {
                 <div className="room-actions">
                   <button type="button" onClick={() => startRoomFlow(flow.id)}>開始</button>
                   <button type="button" onClick={() => completeRoomStep(flow.id)}>1件確認</button>
+                  <a
+                    className={!affiliateReady ? 'disabled-link' : ''}
+                    href={affiliateReady ? affiliateSettings.affiliateLink : undefined}
+                    target="_blank"
+                    rel="noreferrer sponsored"
+                  >
+                    リンク
+                  </a>
                   <button type="button" onClick={() => pauseRoomFlow(flow.id)}>停止</button>
                   <button type="button" onClick={() => deleteRoomFlow(flow.id)}>削除</button>
                 </div>

@@ -9,6 +9,7 @@
 .hero,
 .metric-grid,
 .automation-section,
+.affiliate-section,
 .workspace-grid,
 .insight-grid,
 .room-section,
@@ -220,6 +221,89 @@
   cursor: pointer;
   font-weight: 800;
   padding: 10px 16px;
+}
+
+.affiliate-section {
+  padding: 0 0 16px;
+}
+
+.affiliate-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  gap: 18px;
+  align-items: center;
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+  padding: 22px;
+}
+
+.affiliate-panel h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.affiliate-panel p {
+  margin: 10px 0 0;
+  color: #45505d;
+  line-height: 1.75;
+}
+
+.link-status {
+  display: inline-flex;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: #fff7f4;
+  color: #a02b36;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 7px 12px;
+}
+
+.link-status.ready {
+  background: #eff7f3;
+  color: #245848;
+}
+
+.affiliate-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 0.45fr);
+  gap: 10px;
+}
+
+.affiliate-form input:first-child,
+.affiliate-form input:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.affiliate-form button,
+.affiliate-form a,
+.room-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: #a02b36;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+.affiliate-form a,
+.room-actions a {
+  border: 1px solid rgba(23, 32, 42, 0.14);
+  background: #fff;
+  color: #17202a;
+}
+
+.disabled-link {
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 .today-list {
@@ -638,6 +722,7 @@ textarea {
 @media (max-width: 920px) {
   .hero,
   .automation-section,
+  .affiliate-panel,
   .workspace-grid,
   .insight-grid,
   .metric-grid {
@@ -687,6 +772,7 @@ textarea {
   .hero,
   .metric-grid,
   .automation-section,
+  .affiliate-section,
   .workspace-grid,
   .insight-grid,
   .room-section,
