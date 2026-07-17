@@ -4,14 +4,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-相沢みなみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "相沢みなみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%9B%B8%E6%B2%A2%E3%81%BF%E3%81%AA%E3%81%BF/"
@@ -21,14 +25,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-葵つかさ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "葵つかさ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%91%B5%E3%81%A4%E3%81%8B%E3%81%95/"
@@ -38,14 +46,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-天使もえ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "天使もえ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%A9%E4%BD%BF%E3%82%82%E3%81%88/"
@@ -55,14 +67,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桃乃木かな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桃乃木かな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%83%E4%B9%83%E6%9C%A8%E3%81%8B%E3%81%AA/"
@@ -72,14 +88,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-希島あいり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "希島あいり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B8%8C%E5%B3%B6%E3%81%82%E3%81%84%E3%82%8A/"
@@ -89,14 +109,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-波多野結衣",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "波多野結衣",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B3%A2%E5%A4%9A%E9%87%8E%E7%B5%90%E8%A1%A3/"
@@ -105,7 +129,7 @@
     "name": "大槻ひびき",
     "work": "女優名検索インデックス",
     "code": "INDEX-大槻ひびき",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "大槻ひびき",
       "現役",
@@ -116,7 +140,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%A7%E6%A7%BB%E3%81%B2%E3%81%B3%E3%81%8D/",
@@ -126,7 +154,7 @@
     "name": "AIKA",
     "work": "女優名検索インデックス",
     "code": "INDEX-AIKA",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "AIKA",
       "現役",
@@ -137,7 +165,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=AIKA/",
@@ -148,14 +180,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-蓮実クレア",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "蓮実クレア",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%93%AE%E5%AE%9F%E3%82%AF%E3%83%AC%E3%82%A2/"
@@ -165,14 +201,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-君島みお",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "君島みお",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%90%9B%E5%B3%B6%E3%81%BF%E3%81%8A/"
@@ -182,14 +222,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美谷朱里",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美谷朱里",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E8%B0%B7%E6%9C%B1%E9%87%8C/"
@@ -199,14 +243,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水卜さくら",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水卜さくら",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E5%8D%9C%E3%81%95%E3%81%8F%E3%82%89/"
@@ -216,14 +264,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-山岸逢花",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "山岸逢花",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B1%B1%E5%B2%B8%E9%80%A2%E8%8A%B1/"
@@ -233,14 +285,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-架乃ゆら",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "架乃ゆら",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9E%B6%E4%B9%83%E3%82%86%E3%82%89/"
@@ -250,14 +306,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-つぼみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "つぼみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%A4%E3%81%BC%E3%81%BF/"
@@ -267,14 +327,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小倉由菜",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小倉由菜",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E5%80%89%E7%94%B1%E8%8F%9C/"
@@ -284,14 +348,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桜空もも",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桜空もも",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%9C%E7%A9%BA%E3%82%82%E3%82%82/"
@@ -303,7 +371,7 @@
     ],
     "work": "女優名検索インデックス",
     "code": "INDEX-橋本ありな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "橋本ありな",
       "新ありな",
@@ -311,7 +379,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A9%8B%E6%9C%AC%E3%81%82%E3%82%8A%E3%81%AA/"
@@ -321,14 +393,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-新ありな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "新ありな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%96%B0%E3%81%82%E3%82%8A%E3%81%AA/"
@@ -338,14 +414,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-本郷愛",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "本郷愛",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%AC%E9%83%B7%E6%84%9B/"
@@ -355,14 +435,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-涼森れむ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "涼森れむ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B6%BC%E6%A3%AE%E3%82%8C%E3%82%80/"
@@ -372,14 +456,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-楪カレン",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "楪カレン",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A5%AA%E3%82%AB%E3%83%AC%E3%83%B3/"
@@ -391,7 +479,7 @@
     ],
     "work": "女優名検索インデックス",
     "code": "INDEX-miru",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "miru",
       "現役",
@@ -403,7 +491,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=miru/"
@@ -412,7 +504,7 @@
     "name": "伊藤舞雪",
     "work": "女優名検索インデックス",
     "code": "INDEX-伊藤舞雪",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "伊藤舞雪",
       "現役",
@@ -423,7 +515,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BC%8A%E8%97%A4%E8%88%9E%E9%9B%AA/",
@@ -433,7 +529,7 @@
     "name": "石川澪",
     "work": "女優名検索インデックス",
     "code": "INDEX-石川澪",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "石川澪",
       "現役",
@@ -444,7 +540,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%9F%B3%E5%B7%9D%E6%BE%AA/",
@@ -457,7 +557,7 @@
     ],
     "work": "女優名検索インデックス",
     "code": "INDEX-河北彩花",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "河北彩花",
       "河北彩伽",
@@ -469,7 +569,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B2%B3%E5%8C%97%E5%BD%A9%E8%8A%B1/"
@@ -478,7 +582,7 @@
     "name": "七沢みあ",
     "work": "女優名検索インデックス",
     "code": "INDEX-七沢みあ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "七沢みあ",
       "現役",
@@ -489,7 +593,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%83%E6%B2%A2%E3%81%BF%E3%81%82/",
@@ -499,7 +607,7 @@
     "name": "小野六花",
     "work": "女優名検索インデックス",
     "code": "INDEX-小野六花",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小野六花",
       "現役",
@@ -510,7 +618,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E9%87%8E%E5%85%AD%E8%8A%B1/",
@@ -520,7 +632,7 @@
     "name": "八木奈々",
     "work": "女優名検索インデックス",
     "code": "INDEX-八木奈々",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "八木奈々",
       "現役",
@@ -531,7 +643,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%85%AB%E6%9C%A8%E5%A5%88%E3%80%85/",
@@ -541,7 +657,7 @@
     "name": "本庄鈴",
     "work": "女優名検索インデックス",
     "code": "INDEX-本庄鈴",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "本庄鈴",
       "現役",
@@ -553,7 +669,10 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%AC%E5%BA%84%E9%88%B4/",
@@ -563,7 +682,7 @@
     "name": "紗倉まな",
     "work": "女優名検索インデックス",
     "code": "INDEX-紗倉まな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "紗倉まな",
       "現役",
@@ -575,7 +694,10 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%B4%97%E5%80%89%E3%81%BE%E3%81%AA/",
@@ -585,7 +707,7 @@
     "name": "JULIA",
     "work": "女優名検索インデックス",
     "code": "INDEX-JULIA",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "JULIA",
       "現役",
@@ -596,7 +718,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=JULIA/",
@@ -606,7 +732,7 @@
     "name": "天海つばさ",
     "work": "女優名検索インデックス",
     "code": "INDEX-天海つばさ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "天海つばさ",
       "現役",
@@ -617,7 +743,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%A9%E6%B5%B7%E3%81%A4%E3%81%B0%E3%81%95/",
@@ -627,7 +757,7 @@
     "name": "市川まさみ",
     "work": "女優名検索インデックス",
     "code": "INDEX-市川まさみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "市川まさみ",
       "現役",
@@ -638,7 +768,10 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B8%82%E5%B7%9D%E3%81%BE%E3%81%95%E3%81%BF/",
@@ -648,7 +781,7 @@
     "name": "羽咲みはる",
     "work": "女優名検索インデックス",
     "code": "INDEX-羽咲みはる",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "羽咲みはる",
       "現役",
@@ -659,7 +792,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%BD%E5%92%B2%E3%81%BF%E3%81%AF%E3%82%8B/",
@@ -669,7 +806,7 @@
     "name": "推川ゆうり",
     "work": "女優名検索インデックス",
     "code": "INDEX-推川ゆうり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "推川ゆうり",
       "現役",
@@ -680,7 +817,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%8E%A8%E5%B7%9D%E3%82%86%E3%81%86%E3%82%8A/",
@@ -691,14 +832,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-神宮寺ナオ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "神宮寺ナオ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%A5%9E%E5%AE%AE%E5%AF%BA%E3%83%8A%E3%82%AA/"
@@ -708,14 +853,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水野朝陽",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水野朝陽",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E9%87%8E%E6%9C%9D%E9%99%BD/"
@@ -725,14 +874,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-通野未帆",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "通野未帆",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%80%9A%E9%87%8E%E6%9C%AA%E5%B8%86/"
@@ -742,14 +895,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-北条麻妃",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "北条麻妃",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8C%97%E6%9D%A1%E9%BA%BB%E5%A6%83/"
@@ -759,14 +916,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐山愛",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐山愛",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E5%B1%B1%E6%84%9B/"
@@ -776,14 +937,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-浜崎真緒",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "浜崎真緒",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B5%9C%E5%B4%8E%E7%9C%9F%E7%B7%92/"
@@ -793,14 +958,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-篠田ゆう",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "篠田ゆう",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%AF%A0%E7%94%B0%E3%82%86%E3%81%86/"
@@ -810,14 +979,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-枢木あおい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "枢木あおい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9E%A2%E6%9C%A8%E3%81%82%E3%81%8A%E3%81%84/"
@@ -827,14 +1000,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-栄川乃亜",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "栄川乃亜",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A0%84%E5%B7%9D%E4%B9%83%E4%BA%9C/"
@@ -844,14 +1021,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-岬ななみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "岬ななみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B2%AC%E3%81%AA%E3%81%AA%E3%81%BF/"
@@ -861,14 +1042,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-松本いちか",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "松本いちか",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9D%BE%E6%9C%AC%E3%81%84%E3%81%A1%E3%81%8B/"
@@ -878,14 +1063,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-花狩まい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "花狩まい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%8A%B1%E7%8B%A9%E3%81%BE%E3%81%84/"
@@ -895,14 +1084,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-渚みつき",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "渚みつき",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B8%9A%E3%81%BF%E3%81%A4%E3%81%8D/"
@@ -912,14 +1105,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-白石茉莉奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "白石茉莉奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%99%BD%E7%9F%B3%E8%8C%89%E8%8E%89%E5%A5%88/"
@@ -929,14 +1126,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-吉高寧々",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "吉高寧々",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%90%89%E9%AB%98%E5%AF%A7%E3%80%85/"
@@ -946,14 +1147,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-乙アリス",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "乙アリス",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B9%99%E3%82%A2%E3%83%AA%E3%82%B9/"
@@ -963,14 +1168,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-月乃ルナ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "月乃ルナ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%88%E4%B9%83%E3%83%AB%E3%83%8A/"
@@ -980,14 +1189,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小宵こなん",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小宵こなん",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E5%AE%B5%E3%81%93%E3%81%AA%E3%82%93/"
@@ -997,14 +1210,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-宮下玲奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "宮下玲奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%AE%AE%E4%B8%8B%E7%8E%B2%E5%A5%88/"
@@ -1014,14 +1231,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-藤森里穂",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "藤森里穂",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%97%A4%E6%A3%AE%E9%87%8C%E7%A9%82/"
@@ -1031,14 +1252,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-花音うらら",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "花音うらら",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%8A%B1%E9%9F%B3%E3%81%86%E3%82%89%E3%82%89/"
@@ -1048,14 +1273,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-斎藤あみり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "斎藤あみり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%96%8E%E8%97%A4%E3%81%82%E3%81%BF%E3%82%8A/"
@@ -1065,14 +1294,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-乙白さやか",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "乙白さやか",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B9%99%E7%99%BD%E3%81%95%E3%82%84%E3%81%8B/"
@@ -1082,14 +1315,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-未歩なな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "未歩なな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%AA%E6%AD%A9%E3%81%AA%E3%81%AA/"
@@ -1099,14 +1336,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-うんぱい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "うんぱい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%86%E3%82%93%E3%81%B1%E3%81%84/"
@@ -1116,14 +1357,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-有栖花あか",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "有栖花あか",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%89%E6%A0%96%E8%8A%B1%E3%81%82%E3%81%8B/"
@@ -1133,14 +1378,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-MINAMO",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "MINAMO",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=MINAMO/"
@@ -1150,14 +1399,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-石原希望",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "石原希望",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%9F%B3%E5%8E%9F%E5%B8%8C%E6%9C%9B/"
@@ -1167,14 +1420,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-弥生みづき",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "弥生みづき",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%BC%A5%E7%94%9F%E3%81%BF%E3%81%A5%E3%81%8D/"
@@ -1184,14 +1441,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-朝日りん",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "朝日りん",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%9D%E6%97%A5%E3%82%8A%E3%82%93/"
@@ -1201,14 +1462,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-三宮つばき",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "三宮つばき",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%89%E5%AE%AE%E3%81%A4%E3%81%B0%E3%81%8D/"
@@ -1218,14 +1483,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-姫咲はな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "姫咲はな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A7%AB%E5%92%B2%E3%81%AF%E3%81%AA/"
@@ -1235,14 +1504,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-夏目響",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "夏目響",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%8F%E7%9B%AE%E9%9F%BF/"
@@ -1252,14 +1525,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小梅えな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小梅えな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E6%A2%85%E3%81%88%E3%81%AA/"
@@ -1269,14 +1546,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-星乃莉子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "星乃莉子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%98%9F%E4%B9%83%E8%8E%89%E5%AD%90/"
@@ -1286,14 +1567,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-香水じゅん",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "香水じゅん",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%A6%99%E6%B0%B4%E3%81%98%E3%82%85%E3%82%93/"
@@ -1303,14 +1588,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-恋渕ももな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "恋渕ももな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%81%8B%E6%B8%95%E3%82%82%E3%82%82%E3%81%AA/"
@@ -1320,14 +1609,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小湊よつ葉",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小湊よつ葉",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E6%B9%8A%E3%82%88%E3%81%A4%E8%91%89/"
@@ -1337,14 +1630,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-新井リマ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "新井リマ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%96%B0%E4%BA%95%E3%83%AA%E3%83%9E/"
@@ -1354,14 +1651,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-山手梨愛",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "山手梨愛",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B1%B1%E6%89%8B%E6%A2%A8%E6%84%9B/"
@@ -1371,14 +1672,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-古川ほのか",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "古川ほのか",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8F%A4%E5%B7%9D%E3%81%BB%E3%81%AE%E3%81%8B/"
@@ -1388,14 +1693,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-沙月恵奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "沙月恵奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B2%99%E6%9C%88%E6%81%B5%E5%A5%88/"
@@ -1405,14 +1714,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美園和花",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美園和花",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E5%9C%92%E5%92%8C%E8%8A%B1/"
@@ -1422,14 +1735,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-皆月ひかる",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "皆月ひかる",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%9A%86%E6%9C%88%E3%81%B2%E3%81%8B%E3%82%8B/"
@@ -1439,14 +1756,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-宮沢ちはる",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "宮沢ちはる",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%AE%AE%E6%B2%A2%E3%81%A1%E3%81%AF%E3%82%8B/"
@@ -1456,14 +1777,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐知子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐知子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E7%9F%A5%E5%AD%90/"
@@ -1473,14 +1798,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-夏希まろん",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "夏希まろん",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%8F%E5%B8%8C%E3%81%BE%E3%82%8D%E3%82%93/"
@@ -1490,14 +1819,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-乃木蛍",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "乃木蛍",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B9%83%E6%9C%A8%E8%9B%8D/"
@@ -1507,14 +1840,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-稲場るか",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "稲場るか",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%A8%B2%E5%A0%B4%E3%82%8B%E3%81%8B/"
@@ -1524,14 +1861,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-若宮穂乃",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "若宮穂乃",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%8B%A5%E5%AE%AE%E7%A9%82%E4%B9%83/"
@@ -1541,14 +1882,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-白桃はな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "白桃はな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%99%BD%E6%A1%83%E3%81%AF%E3%81%AA/"
@@ -1558,14 +1903,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-宍戸里帆",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "宍戸里帆",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%AE%8D%E6%88%B8%E9%87%8C%E5%B8%86/"
@@ -1575,14 +1924,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小島みなみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小島みなみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E5%B3%B6%E3%81%BF%E3%81%AA%E3%81%BF/"
@@ -1592,14 +1945,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-初川みなみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "初川みなみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%88%9D%E5%B7%9D%E3%81%BF%E3%81%AA%E3%81%BF/"
@@ -1609,14 +1966,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-希崎ジェシカ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "希崎ジェシカ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B8%8C%E5%B4%8E%E3%82%B8%E3%82%A7%E3%82%B7%E3%82%AB/"
@@ -1626,14 +1987,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-あべみかこ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "あべみかこ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%82%E3%81%B9%E3%81%BF%E3%81%8B%E3%81%93/"
@@ -1643,14 +2008,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-園田みおん",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "園田みおん",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%9C%92%E7%94%B0%E3%81%BF%E3%81%8A%E3%82%93/"
@@ -1660,14 +2029,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-跡美しゅり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "跡美しゅり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%B7%A1%E7%BE%8E%E3%81%97%E3%82%85%E3%82%8A/"
@@ -1677,14 +2050,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桜もこ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桜もこ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%9C%E3%82%82%E3%81%93/"
@@ -1694,14 +2071,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-向井藍",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "向井藍",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%90%91%E4%BA%95%E8%97%8D/"
@@ -1711,14 +2092,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-青空ひかり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "青空ひかり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%9D%92%E7%A9%BA%E3%81%B2%E3%81%8B%E3%82%8A/"
@@ -1728,14 +2113,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-戸田真琴",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "戸田真琴",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%88%B8%E7%94%B0%E7%9C%9F%E7%90%B4/"
@@ -1745,14 +2134,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-川上奈々美",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "川上奈々美",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B7%9D%E4%B8%8A%E5%A5%88%E3%80%85%E7%BE%8E/"
@@ -1762,14 +2155,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-友田彩也香",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "友田彩也香",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8F%8B%E7%94%B0%E5%BD%A9%E4%B9%9F%E9%A6%99/"
@@ -1779,14 +2176,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-長瀬麻美",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "長瀬麻美",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%95%B7%E7%80%AC%E9%BA%BB%E7%BE%8E/"
@@ -1796,14 +2197,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-希美まゆ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "希美まゆ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B8%8C%E7%BE%8E%E3%81%BE%E3%82%86/"
@@ -1813,14 +2218,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-麻倉憂",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "麻倉憂",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%BA%BB%E5%80%89%E6%86%82/"
@@ -1830,14 +2239,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-春菜はな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "春菜はな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%98%A5%E8%8F%9C%E3%81%AF%E3%81%AA/"
@@ -1847,14 +2260,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-鈴村あいり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "鈴村あいり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%88%B4%E6%9D%91%E3%81%82%E3%81%84%E3%82%8A/"
@@ -1864,14 +2281,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-西野翔",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "西野翔",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%A5%BF%E9%87%8E%E7%BF%94/"
@@ -1881,14 +2302,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-並木優",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "並木優",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%A6%E6%9C%A8%E5%84%AA/"
@@ -1898,14 +2323,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-愛田奈々",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "愛田奈々",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%84%9B%E7%94%B0%E5%A5%88%E3%80%85/"
@@ -1914,7 +2343,7 @@
     "name": "希志あいの",
     "work": "女優名検索インデックス",
     "code": "INDEX-希志あいの",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "希志あいの",
       "レジェンド",
@@ -1925,7 +2354,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B8%8C%E5%BF%97%E3%81%82%E3%81%84%E3%81%AE/",
@@ -1935,7 +2368,7 @@
     "name": "かすみ果穂",
     "work": "女優名検索インデックス",
     "code": "INDEX-かすみ果穂",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "かすみ果穂",
       "レジェンド",
@@ -1946,7 +2379,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%8B%E3%81%99%E3%81%BF%E6%9E%9C%E7%A9%82/",
@@ -1959,7 +2396,7 @@
     ],
     "work": "女優名検索インデックス",
     "code": "INDEX-成瀬心美",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "成瀬心美",
       "ここみ",
@@ -1971,7 +2408,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%88%90%E7%80%AC%E5%BF%83%E7%BE%8E/"
@@ -1980,7 +2421,7 @@
     "name": "初音みのり",
     "work": "女優名検索インデックス",
     "code": "INDEX-初音みのり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "初音みのり",
       "レジェンド",
@@ -1990,7 +2431,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%88%9D%E9%9F%B3%E3%81%BF%E3%81%AE%E3%82%8A/",
@@ -2000,7 +2445,7 @@
     "name": "瑠川リナ",
     "work": "女優名検索インデックス",
     "code": "INDEX-瑠川リナ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "瑠川リナ",
       "レジェンド",
@@ -2011,7 +2456,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%91%A0%E5%B7%9D%E3%83%AA%E3%83%8A/",
@@ -2021,7 +2470,7 @@
     "name": "麻美ゆま",
     "work": "女優名検索インデックス",
     "code": "INDEX-麻美ゆま",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "麻美ゆま",
       "レジェンド",
@@ -2033,7 +2482,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%BA%BB%E7%BE%8E%E3%82%86%E3%81%BE/",
@@ -2043,7 +2496,7 @@
     "name": "吉沢明歩",
     "work": "女優名検索インデックス",
     "code": "INDEX-吉沢明歩",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "吉沢明歩",
       "レジェンド",
@@ -2054,7 +2507,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%90%89%E6%B2%A2%E6%98%8E%E6%AD%A9/",
@@ -2064,7 +2521,7 @@
     "name": "蒼井そら",
     "work": "女優名検索インデックス",
     "code": "INDEX-蒼井そら",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "蒼井そら",
       "レジェンド",
@@ -2076,7 +2533,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%92%BC%E4%BA%95%E3%81%9D%E3%82%89/",
@@ -2086,7 +2547,7 @@
     "name": "上原亜衣",
     "work": "女優名検索インデックス",
     "code": "INDEX-上原亜衣",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "上原亜衣",
       "レジェンド",
@@ -2098,7 +2559,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%8A%E5%8E%9F%E4%BA%9C%E8%A1%A3/",
@@ -2111,7 +2576,7 @@
     ],
     "work": "女優名検索インデックス",
     "code": "INDEX-三上悠亜",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "三上悠亜",
       "元アイドル",
@@ -2123,7 +2588,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%89%E4%B8%8A%E6%82%A0%E4%BA%9C/"
@@ -2132,7 +2601,7 @@
     "name": "明日花キララ",
     "work": "女優名検索インデックス",
     "code": "INDEX-明日花キララ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "明日花キララ",
       "モデル",
@@ -2143,7 +2612,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%98%8E%E6%97%A5%E8%8A%B1%E3%82%AD%E3%83%A9%E3%83%A9/",
@@ -2153,7 +2626,7 @@
     "name": "深田えいみ",
     "work": "女優名検索インデックス",
     "code": "INDEX-深田えいみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "深田えいみ",
       "インフルエンサー",
@@ -2164,7 +2637,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B7%B1%E7%94%B0%E3%81%88%E3%81%84%E3%81%BF/",
@@ -2177,7 +2654,7 @@
     ],
     "work": "女優名検索インデックス",
     "code": "INDEX-高橋しょう子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "高橋しょう子",
       "高崎聖子",
@@ -2188,7 +2665,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%AB%98%E6%A9%8B%E3%81%97%E3%82%87%E3%81%86%E5%AD%90/"
@@ -2200,7 +2681,7 @@
     ],
     "work": "女優名検索インデックス",
     "code": "INDEX-Rio",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "Rio",
       "柚木ティナ",
@@ -2212,7 +2693,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=Rio/"
@@ -2221,7 +2706,7 @@
     "name": "小澤マリア",
     "work": "女優名検索インデックス",
     "code": "INDEX-小澤マリア",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小澤マリア",
       "レジェンド",
@@ -2232,7 +2717,11 @@
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E6%BE%A4%E3%83%9E%E3%83%AA%E3%82%A2/",
@@ -2243,14 +2732,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-大橋未久",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "大橋未久",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%A7%E6%A9%8B%E6%9C%AA%E4%B9%85/"
@@ -2260,14 +2753,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-及川奈央",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "及川奈央",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8F%8A%E5%B7%9D%E5%A5%88%E5%A4%AE/"
@@ -2277,14 +2774,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-穂花",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "穂花",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%A9%82%E8%8A%B1/"
@@ -2294,14 +2795,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小川あさ美",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小川あさ美",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E5%B7%9D%E3%81%82%E3%81%95%E7%BE%8E/"
@@ -2311,14 +2816,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-原紗央莉",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "原紗央莉",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8E%9F%E7%B4%97%E5%A4%AE%E8%8E%89/"
@@ -2328,14 +2837,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-かすみりさ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "かすみりさ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%8B%E3%81%99%E3%81%BF%E3%82%8A%E3%81%95/"
@@ -2345,14 +2858,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-みづなれい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "みづなれい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%BF%E3%81%A5%E3%81%AA%E3%82%8C%E3%81%84/"
@@ -2362,14 +2879,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-横山美雪",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "横山美雪",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A8%AA%E5%B1%B1%E7%BE%8E%E9%9B%AA/"
@@ -2379,14 +2900,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-星野ナミ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "星野ナミ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%98%9F%E9%87%8E%E3%83%8A%E3%83%9F/"
@@ -2396,14 +2921,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-橘梨紗",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "橘梨紗",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A9%98%E6%A2%A8%E7%B4%97/"
@@ -2413,14 +2942,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐々木あき",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐々木あき",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E3%80%85%E6%9C%A8%E3%81%82%E3%81%8D/"
@@ -2430,14 +2963,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小早川怜子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小早川怜子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E6%97%A9%E5%B7%9D%E6%80%9C%E5%AD%90/"
@@ -2447,14 +2984,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-翔田千里",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "翔田千里",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BF%94%E7%94%B0%E5%8D%83%E9%87%8C/"
@@ -2464,14 +3005,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-風間ゆみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "風間ゆみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%A2%A8%E9%96%93%E3%82%86%E3%81%BF/"
@@ -2481,14 +3026,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-友田真希",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "友田真希",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8F%8B%E7%94%B0%E7%9C%9F%E5%B8%8C/"
@@ -2498,14 +3047,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-村上涼子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "村上涼子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9D%91%E4%B8%8A%E6%B6%BC%E5%AD%90/"
@@ -2515,14 +3068,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水城奈緒",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水城奈緒",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E5%9F%8E%E5%A5%88%E7%B7%92/"
@@ -2532,14 +3089,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水原さな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水原さな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E5%8E%9F%E3%81%95%E3%81%AA/"
@@ -2549,14 +3110,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-加藤ツバキ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "加藤ツバキ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8A%A0%E8%97%A4%E3%83%84%E3%83%90%E3%82%AD/"
@@ -2566,14 +3131,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-成宮いろは",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "成宮いろは",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%88%90%E5%AE%AE%E3%81%84%E3%82%8D%E3%81%AF/"
@@ -2583,14 +3152,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-森沢かな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "森沢かな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A3%AE%E6%B2%A2%E3%81%8B%E3%81%AA/"
@@ -2600,14 +3173,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-森日向子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "森日向子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A3%AE%E6%97%A5%E5%90%91%E5%AD%90/"
@@ -2617,14 +3194,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-乙葉ななせ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "乙葉ななせ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B9%99%E8%91%89%E3%81%AA%E3%81%AA%E3%81%9B/"
@@ -2634,14 +3215,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-羽田あい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "羽田あい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%BD%E7%94%B0%E3%81%82%E3%81%84/"
@@ -2651,14 +3236,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-神咲詩織",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "神咲詩織",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%A5%9E%E5%92%B2%E8%A9%A9%E7%B9%94/"
@@ -2668,14 +3257,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-大島優香",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "大島優香",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%A7%E5%B3%B6%E5%84%AA%E9%A6%99/"
@@ -2685,14 +3278,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-里美ゆりあ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "里美ゆりあ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%87%8C%E7%BE%8E%E3%82%86%E3%82%8A%E3%81%82/"
@@ -2702,14 +3299,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-早川瀬里奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "早川瀬里奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%97%A9%E5%B7%9D%E7%80%AC%E9%87%8C%E5%A5%88/"
@@ -2719,14 +3320,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美竹すず",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美竹すず",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E7%AB%B9%E3%81%99%E3%81%9A/"
@@ -2736,14 +3341,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐倉絆",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐倉絆",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E5%80%89%E7%B5%86/"
@@ -2753,14 +3362,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-さとう遥希",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "さとう遥希",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%95%E3%81%A8%E3%81%86%E9%81%A5%E5%B8%8C/"
@@ -2770,14 +3383,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-彩乃なな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "彩乃なな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%BD%A9%E4%B9%83%E3%81%AA%E3%81%AA/"
@@ -2787,14 +3404,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-浅田結梨",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "浅田結梨",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B5%85%E7%94%B0%E7%B5%90%E6%A2%A8/"
@@ -2804,14 +3425,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-涼川絢音",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "涼川絢音",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B6%BC%E5%B7%9D%E7%B5%A2%E9%9F%B3/"
@@ -2821,14 +3446,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐々波綾",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐々波綾",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E3%80%85%E6%B3%A2%E7%B6%BE/"
@@ -2838,14 +3467,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-椎名そら",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "椎名そら",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A4%8E%E5%90%8D%E3%81%9D%E3%82%89/"
@@ -2855,14 +3488,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-星美りか",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "星美りか",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%98%9F%E7%BE%8E%E3%82%8A%E3%81%8B/"
@@ -2872,14 +3509,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-沖田杏梨",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "沖田杏梨",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B2%96%E7%94%B0%E6%9D%8F%E6%A2%A8/"
@@ -2889,14 +3530,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-あやみ旬果",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "あやみ旬果",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%82%E3%82%84%E3%81%BF%E6%97%AC%E6%9E%9C/"
@@ -2906,14 +3551,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-由愛可奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "由愛可奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%94%B1%E6%84%9B%E5%8F%AF%E5%A5%88/"
@@ -2923,14 +3572,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-琥珀うた",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "琥珀うた",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%90%A5%E7%8F%80%E3%81%86%E3%81%9F/"
@@ -2940,14 +3593,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-椎名ゆな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "椎名ゆな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A4%8E%E5%90%8D%E3%82%86%E3%81%AA/"
@@ -2957,14 +3614,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-二宮ナナ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "二宮ナナ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BA%8C%E5%AE%AE%E3%83%8A%E3%83%8A/"
@@ -2974,14 +3635,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-篠宮ゆり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "篠宮ゆり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%AF%A0%E5%AE%AE%E3%82%86%E3%82%8A/"
@@ -2991,14 +3656,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-湊莉久",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "湊莉久",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B9%8A%E8%8E%89%E4%B9%85/"
@@ -3008,14 +3677,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-篠田あゆみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "篠田あゆみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%AF%A0%E7%94%B0%E3%81%82%E3%82%86%E3%81%BF/"
@@ -3025,14 +3698,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-白咲碧",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "白咲碧",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%99%BD%E5%92%B2%E7%A2%A7/"
@@ -3042,14 +3719,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-卯水咲流",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "卯水咲流",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8D%AF%E6%B0%B4%E5%92%B2%E6%B5%81/"
@@ -3059,14 +3740,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-なつめ愛莉",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "なつめ愛莉",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E3%81%AA%E3%81%A4%E3%82%81%E6%84%9B%E8%8E%89/"
@@ -3076,14 +3761,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-上原保奈美",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "上原保奈美",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%8A%E5%8E%9F%E4%BF%9D%E5%A5%88%E7%BE%8E/"
@@ -3093,14 +3782,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-北川エリカ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "北川エリカ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8C%97%E5%B7%9D%E3%82%A8%E3%83%AA%E3%82%AB/"
@@ -3110,14 +3803,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-有村千佳",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "有村千佳",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%89%E6%9D%91%E5%8D%83%E4%BD%B3/"
@@ -3127,14 +3824,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-愛須心亜",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "愛須心亜",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%84%9B%E9%A0%88%E5%BF%83%E4%BA%9C/"
@@ -3144,14 +3845,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桐谷まつり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桐谷まつり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%90%E8%B0%B7%E3%81%BE%E3%81%A4%E3%82%8A/"
@@ -3161,14 +3866,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-逢沢るる",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "逢沢るる",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%80%A2%E6%B2%A2%E3%82%8B%E3%82%8B/"
@@ -3178,14 +3887,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美雪ありす",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美雪ありす",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E9%9B%AA%E3%81%82%E3%82%8A%E3%81%99/"
@@ -3195,14 +3908,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-星川麻紀",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "星川麻紀",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%98%9F%E5%B7%9D%E9%BA%BB%E7%B4%80/"
@@ -3212,14 +3929,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水嶋杏樹",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水嶋杏樹",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E5%B6%8B%E6%9D%8F%E6%A8%B9/"
@@ -3229,14 +3950,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-妃月るい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "妃月るい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A6%83%E6%9C%88%E3%82%8B%E3%81%84/"
@@ -3246,14 +3971,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-広瀬奈々美",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "広瀬奈々美",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%BA%83%E7%80%AC%E5%A5%88%E3%80%85%E7%BE%8E/"
@@ -3263,14 +3992,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水川スミレ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水川スミレ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E5%B7%9D%E3%82%B9%E3%83%9F%E3%83%AC/"
@@ -3280,14 +4013,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小西まりえ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小西まりえ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E8%A5%BF%E3%81%BE%E3%82%8A%E3%81%88/"
@@ -3297,14 +4034,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-大場ゆい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "大場ゆい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%A7%E5%A0%B4%E3%82%86%E3%81%84/"
@@ -3314,14 +4055,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-川村まや",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "川村まや",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B7%9D%E6%9D%91%E3%81%BE%E3%82%84/"
@@ -3331,14 +4076,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桃谷エリカ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桃谷エリカ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%83%E8%B0%B7%E3%82%A8%E3%83%AA%E3%82%AB/"
@@ -3348,14 +4097,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-愛音まりあ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "愛音まりあ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%84%9B%E9%9F%B3%E3%81%BE%E3%82%8A%E3%81%82/"
@@ -3365,14 +4118,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-香椎りあ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "香椎りあ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%A6%99%E6%A4%8E%E3%82%8A%E3%81%82/"
@@ -3382,14 +4139,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-羽月希",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "羽月希",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%BD%E6%9C%88%E5%B8%8C/"
@@ -3399,14 +4160,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佳苗るか",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佳苗るか",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%B3%E8%8B%97%E3%82%8B%E3%81%8B/"
@@ -3416,14 +4181,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-卯月麻衣",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "卯月麻衣",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8D%AF%E6%9C%88%E9%BA%BB%E8%A1%A3/"
@@ -3433,14 +4202,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美泉咲",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美泉咲",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E6%B3%89%E5%92%B2/"
@@ -3450,14 +4223,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-秋山祥子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "秋山祥子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%A7%8B%E5%B1%B1%E7%A5%A5%E5%AD%90/"
@@ -3467,14 +4244,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-一ノ瀬アメリ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "一ノ瀬アメリ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%80%E3%83%8E%E7%80%AC%E3%82%A2%E3%83%A1%E3%83%AA/"
@@ -3484,14 +4265,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小向美奈子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小向美奈子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E5%90%91%E7%BE%8E%E5%A5%88%E5%AD%90/"
@@ -3501,14 +4286,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-倖田李梨",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "倖田李梨",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%80%96%E7%94%B0%E6%9D%8E%E6%A2%A8/"
@@ -3518,14 +4307,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-黒木いくみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "黒木いくみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%BB%92%E6%9C%A8%E3%81%84%E3%81%8F%E3%81%BF/"
@@ -3535,14 +4328,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-妃乃ひかり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "妃乃ひかり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A6%83%E4%B9%83%E3%81%B2%E3%81%8B%E3%82%8A/"
@@ -3552,14 +4349,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水谷心音",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水谷心音",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E8%B0%B7%E5%BF%83%E9%9F%B3/"
@@ -3569,14 +4370,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐藤遥希",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐藤遥希",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E8%97%A4%E9%81%A5%E5%B8%8C/"
@@ -3586,14 +4391,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-琴乃",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "琴乃",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%90%B4%E4%B9%83/"
@@ -3603,14 +4412,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小沢菜穂",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小沢菜穂",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E6%B2%A2%E8%8F%9C%E7%A9%82/"
@@ -3620,14 +4433,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-紅音ほたる",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "紅音ほたる",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%B4%85%E9%9F%B3%E3%81%BB%E3%81%9F%E3%82%8B/"
@@ -3637,14 +4454,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-松島かえで",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "松島かえで",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9D%BE%E5%B3%B6%E3%81%8B%E3%81%88%E3%81%A7/"
@@ -3654,14 +4475,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-松野ゆい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "松野ゆい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9D%BE%E9%87%8E%E3%82%86%E3%81%84/"
@@ -3671,14 +4496,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-長澤つぐみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "長澤つぐみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%95%B7%E6%BE%A4%E3%81%A4%E3%81%90%E3%81%BF/"
@@ -3688,14 +4517,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-南波杏",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "南波杏",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8D%97%E6%B3%A2%E6%9D%8F/"
@@ -3705,14 +4538,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美神ルナ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美神ルナ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E7%A5%9E%E3%83%AB%E3%83%8A/"
@@ -3722,14 +4559,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-鈴木心春",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "鈴木心春",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%88%B4%E6%9C%A8%E5%BF%83%E6%98%A5/"
@@ -3739,14 +4580,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桜木凛",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桜木凛",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%9C%E6%9C%A8%E5%87%9B/"
@@ -3756,14 +4601,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桜井あゆ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桜井あゆ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%9C%E4%BA%95%E3%81%82%E3%82%86/"
@@ -3773,14 +4622,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-高千穂すず",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "高千穂すず",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%AB%98%E5%8D%83%E7%A9%82%E3%81%99%E3%81%9A/"
@@ -3790,14 +4643,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-葵いぶき",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "葵いぶき",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%91%B5%E3%81%84%E3%81%B6%E3%81%8D/"
@@ -3807,14 +4664,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-加美杏奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "加美杏奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%8A%A0%E7%BE%8E%E6%9D%8F%E5%A5%88/"
@@ -3824,14 +4685,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐伯由美香",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐伯由美香",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E4%BC%AF%E7%94%B1%E7%BE%8E%E9%A6%99/"
@@ -3841,14 +4706,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小倉七海",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小倉七海",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E5%80%89%E4%B8%83%E6%B5%B7/"
@@ -3858,14 +4727,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-白坂有以",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "白坂有以",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%99%BD%E5%9D%82%E6%9C%89%E4%BB%A5/"
@@ -3875,14 +4748,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水端あさみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水端あさみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E7%AB%AF%E3%81%82%E3%81%95%E3%81%BF/"
@@ -3892,14 +4769,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-姫野ことめ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "姫野ことめ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A7%AB%E9%87%8E%E3%81%93%E3%81%A8%E3%82%81/"
@@ -3909,14 +4790,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-希代あみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "希代あみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B8%8C%E4%BB%A3%E3%81%82%E3%81%BF/"
@@ -3926,14 +4811,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-石川祐奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "石川祐奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%9F%B3%E5%B7%9D%E7%A5%90%E5%A5%88/"
@@ -3943,14 +4832,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-宮島めい",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "宮島めい",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%AE%AE%E5%B3%B6%E3%82%81%E3%81%84/"
@@ -3960,14 +4853,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-日向なつ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "日向なつ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%97%A5%E5%90%91%E3%81%AA%E3%81%A4/"
@@ -3977,14 +4874,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-真白希実",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "真白希実",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%9C%9F%E7%99%BD%E5%B8%8C%E5%AE%9F/"
@@ -3994,14 +4895,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-水瀬もも",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "水瀬もも",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B0%B4%E7%80%AC%E3%82%82%E3%82%82/"
@@ -4011,14 +4916,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-森川アンナ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "森川アンナ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A3%AE%E5%B7%9D%E3%82%A2%E3%83%B3%E3%83%8A/"
@@ -4028,14 +4937,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-朝比奈ななせ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "朝比奈ななせ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%9D%E6%AF%94%E5%A5%88%E3%81%AA%E3%81%AA%E3%81%9B/"
@@ -4045,14 +4958,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美波こづえ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美波こづえ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E6%B3%A2%E3%81%93%E3%81%A5%E3%81%88/"
@@ -4062,14 +4979,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-矢埜愛茉",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "矢埜愛茉",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%9F%A2%E5%9F%9C%E6%84%9B%E8%8C%89/"
@@ -4079,14 +5000,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-月野かすみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "月野かすみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%88%E9%87%8E%E3%81%8B%E3%81%99%E3%81%BF/"
@@ -4096,14 +5021,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-田中ねね",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "田中ねね",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%94%B0%E4%B8%AD%E3%81%AD%E3%81%AD/"
@@ -4113,14 +5042,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-桃園怜奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "桃園怜奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%A1%83%E5%9C%92%E6%80%9C%E5%A5%88/"
@@ -4130,14 +5063,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-木下ひまり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "木下ひまり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%A8%E4%B8%8B%E3%81%B2%E3%81%BE%E3%82%8A/"
@@ -4147,14 +5084,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-二階堂夢",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "二階堂夢",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BA%8C%E9%9A%8E%E5%A0%82%E5%A4%A2/"
@@ -4164,14 +5105,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-一条みお",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "一条みお",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%80%E6%9D%A1%E3%81%BF%E3%81%8A/"
@@ -4181,14 +5126,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-広瀬なるみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "広瀬なるみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%BA%83%E7%80%AC%E3%81%AA%E3%82%8B%E3%81%BF/"
@@ -4198,14 +5147,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-藤井蘭々",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "藤井蘭々",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%97%A4%E4%BA%95%E8%98%AD%E3%80%85/"
@@ -4215,14 +5168,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-東條なつ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "東條なつ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9D%B1%E6%A2%9D%E3%81%AA%E3%81%A4/"
@@ -4232,14 +5189,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-百永さりな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "百永さりな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%99%BE%E6%B0%B8%E3%81%95%E3%82%8A%E3%81%AA/"
@@ -4249,14 +5210,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-岬あずさ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "岬あずさ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B2%AC%E3%81%82%E3%81%9A%E3%81%95/"
@@ -4266,14 +5231,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-奏音かのん",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "奏音かのん",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A5%8F%E9%9F%B3%E3%81%8B%E3%81%AE%E3%82%93/"
@@ -4283,14 +5252,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-黒川すみれ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "黒川すみれ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E9%BB%92%E5%B7%9D%E3%81%99%E3%81%BF%E3%82%8C/"
@@ -4300,14 +5273,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-花柳杏奈",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "花柳杏奈",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%8A%B1%E6%9F%B3%E6%9D%8F%E5%A5%88/"
@@ -4317,14 +5294,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-宝田もなみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "宝田もなみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%AE%9D%E7%94%B0%E3%82%82%E3%81%AA%E3%81%BF/"
@@ -4334,14 +5315,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-月島さくら",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "月島さくら",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%9C%88%E5%B3%B6%E3%81%95%E3%81%8F%E3%82%89/"
@@ -4351,14 +5336,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-深田結梨",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "深田結梨",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%B7%B1%E7%94%B0%E7%B5%90%E6%A2%A8/"
@@ -4368,14 +5357,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-西宮ゆめ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "西宮ゆめ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%A5%BF%E5%AE%AE%E3%82%86%E3%82%81/"
@@ -4385,14 +5378,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-一ノ瀬もも",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "一ノ瀬もも",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%B8%80%E3%83%8E%E7%80%AC%E3%82%82%E3%82%82/"
@@ -4402,14 +5399,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-新村あかり",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "新村あかり",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%96%B0%E6%9D%91%E3%81%82%E3%81%8B%E3%82%8A/"
@@ -4419,14 +5420,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-若月まりあ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "若月まりあ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E8%8B%A5%E6%9C%88%E3%81%BE%E3%82%8A%E3%81%82/"
@@ -4436,14 +5441,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-星仲ここみ",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "星仲ここみ",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E6%98%9F%E4%BB%B2%E3%81%93%E3%81%93%E3%81%BF/"
@@ -4453,14 +5462,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-大原向葵",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "大原向葵",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%A4%A7%E5%8E%9F%E5%90%91%E8%91%B5/"
@@ -4470,14 +5483,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-結城のの",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "結城のの",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%B5%90%E5%9F%8E%E3%81%AE%E3%81%AE/"
@@ -4487,14 +5504,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-心実るな",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "心実るな",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%BF%83%E5%AE%9F%E3%82%8B%E3%81%AA/"
@@ -4504,14 +5525,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-小野夕子",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "小野夕子",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E5%B0%8F%E9%87%8E%E5%A4%95%E5%AD%90/"
@@ -4521,14 +5546,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-佐野ゆま",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "佐野ゆま",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E4%BD%90%E9%87%8E%E3%82%86%E3%81%BE/"
@@ -4538,14 +5567,18 @@
     "aliases": [],
     "work": "女優名検索インデックス",
     "code": "INDEX-美谷朱音",
-    "maker": "FANZA / DUGA / APEX / MGS動画 API同期対象",
+    "maker": "FANZA / DUGA / APEX / MGS動画 / SOD / DTICASH API同期対象",
     "tags": [
       "美谷朱音",
       "大量データ",
       "検索索引",
       "女優名",
       "MGS動画",
-      "API補完対象"
+      "API補完対象",
+      "SOD",
+      "DTICASH",
+      "DTI CASH",
+      "DTI"
     ],
     "source": "初期検索インデックス",
     "sourceUrl": "https://www.dmm.co.jp/search/=/searchstr=%E7%BE%8E%E8%B0%B7%E6%9C%B1%E9%9F%B3/"

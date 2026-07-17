@@ -9,6 +9,8 @@ const SOURCE_TAGS = {
   duga: ['DUGA', 'API'],
   apex: ['APEX', 'API'],
   mgs: ['MGS動画', 'API'],
+  sod: ['SOD', 'API'],
+  dticash: ['DTICASH', 'API'],
 }
 
 const apiId = process.env.FANZA_API_ID || process.env.DMM_API_ID
@@ -196,11 +198,13 @@ async function main() {
     ...(await fetchConfiguredFeed('DUGA_ACTRESS_FEED_URL', 'DUGA', SOURCE_TAGS.duga)),
     ...(await fetchConfiguredFeed('APEX_ACTRESS_FEED_URL', 'APEX', SOURCE_TAGS.apex)),
     ...(await fetchConfiguredFeed('MGS_ACTRESS_FEED_URL', 'MGS動画', SOURCE_TAGS.mgs)),
+    ...(await fetchConfiguredFeed('SOD_ACTRESS_FEED_URL', 'SOD', SOURCE_TAGS.sod)),
+    ...(await fetchConfiguredFeed('DTICASH_ACTRESS_FEED_URL', 'DTICASH', SOURCE_TAGS.dticash)),
   ]
 
   if (imported.length === 0) {
     console.log(
-      'No API credentials/feed URLs set. Keeping existing records. Set FANZA_API_ID/FANZA_AFFILIATE_ID, DUGA_ACTRESS_FEED_URL, APEX_ACTRESS_FEED_URL, or MGS_ACTRESS_FEED_URL to import all available actress data.',
+      'No API credentials/feed URLs set. Keeping existing records. Set FANZA_API_ID/FANZA_AFFILIATE_ID, DUGA_ACTRESS_FEED_URL, APEX_ACTRESS_FEED_URL, MGS_ACTRESS_FEED_URL, SOD_ACTRESS_FEED_URL, or DTICASH_ACTRESS_FEED_URL to import all available actress data.',
     )
     return
   }
