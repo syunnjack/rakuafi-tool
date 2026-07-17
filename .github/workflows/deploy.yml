@@ -25,6 +25,22 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          FANZA_API_ID: ${{ secrets.FANZA_API_ID }}
+          FANZA_AFFILIATE_ID: ${{ secrets.FANZA_AFFILIATE_ID }}
+          DMM_API_ID: ${{ secrets.DMM_API_ID }}
+          DMM_AFFILIATE_ID: ${{ secrets.DMM_AFFILIATE_ID }}
+          DUGA_ACTRESS_FEED_URL: ${{ secrets.DUGA_ACTRESS_FEED_URL }}
+          APEX_ACTRESS_FEED_URL: ${{ secrets.APEX_ACTRESS_FEED_URL }}
+          MGS_ACTRESS_FEED_URL: ${{ secrets.MGS_ACTRESS_FEED_URL }}
+          SOD_ACTRESS_FEED_URL: ${{ secrets.SOD_ACTRESS_FEED_URL }}
+          DTICASH_ACTRESS_FEED_URL: ${{ secrets.DTICASH_ACTRESS_FEED_URL }}
+          VITE_DMM_AFFILIATE_ID: ${{ secrets.VITE_DMM_AFFILIATE_ID }}
+          VITE_FANZA_AFFILIATE_ID: ${{ secrets.VITE_FANZA_AFFILIATE_ID }}
+          VITE_DUGA_AFFILIATE_URL: ${{ secrets.VITE_DUGA_AFFILIATE_URL }}
+          VITE_MGS_AFFILIATE_URL: ${{ secrets.VITE_MGS_AFFILIATE_URL }}
+          VITE_SOD_AFFILIATE_URL: ${{ secrets.VITE_SOD_AFFILIATE_URL }}
+          VITE_DTICASH_AFFILIATE_URL: ${{ secrets.VITE_DTICASH_AFFILIATE_URL }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

@@ -243,7 +243,7 @@
 }
 
 .result-tags button,
-.result-list a {
+.affiliate-actions a {
   border: 1px solid rgba(24, 21, 31, 0.14);
   border-radius: 999px;
   background: #fff;
@@ -252,6 +252,20 @@
   font-size: 13px;
   padding: 7px 10px;
   text-decoration: none;
+}
+
+.affiliate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.affiliate-actions a:first-child {
+  border-color: #8b4054;
+  background: #8b4054;
+  color: #fff;
+  font-weight: 700;
 }
 
 .no-results {

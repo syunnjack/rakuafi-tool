@@ -25,6 +25,52 @@ const featuredCreators = [
 
 const categories = ['作品名', '品番', 'メーカー', '出演者', 'ジャンル', '配信サイト']
 
+const affiliateConfig = {
+  dmmId: import.meta.env.VITE_DMM_AFFILIATE_ID || import.meta.env.VITE_FANZA_AFFILIATE_ID || '',
+  dugaTemplate: import.meta.env.VITE_DUGA_AFFILIATE_URL || '',
+  mgsTemplate: import.meta.env.VITE_MGS_AFFILIATE_URL || '',
+  sodTemplate: import.meta.env.VITE_SOD_AFFILIATE_URL || '',
+  dticashTemplate: import.meta.env.VITE_DTICASH_AFFILIATE_URL || '',
+}
+
+function dmmSearchUrl(name) {
+  return `https://www.dmm.co.jp/search/=/searchstr=${encodeURIComponent(name)}/`
+}
+
+function buildDmmAffiliateUrl(record) {
+  const targetUrl = record.sourceUrl?.includes('dmm.co.jp')
+    ? record.sourceUrl
+    : dmmSearchUrl(record.name)
+
+  if (!affiliateConfig.dmmId) return targetUrl
+  if (targetUrl.includes('al.dmm.co.jp')) return targetUrl
+
+  const params = new URLSearchParams({
+    lurl: targetUrl,
+    af_id: affiliateConfig.dmmId,
+    ch: 'api',
+  })
+  return `https://al.dmm.co.jp/?${params}`
+}
+
+function buildTemplateUrl(template, record) {
+  if (!template) return ''
+  return template
+    .replaceAll('{name}', encodeURIComponent(record.name))
+    .replaceAll('{code}', encodeURIComponent(record.code || record.name))
+    .replaceAll('{sourceUrl}', encodeURIComponent(record.sourceUrl || dmmSearchUrl(record.name)))
+}
+
+function affiliateLinks(record) {
+  return [
+    ['FANZA', buildDmmAffiliateUrl(record)],
+    ['DUGA', buildTemplateUrl(affiliateConfig.dugaTemplate, record)],
+    ['MGS動画', buildTemplateUrl(affiliateConfig.mgsTemplate, record)],
+    ['SOD', buildTemplateUrl(affiliateConfig.sodTemplate, record)],
+    ['DTICASH', buildTemplateUrl(affiliateConfig.dticashTemplate, record)],
+  ].filter(([, url]) => Boolean(url))
+}
+
 const faqItems = [
   {
     question: '作品名や品番だけで出演女優名を探せますか？',
@@ -130,9 +176,13 @@ function App() {
                   </button>
                 ))}
               </div>
-              <a href={record.sourceUrl} target="_blank" rel="noreferrer">
-                {record.source}
-              </a>
+              <div className="affiliate-actions" aria-label={`${record.name}の販売リンク`}>
+                {affiliateLinks(record).map(([label, url]) => (
+                  <a href={url} target="_blank" rel="noreferrer sponsored" key={label}>
+                    {label}
+                  </a>
+                ))}
+              </div>
             </article>
           ))}
           {results.length === 0 && (
