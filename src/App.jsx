@@ -1,277 +1,402 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import actressRecords from './data/actresses.json'
 
-const featuredCreators = [
-  {
-    name: '作品タイトルから探す',
-    role: 'title / maker / label',
-    tag: '#作品名 #品番 #メーカー',
-    tone: 'coral',
-  },
-  {
-    name: '特徴タグで絞る',
-    role: 'scene / costume / genre',
-    tag: '#衣装 #髪型 #ジャンル',
-    tone: 'mint',
-  },
-  {
-    name: '公式リンクを確認',
-    role: 'profile / SNS / store',
-    tag: '#公式SNS #配信ページ',
-    tone: 'sky',
-  },
+const REPORTS_KEY = 'task-dashboard.rakutenReports'
+const TASKS_KEY = 'task-dashboard.rakutenTasks'
+const CONTENT_KEY = 'task-dashboard.rakutenContent'
+
+const defaultReports = [
+  { id: 'sample-1', date: '2026-07-15', clicks: 42, orders: 2, sales: 8600, reward: 172, memo: 'レビュー記事から初成果。商品ボタンを上部にも追加。' },
+  { id: 'sample-2', date: '2026-07-16', clicks: 58, orders: 3, sales: 12600, reward: 252, memo: 'SNS投稿後にクリック増。夜の投稿が反応よし。' },
+  { id: 'sample-3', date: '2026-07-17', clicks: 64, orders: 2, sales: 9800, reward: 196, memo: '比較表に公式リンクを追記。' },
 ]
 
-const categories = ['作品名', '品番', 'メーカー', '出演者', 'ジャンル', '配信サイト']
-
-const affiliateConfig = {
-  dmmId: import.meta.env.VITE_DMM_AFFILIATE_ID || import.meta.env.VITE_FANZA_AFFILIATE_ID || '',
-  dugaTemplate: import.meta.env.VITE_DUGA_AFFILIATE_URL || '',
-  mgsTemplate: import.meta.env.VITE_MGS_AFFILIATE_URL || '',
-  sodTemplate: import.meta.env.VITE_SOD_AFFILIATE_URL || '',
-  dticashTemplate: import.meta.env.VITE_DTICASH_AFFILIATE_URL || '',
-}
-
-function dmmSearchUrl(name) {
-  return `https://www.dmm.co.jp/search/=/searchstr=${encodeURIComponent(name)}/`
-}
-
-function buildDmmAffiliateUrl(record) {
-  const targetUrl = record.sourceUrl?.includes('dmm.co.jp')
-    ? record.sourceUrl
-    : dmmSearchUrl(record.name)
-
-  if (!affiliateConfig.dmmId) return targetUrl
-  if (targetUrl.includes('al.dmm.co.jp')) return targetUrl
-
-  const params = new URLSearchParams({
-    lurl: targetUrl,
-    af_id: affiliateConfig.dmmId,
-    ch: 'api',
-  })
-  return `https://al.dmm.co.jp/?${params}`
-}
-
-function buildTemplateUrl(template, record) {
-  if (!template) return ''
-  return template
-    .replaceAll('{name}', encodeURIComponent(record.name))
-    .replaceAll('{code}', encodeURIComponent(record.code || record.name))
-    .replaceAll('{sourceUrl}', encodeURIComponent(record.sourceUrl || dmmSearchUrl(record.name)))
-}
-
-function affiliateLinks(record) {
-  return [
-    ['FANZA', buildDmmAffiliateUrl(record)],
-    ['DUGA', buildTemplateUrl(affiliateConfig.dugaTemplate, record)],
-    ['MGS動画', buildTemplateUrl(affiliateConfig.mgsTemplate, record)],
-    ['SOD', buildTemplateUrl(affiliateConfig.sodTemplate, record)],
-    ['DTICASH', buildTemplateUrl(affiliateConfig.dticashTemplate, record)],
-  ].filter(([, url]) => Boolean(url))
-}
-
-const faqItems = [
-  {
-    question: '作品名や品番だけで出演女優名を探せますか？',
-    answer: '公開されている作品ページ、メーカー情報、販売サイトのクレジットをもとに候補を整理します。',
-  },
-  {
-    question: '名前が違う、別名義がある場合はどうなりますか？',
-    answer: '別名義、旧名義、SNS名をプロフィールに紐づけ、ユーザー投稿で補完できる設計にします。',
-  },
-  {
-    question: 'ユーザー投稿はすぐ掲載されますか？',
-    answer: '誤情報を防ぐため、投稿は証拠URLとあわせて受け付け、運営確認後に反映します。',
-  },
+const defaultTasks = [
+  { id: 'task-1', title: '成果が出た記事の冒頭に楽天リンクを1つ追加', channel: 'ブログ', impact: '高', done: false },
+  { id: 'task-2', title: 'クリックが多い商品を3つ比較表にする', channel: 'ブログ', impact: '高', done: false },
+  { id: 'task-3', title: '昨日の売れた商品をSNSで再紹介する', channel: 'SNS', impact: '中', done: true },
+  { id: 'task-4', title: '楽天レポートのクリック上位ページを確認', channel: '分析', impact: '中', done: false },
 ]
+
+const defaultContent = [
+  { id: 'content-1', name: '買ってよかった日用品まとめ', channel: 'ブログ', clicks: 38, reward: 118, idea: '季節ワードをタイトルに追加' },
+  { id: 'content-2', name: '週末セール告知ポスト', channel: 'SNS', clicks: 21, reward: 64, idea: '投稿時間を21時に固定して検証' },
+  { id: 'content-3', name: '家電の比較ページ', channel: 'ブログ', clicks: 12, reward: 0, idea: '価格帯別のおすすめを追記' },
+]
+
+const emptyReport = {
+  date: new Date().toISOString().slice(0, 10),
+  clicks: '',
+  orders: '',
+  sales: '',
+  reward: '',
+  memo: '',
+}
+
+const emptyTask = {
+  title: '',
+  channel: 'ブログ',
+  impact: '中',
+}
+
+const emptyContent = {
+  name: '',
+  channel: 'ブログ',
+  clicks: '',
+  reward: '',
+  idea: '',
+}
+
+function readStorage(key, fallback) {
+  try {
+    const stored = localStorage.getItem(key)
+    return stored ? JSON.parse(stored) : fallback
+  } catch {
+    return fallback
+  }
+}
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat('ja-JP', {
+    style: 'currency',
+    currency: 'JPY',
+    maximumFractionDigits: 0,
+  }).format(value)
+}
+
+function formatNumber(value) {
+  return new Intl.NumberFormat('ja-JP').format(value)
+}
+
+function toNumber(value) {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : 0
+}
 
 function App() {
-  const [query, setQuery] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [reports, setReports] = useState(() => readStorage(REPORTS_KEY, defaultReports))
+  const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
+  const [contents, setContents] = useState(() => readStorage(CONTENT_KEY, defaultContent))
+  const [reportForm, setReportForm] = useState(emptyReport)
+  const [taskForm, setTaskForm] = useState(emptyTask)
+  const [contentForm, setContentForm] = useState(emptyContent)
 
-  const results = useMemo(() => {
-    const keyword = query.trim().toLowerCase()
-    if (!keyword) return actressRecords
-    return actressRecords.filter((record) => {
-      const haystack = [
-        record.name,
-        ...(record.aliases ?? []),
-        record.work,
-        record.code,
-        record.maker,
-        record.source,
-        ...record.tags,
-      ].join(' ').toLowerCase()
-      return haystack.includes(keyword)
-    })
-  }, [query])
+  useEffect(() => {
+    localStorage.setItem(REPORTS_KEY, JSON.stringify(reports))
+  }, [reports])
 
-  const submitUgc = (event) => {
+  useEffect(() => {
+    localStorage.setItem(TASKS_KEY, JSON.stringify(tasks))
+  }, [tasks])
+
+  useEffect(() => {
+    localStorage.setItem(CONTENT_KEY, JSON.stringify(contents))
+  }, [contents])
+
+  const sortedReports = useMemo(
+    () => [...reports].sort((a, b) => b.date.localeCompare(a.date)),
+    [reports],
+  )
+
+  const totals = useMemo(() => {
+    const totalClicks = reports.reduce((sum, report) => sum + toNumber(report.clicks), 0)
+    const totalOrders = reports.reduce((sum, report) => sum + toNumber(report.orders), 0)
+    const totalSales = reports.reduce((sum, report) => sum + toNumber(report.sales), 0)
+    const totalReward = reports.reduce((sum, report) => sum + toNumber(report.reward), 0)
+
+    return {
+      clicks: totalClicks,
+      orders: totalOrders,
+      sales: totalSales,
+      reward: totalReward,
+      conversionRate: totalClicks ? (totalOrders / totalClicks) * 100 : 0,
+      rewardPerClick: totalClicks ? totalReward / totalClicks : 0,
+    }
+  }, [reports])
+
+  const activeTasks = tasks.filter((task) => !task.done)
+  const completedTasks = tasks.filter((task) => task.done)
+  const bestContent = [...contents].sort((a, b) => toNumber(b.reward) - toNumber(a.reward))[0]
+  const weakestContent = [...contents].sort((a, b) => toNumber(b.clicks) - toNumber(a.clicks) || toNumber(a.reward) - toNumber(b.reward))[0]
+
+  const suggestions = [
+    totals.conversionRate < 3
+      ? 'クリックはあるので、記事冒頭・比較表・購入直前の3か所に楽天リンクを置く'
+      : '成約率は悪くないので、成果記事への導線をSNSと関連記事から増やす',
+    totals.rewardPerClick < 5
+      ? '単価が低めの商品だけでなく、買い替え需要のある商品を1つ混ぜる'
+      : '報酬効率が良い商品を、別キーワードの記事にも横展開する',
+    weakestContent?.reward === 0
+      ? `${weakestContent.name} はクリック後の購入が弱いので、商品選定か訴求文を見直す`
+      : '週1回、クリック上位3ページだけ改善して小さく積み上げる',
+  ]
+
+  const addReport = (event) => {
     event.preventDefault()
-    setSubmitted(true)
+    const nextReport = {
+      id: crypto.randomUUID(),
+      date: reportForm.date,
+      clicks: toNumber(reportForm.clicks),
+      orders: toNumber(reportForm.orders),
+      sales: toNumber(reportForm.sales),
+      reward: toNumber(reportForm.reward),
+      memo: reportForm.memo.trim(),
+    }
+    setReports((current) => [nextReport, ...current])
+    setReportForm(emptyReport)
+  }
+
+  const addTask = (event) => {
+    event.preventDefault()
+    if (!taskForm.title.trim()) return
+    setTasks((current) => [
+      { id: crypto.randomUUID(), ...taskForm, title: taskForm.title.trim(), done: false },
+      ...current,
+    ])
+    setTaskForm(emptyTask)
+  }
+
+  const addContent = (event) => {
+    event.preventDefault()
+    if (!contentForm.name.trim()) return
+    setContents((current) => [
+      {
+        id: crypto.randomUUID(),
+        name: contentForm.name.trim(),
+        channel: contentForm.channel,
+        clicks: toNumber(contentForm.clicks),
+        reward: toNumber(contentForm.reward),
+        idea: contentForm.idea.trim(),
+      },
+      ...current,
+    ])
+    setContentForm(emptyContent)
+  }
+
+  const toggleTask = (taskId) => {
+    setTasks((current) =>
+      current.map((task) => (task.id === taskId ? { ...task, done: !task.done } : task)),
+    )
+  }
+
+  const deleteReport = (reportId) => {
+    setReports((current) => current.filter((report) => report.id !== reportId))
+  }
+
+  const deleteTask = (taskId) => {
+    setTasks((current) => current.filter((task) => task.id !== taskId))
+  }
+
+  const deleteContent = (contentId) => {
+    setContents((current) => current.filter((content) => content.id !== contentId))
   }
 
   return (
-    <main className="site-shell">
+    <main className="app-shell">
       <section className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">Public creator discovery</p>
-          <h1>この子だれ？</h1>
+        <div>
+          <p className="eyebrow">Rakuten affiliate growth</p>
+          <h1>楽天報酬を、毎日少しずつ増やす作業場</h1>
           <p className="lead">
-            気になった出演女優の名前を、作品名・品番・メーカー・ジャンル・公開クレジットから探せる
-            女優名検索サイト。
+            楽天アフィリエイトのレポート数値を入れて、クリック、成約、報酬、改善タスクを同じ画面で管理します。
+            大きな一発狙いではなく、昨日より1つ良くするためのダッシュボードです。
           </p>
-          <form className="search-panel" aria-label="女優名検索" onSubmit={(event) => event.preventDefault()}>
-            <input
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="作品名、品番、メーカー、特徴タグで検索"
-            />
-            <button type="submit">探す</button>
-          </form>
-          <div className="quick-tags" aria-label="人気タグ">
-            {categories.map((category) => (
-              <a href="#creators" key={category}>{category}</a>
-            ))}
+          <div className="hero-actions">
+            <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">
+              楽天レポートを開く
+            </a>
+            <a href="#today-work">今日の改善へ</a>
           </div>
         </div>
-
-        <div className="visual-board" aria-label="注目クリエイター">
-          {featuredCreators.map((creator, index) => (
-            <article className={`creator-tile ${creator.tone}`} key={creator.name}>
-              <div className="avatar-mark">{creator.name.slice(0, 1)}</div>
-              <div>
-                <p className="tile-rank">No.0{index + 1}</p>
-                <h2>{creator.name}</h2>
-                <p>{creator.role}</p>
-                <span>{creator.tag}</span>
-              </div>
-            </article>
-          ))}
-        </div>
+        <aside className="focus-panel" aria-label="今日の注目ポイント">
+          <p className="panel-label">Next action</p>
+          <h2>{suggestions[0]}</h2>
+          <p>クリック数、成約率、1クリックあたり報酬を見ながら、改善の優先順位を決めます。</p>
+        </aside>
       </section>
 
-      <section className="results-band" aria-live="polite">
-        <div className="section-heading">
-          <p className="eyebrow">Search results</p>
-          <h2>候補一覧</h2>
-        </div>
-        <div className="result-list">
-          {results.map((record) => (
-            <article key={record.code}>
-              <div>
-                <p className="result-code">{record.code}</p>
-                <h3>{record.name}</h3>
-                {record.aliases?.length > 0 && (
-                  <p className="result-aliases">旧名・別名: {record.aliases.join(' / ')}</p>
-                )}
-                <p>{record.work} / {record.maker}</p>
+      <section className="metric-grid" aria-label="報酬サマリー">
+        <article>
+          <span>クリック</span>
+          <strong>{formatNumber(totals.clicks)}</strong>
+          <small>集客量の合計</small>
+        </article>
+        <article>
+          <span>注文</span>
+          <strong>{formatNumber(totals.orders)}</strong>
+          <small>成約率 {totals.conversionRate.toFixed(1)}%</small>
+        </article>
+        <article>
+          <span>売上</span>
+          <strong>{formatCurrency(totals.sales)}</strong>
+          <small>成果金額の合計</small>
+        </article>
+        <article>
+          <span>報酬</span>
+          <strong>{formatCurrency(totals.reward)}</strong>
+          <small>1クリック {formatCurrency(totals.rewardPerClick)}</small>
+        </article>
+      </section>
+
+      <section className="workspace-grid" id="today-work">
+        <article className="tool-panel">
+          <div className="panel-heading">
+            <p className="eyebrow">Daily report</p>
+            <h2>日次レポートを記録</h2>
+          </div>
+          <form className="report-form" onSubmit={addReport}>
+            <label>
+              日付
+              <input type="date" value={reportForm.date} onChange={(event) => setReportForm({ ...reportForm, date: event.target.value })} required />
+            </label>
+            <label>
+              クリック
+              <input type="number" min="0" value={reportForm.clicks} onChange={(event) => setReportForm({ ...reportForm, clicks: event.target.value })} required />
+            </label>
+            <label>
+              注文
+              <input type="number" min="0" value={reportForm.orders} onChange={(event) => setReportForm({ ...reportForm, orders: event.target.value })} required />
+            </label>
+            <label>
+              売上
+              <input type="number" min="0" value={reportForm.sales} onChange={(event) => setReportForm({ ...reportForm, sales: event.target.value })} required />
+            </label>
+            <label>
+              報酬
+              <input type="number" min="0" value={reportForm.reward} onChange={(event) => setReportForm({ ...reportForm, reward: event.target.value })} required />
+            </label>
+            <label className="wide-field">
+              メモ
+              <textarea value={reportForm.memo} onChange={(event) => setReportForm({ ...reportForm, memo: event.target.value })} placeholder="伸びた記事、投稿時間、変更したリンクなど" />
+            </label>
+            <button type="submit">記録する</button>
+          </form>
+        </article>
+
+        <article className="tool-panel">
+          <div className="panel-heading">
+            <p className="eyebrow">Improvement queue</p>
+            <h2>改善タスク</h2>
+          </div>
+          <form className="task-form" onSubmit={addTask}>
+            <input value={taskForm.title} onChange={(event) => setTaskForm({ ...taskForm, title: event.target.value })} placeholder="例: 成果記事に比較表を追加" />
+            <select value={taskForm.channel} onChange={(event) => setTaskForm({ ...taskForm, channel: event.target.value })}>
+              <option>ブログ</option>
+              <option>SNS</option>
+              <option>分析</option>
+              <option>商品選定</option>
+            </select>
+            <select value={taskForm.impact} onChange={(event) => setTaskForm({ ...taskForm, impact: event.target.value })}>
+              <option>高</option>
+              <option>中</option>
+              <option>低</option>
+            </select>
+            <button type="submit">追加</button>
+          </form>
+          <div className="task-list">
+            {tasks.map((task) => (
+              <div className={`task-row ${task.done ? 'done' : ''}`} key={task.id}>
+                <button type="button" className="check-button" onClick={() => toggleTask(task.id)} aria-label={`${task.title}を完了にする`}>
+                  {task.done ? '✓' : ''}
+                </button>
+                <div>
+                  <strong>{task.title}</strong>
+                  <span>{task.channel} / 効果 {task.impact}</span>
+                </div>
+                <button type="button" className="delete-button" onClick={() => deleteTask(task.id)}>削除</button>
               </div>
-              <div className="result-tags" aria-label={`${record.name}のタグ`}>
-                {record.tags.map((tag) => (
-                  <button type="button" key={tag} onClick={() => setQuery(tag)}>
-                    #{tag}
-                  </button>
-                ))}
-              </div>
-              <div className="affiliate-actions" aria-label={`${record.name}の販売リンク`}>
-                {affiliateLinks(record).map(([label, url]) => (
-                  <a href={url} target="_blank" rel="noreferrer sponsored" key={label}>
-                    {label}
-                  </a>
-                ))}
-              </div>
-            </article>
-          ))}
-          {results.length === 0 && (
-            <p className="no-results">該当候補がありません。UGC投稿から情報提供できます。</p>
+            ))}
+          </div>
+          <p className="panel-note">未完了 {activeTasks.length}件 / 完了 {completedTasks.length}件</p>
+        </article>
+      </section>
+
+      <section className="insight-grid">
+        <article className="tool-panel">
+          <div className="panel-heading">
+            <p className="eyebrow">What to improve</p>
+            <h2>次に伸ばすポイント</h2>
+          </div>
+          <ul className="suggestion-list">
+            {suggestions.map((suggestion) => (
+              <li key={suggestion}>{suggestion}</li>
+            ))}
+          </ul>
+        </article>
+
+        <article className="tool-panel">
+          <div className="panel-heading">
+            <p className="eyebrow">Top content</p>
+            <h2>成果が出ている導線</h2>
+          </div>
+          {bestContent ? (
+            <div className="best-content">
+              <span>{bestContent.channel}</span>
+              <strong>{bestContent.name}</strong>
+              <p>{formatNumber(bestContent.clicks)}クリック / {formatCurrency(toNumber(bestContent.reward))}</p>
+              <small>{bestContent.idea}</small>
+            </div>
+          ) : (
+            <p className="empty-text">媒体メモを追加すると表示されます。</p>
           )}
-        </div>
+        </article>
       </section>
 
-      <section className="content-band" id="creators">
-        <div className="section-heading">
-          <p className="eyebrow">Find faster</p>
-          <h2>名前にたどり着く導線</h2>
+      <section className="content-section">
+        <div className="panel-heading">
+          <p className="eyebrow">Content tracker</p>
+          <h2>媒体・記事別メモ</h2>
         </div>
-        <div className="feature-grid">
-          <article>
-            <h3>作品情報検索</h3>
-            <p>タイトル、品番、メーカー、シリーズ名から公開されている出演者情報を探します。</p>
-          </article>
-          <article>
-            <h3>出演者プロフィール</h3>
-            <p>公式プロフィール、SNS、配信サイト、販売ページへの公開リンクを整理します。</p>
-          </article>
-          <article>
-            <h3>UGC補完</h3>
-            <p>ユーザー投稿で候補情報を集め、運営確認後に公開データとして反映します。</p>
-          </article>
-        </div>
-      </section>
-
-      <section className="intent-band">
-        <div className="section-heading">
-          <p className="eyebrow">SEO / AIO / LLMO</p>
-          <h2>検索AIに伝わる情報設計</h2>
-        </div>
-        <div className="intent-grid">
-          <article>
-            <h3>作品名で女優名を知りたい</h3>
-            <p>「作品名 出演女優」「品番 女優名」「メーカー 出演者」の検索意図に対応します。</p>
-          </article>
-          <article>
-            <h3>似ている候補を比較したい</h3>
-            <p>候補者ごとに出演作品、公開SNS、別名義、活動ジャンルを比較できるページを作ります。</p>
-          </article>
-          <article>
-            <h3>公式情報へ移動したい</h3>
-            <p>プロフィールから公式SNS、配信サイト、販売ページ、ファンクラブへ自然に送客します。</p>
-          </article>
-        </div>
-      </section>
-
-      <section className="ugc-band">
-        <div>
-          <p className="eyebrow">UGC</p>
-          <h2>ユーザー投稿で情報を育てる</h2>
-          <p>
-            見つけた作品ページ、SNS投稿、メーカー情報を投稿できる仕組みにし、確認済み情報として
-            女優プロフィールへ反映します。
-          </p>
-        </div>
-        <form className="ugc-form" onSubmit={submitUgc}>
-          <input type="text" placeholder="作品名または品番" required />
-          <input type="url" placeholder="証拠URL" required />
-          <button type="submit">候補を投稿</button>
-          {submitted && <p className="form-note">投稿候補を受け付けました。確認後に反映します。</p>}
+        <form className="content-form" onSubmit={addContent}>
+          <input value={contentForm.name} onChange={(event) => setContentForm({ ...contentForm, name: event.target.value })} placeholder="記事名、投稿名、ページ名" />
+          <select value={contentForm.channel} onChange={(event) => setContentForm({ ...contentForm, channel: event.target.value })}>
+            <option>ブログ</option>
+            <option>SNS</option>
+            <option>メール</option>
+            <option>その他</option>
+          </select>
+          <input type="number" min="0" value={contentForm.clicks} onChange={(event) => setContentForm({ ...contentForm, clicks: event.target.value })} placeholder="クリック" />
+          <input type="number" min="0" value={contentForm.reward} onChange={(event) => setContentForm({ ...contentForm, reward: event.target.value })} placeholder="報酬" />
+          <input value={contentForm.idea} onChange={(event) => setContentForm({ ...contentForm, idea: event.target.value })} placeholder="次の改善案" />
+          <button type="submit">追加</button>
         </form>
+        <div className="content-table" role="table" aria-label="媒体別成果">
+          <div className="table-head" role="row">
+            <span>媒体</span>
+            <span>名前</span>
+            <span>クリック</span>
+            <span>報酬</span>
+            <span>改善案</span>
+            <span></span>
+          </div>
+          {contents.map((content) => (
+            <div className="table-row" role="row" key={content.id}>
+              <span>{content.channel}</span>
+              <strong>{content.name}</strong>
+              <span>{formatNumber(toNumber(content.clicks))}</span>
+              <span>{formatCurrency(toNumber(content.reward))}</span>
+              <span>{content.idea || '次回入力'}</span>
+              <button type="button" onClick={() => deleteContent(content.id)}>削除</button>
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="ranking-band">
-        <div>
-          <p className="eyebrow">Monetize</p>
-          <h2>収益導線</h2>
+      <section className="history-section">
+        <div className="panel-heading">
+          <p className="eyebrow">Report history</p>
+          <h2>記録履歴</h2>
         </div>
-        <ul className="revenue-list">
-          <li>配信サイト・販売ページへのアフィリエイトリンク</li>
-          <li>女優プロフィールの公式SNS・ファンクラブ導線</li>
-          <li>メーカー・レーベル向けの掲載強化枠</li>
-        </ul>
-      </section>
-
-      <section className="faq-band">
-        <div className="section-heading">
-          <p className="eyebrow">FAQ</p>
-          <h2>よくある検索</h2>
-        </div>
-        <div className="faq-list">
-          {faqItems.map((item) => (
-            <article key={item.question}>
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
+        <div className="history-list">
+          {sortedReports.map((report) => (
+            <article key={report.id}>
+              <div>
+                <time>{report.date}</time>
+                <strong>{formatCurrency(toNumber(report.reward))}</strong>
+                <span>{formatNumber(toNumber(report.clicks))}クリック / {formatNumber(toNumber(report.orders))}注文 / 売上 {formatCurrency(toNumber(report.sales))}</span>
+                {report.memo && <p>{report.memo}</p>}
+              </div>
+              <button type="button" onClick={() => deleteReport(report.id)}>削除</button>
             </article>
           ))}
         </div>
