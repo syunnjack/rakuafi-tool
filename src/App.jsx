@@ -7,6 +7,7 @@ const CONTENT_KEY = 'task-dashboard.rakutenContent'
 const AUTOPILOT_KEY = 'task-dashboard.rakutenAutopilot'
 const ROOM_FLOWS_KEY = 'task-dashboard.roomFlows'
 const AFFILIATE_SETTINGS_KEY = 'task-dashboard.rakutenAffiliateSettings'
+const POST_DRAFT_KEY = 'task-dashboard.roomPostDraft'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 
 const defaultReports = [
@@ -96,6 +97,17 @@ const defaultAffiliateSettings = {
   affiliateLink: USER_RAKUTEN_AFFILIATE_LINK,
   campaignName: '楽天市場テキストリンク',
   targetMemo: '日本最大級ショッピングサイト！お買い物なら楽天市場',
+}
+
+const defaultPostDraft = {
+  productName: '',
+  productLink: '',
+  audience: '',
+  problem: '',
+  benefit: '',
+  proof: '',
+  priceHook: '',
+  hashtags: '#楽天ROOM #買ってよかった',
 }
 
 function readStorage(key, fallback) {
@@ -203,8 +215,31 @@ function roomModeLabel(mode) {
   return roomModes.find((item) => item.value === mode)?.label ?? mode
 }
 
+function readReports() {
+  return readStorage(REPORTS_KEY, defaultReports).filter((report) => !String(report.id).startsWith('sample-'))
+}
+
+function isGenericRakutenLink(link) {
+  const value = link.toLowerCase()
+  return value.includes('page%22%3a%22shop') || value.includes('"page":"shop"')
+}
+
+function buildRoomPost(draft) {
+  const opening = draft.audience && draft.problem
+    ? `${draft.problem}で困っている${draft.audience}へ。`
+    : draft.problem || `${draft.productName}を探している方へ。`
+  const details = [draft.benefit, draft.proof, draft.priceHook].filter(Boolean)
+  return [
+    `【${draft.productName || '商品名を入力'}】`,
+    opening,
+    ...details,
+    '気になる方は、商品ページで詳細と最新価格をチェックしてみてください。',
+    draft.hashtags,
+  ].filter(Boolean).join('\n\n')
+}
+
 function App() {
-  const [reports, setReports] = useState(() => readStorage(REPORTS_KEY, defaultReports))
+  const [reports, setReports] = useState(readReports)
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
   const [contents, setContents] = useState(() => readStorage(CONTENT_KEY, defaultContent))
   const [roomFlows, setRoomFlows] = useState(() => readStorage(ROOM_FLOWS_KEY, defaultRoomFlows))
@@ -217,6 +252,8 @@ function App() {
   const [contentForm, setContentForm] = useState(emptyContent)
   const [roomForm, setRoomForm] = useState(emptyRoomFlow)
   const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
+  const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
+  const [copyMessage, setCopyMessage] = useState('')
   const [automationMessage, setAutomationMessage] = useState('自動運転はオンです。数字を入れると改善タスクを自動で作ります。')
 
   useEffect(() => {
@@ -249,6 +286,10 @@ function App() {
     localStorage.setItem(AUTOPILOT_KEY, JSON.stringify(autopilot))
   }, [autopilot])
 
+  useEffect(() => {
+    localStorage.setItem(POST_DRAFT_KEY, JSON.stringify(postDraft))
+  }, [postDraft])
+
   const sortedReports = useMemo(
     () => [...reports].sort((a, b) => b.date.localeCompare(a.date)),
     [reports],
@@ -277,7 +318,9 @@ function App() {
   const latestReport = sortedReports[0]
 
   const suggestions = [
-    totals.conversionRate < 3
+    totals.clicks === 0
+      ? '商品別リンクと悩み訴求を揃えた投稿を1本作り、24時間後のクリックを確認する'
+      : totals.conversionRate < 3
       ? 'クリックはあるので、記事冒頭・比較表・購入直前の3か所に楽天リンクを置く'
       : '成約率は悪くないので、成果記事への導線をSNSと関連記事から増やす',
     totals.rewardPerClick < 5
@@ -305,6 +348,31 @@ function App() {
   }, [roomFlows])
 
   const affiliateReady = affiliateSettings.affiliateLink.trim().startsWith('http')
+  const generatedPost = buildRoomPost(postDraft)
+  const postLinkReady = postDraft.productLink.trim().startsWith('http')
+  const postScoreItems = [
+    [Boolean(postDraft.productName.trim()), '商品名'],
+    [postLinkReady && !isGenericRakutenLink(postDraft.productLink), '商品別リンク'],
+    [Boolean(postDraft.audience.trim()), '対象ユーザー'],
+    [Boolean(postDraft.problem.trim()), '悩み'],
+    [Boolean(postDraft.benefit.trim()), '使うメリット'],
+    [Boolean(postDraft.proof.trim()), '実感・根拠'],
+  ]
+  const postScore = postScoreItems.filter(([done]) => done).length
+
+  const updatePostDraft = (field, value) => {
+    setPostDraft((current) => ({ ...current, [field]: value }))
+    setCopyMessage('')
+  }
+
+  const copyPost = async () => {
+    try {
+      await navigator.clipboard.writeText(generatedPost)
+      setCopyMessage('投稿文をコピーしました。')
+    } catch {
+      setCopyMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
 
   const runAutomation = () => {
     setTasks((current) => {
@@ -467,10 +535,10 @@ function App() {
             大きな一発狙いではなく、昨日より1つ良くするためのダッシュボードです。
           </p>
           <div className="hero-actions">
+            <a href="#click-studio">クリック投稿を作る</a>
             <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">
               楽天レポートを開く
             </a>
-            <a href="#today-work">今日の改善へ</a>
           </div>
         </div>
         <aside className="focus-panel" aria-label="今日の注目ポイント">
@@ -501,6 +569,48 @@ function App() {
           <strong>{formatCurrency(totals.reward)}</strong>
           <small>1クリック {formatCurrency(totals.rewardPerClick)}</small>
         </article>
+      </section>
+
+      <section className="click-studio" id="click-studio">
+        <div className="studio-heading">
+          <div>
+            <p className="eyebrow">Zero click rescue</p>
+            <h2>クリックされるROOM投稿を作る</h2>
+            <p>商品別リンクと「誰の、どんな悩みを解決するか」を揃え、読む人が次の行動を判断できる投稿にします。</p>
+          </div>
+          <div className="post-score" aria-label={`投稿準備 ${postScore}項目完了`}>
+            <strong>{postScore}<span>/6</span></strong>
+            <small>{postScore >= 5 ? '投稿準備OK' : '不足項目を入力'}</small>
+          </div>
+        </div>
+
+        <div className="studio-grid">
+          <form className="post-builder" onSubmit={(event) => event.preventDefault()}>
+            <label>商品名<input value={postDraft.productName} onChange={(event) => updatePostDraft('productName', event.target.value)} placeholder="例: 軽量コードレス掃除機" /></label>
+            <label>商品別アフィリエイトURL<input type="url" value={postDraft.productLink} onChange={(event) => updatePostDraft('productLink', event.target.value)} placeholder="楽天の商品ページから作成したリンク" /></label>
+            {postLinkReady && isGenericRakutenLink(postDraft.productLink) && <p className="link-warning">楽天市場トップへの汎用リンクです。紹介する商品の個別ページからリンクを作り直してください。</p>}
+            <label>誰向け<input value={postDraft.audience} onChange={(event) => updatePostDraft('audience', event.target.value)} placeholder="例: 忙しい一人暮らしの方" /></label>
+            <label>悩み<input value={postDraft.problem} onChange={(event) => updatePostDraft('problem', event.target.value)} placeholder="例: 毎日の床掃除が面倒" /></label>
+            <label>使うメリット<textarea value={postDraft.benefit} onChange={(event) => updatePostDraft('benefit', event.target.value)} placeholder="例: 軽くて片手で扱え、気づいた時にすぐ掃除できます" /></label>
+            <label>実感・選んだ根拠<textarea value={postDraft.proof} onChange={(event) => updatePostDraft('proof', event.target.value)} placeholder="実際に確認できた仕様や、自分の正直な感想" /></label>
+            <label>価格・季節の一押し<input value={postDraft.priceHook} onChange={(event) => updatePostDraft('priceHook', event.target.value)} placeholder="例: クーポン対象。最新価格は商品ページで確認" /></label>
+            <label>ハッシュタグ<input value={postDraft.hashtags} onChange={(event) => updatePostDraft('hashtags', event.target.value)} /></label>
+          </form>
+
+          <aside className="post-preview">
+            <div className="preview-topline"><span>ROOM投稿プレビュー</span><strong>{generatedPost.length}文字</strong></div>
+            <textarea readOnly value={generatedPost} aria-label="生成されたROOM投稿文" />
+            <div className="preview-actions">
+              <button type="button" onClick={copyPost}>投稿文をコピー</button>
+              <a className={!postLinkReady ? 'disabled-link' : ''} href={postLinkReady ? postDraft.productLink : undefined} target="_blank" rel="noreferrer sponsored">商品リンクを確認</a>
+            </div>
+            {copyMessage && <p className="copy-message" role="status">{copyMessage}</p>}
+            <div className="post-checklist">
+              {postScoreItems.map(([done, label]) => <span className={done ? 'done' : ''} key={label}>{done ? '✓' : '○'} {label}</span>)}
+            </div>
+            <p className="disclosure-note">価格や在庫は変動します。未確認の効果を断定せず、実際に確認できた情報だけを使ってください。</p>
+          </aside>
+        </div>
       </section>
 
       <section className="automation-section" aria-label="自動運転">
