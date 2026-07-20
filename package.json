@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node scripts/fetch-fanza-data.mjs",
+    "data:actresses": "node --env-file-if-exists=.env.local scripts/build-actress-catalog.mjs",
+    "data:actresses:fresh": "node --env-file-if-exists=.env.local scripts/build-actress-catalog.mjs",
+    "data:works": "node --env-file-if-exists=.env.local scripts/build-work-catalog.mjs",
+    "data:all": "npm run data:actresses && npm run data:works",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview"

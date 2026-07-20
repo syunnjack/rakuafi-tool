@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.env.local
+output/actress-catalog/
+output/work-catalog/
 
 # Editor directories and files
 .vscode/*
