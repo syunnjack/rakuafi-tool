@@ -8,6 +8,7 @@
 
 .hero,
 .metric-grid,
+.diagnosis-section,
 .click-studio,
 .automation-section,
 .affiliate-section,
@@ -238,11 +239,171 @@
   line-height: 1;
 }
 
+.diagnosis-section {
+  margin-bottom: 16px;
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+  padding: 24px;
+}
+
+.diagnosis-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 18px;
+  align-items: center;
+}
+
+.diagnosis-main h2 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: 0;
+}
+
+.diagnosis-main p {
+  max-width: 780px;
+  margin: 10px 0 0;
+  color: #45505d;
+  line-height: 1.75;
+}
+
+.diagnosis-status {
+  display: grid;
+  gap: 6px;
+  border-radius: 8px;
+  background: #eff7f3;
+  color: #245848;
+  padding: 18px;
+}
+
+.diagnosis-status.critical {
+  background: #fff2f0;
+  color: #a02b36;
+}
+
+.diagnosis-status span {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.diagnosis-status strong {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.diagnosis-status small {
+  color: #65717e;
+  line-height: 1.5;
+}
+
+.reason-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.reason-card {
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-left: 4px solid #c48b23;
+  border-radius: 8px;
+  background: #fffaf0;
+  padding: 16px;
+}
+
+.reason-card.critical {
+  border-left-color: #a02b36;
+  background: #fff2f0;
+}
+
+.reason-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.reason-card p {
+  margin: 0;
+  color: #45505d;
+  line-height: 1.7;
+}
+
+.rescue-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.rescue-actions button,
+.rescue-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #a02b36;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+.rescue-actions a {
+  background: #fff;
+  color: #a02b36;
+}
+
 .automation-section {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
   gap: 16px;
   padding: 0 0 16px;
+}
+
+.automation-truth {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto 16px;
+}
+
+.automation-truth article {
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+  padding: 18px;
+}
+
+.automation-truth span {
+  display: inline-flex;
+  border-radius: 999px;
+  background: #eff7f3;
+  color: #245848;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+}
+
+.automation-truth article:nth-child(2) span {
+  background: #fff7f4;
+  color: #a02b36;
+}
+
+.automation-truth strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 20px;
+}
+
+.automation-truth p {
+  margin: 8px 0 0;
+  color: #45505d;
+  line-height: 1.7;
 }
 
 .automation-panel,
@@ -813,8 +974,10 @@ textarea {
 
 @media (max-width: 920px) {
   .hero,
+  .diagnosis-main,
   .studio-grid,
   .automation-section,
+  .automation-truth,
   .affiliate-panel,
   .workspace-grid,
   .insight-grid,
@@ -824,6 +987,10 @@ textarea {
 
   .metric-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reason-grid {
+    grid-template-columns: 1fr;
   }
 
   .report-form,
@@ -864,7 +1031,9 @@ textarea {
 @media (max-width: 560px) {
   .hero,
   .metric-grid,
+  .diagnosis-section,
   .click-studio,
+  .automation-truth,
   .automation-section,
   .affiliate-section,
   .workspace-grid,

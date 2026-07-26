@@ -152,6 +152,81 @@ function uniqueTasks(currentTasks, nextTasks) {
   return nextTasks.filter((task) => !existingTitles.has(task.title))
 }
 
+function daysBetween(fromDate, toDate) {
+  const oneDay = 24 * 60 * 60 * 1000
+  const from = new Date(`${fromDate}T00:00:00`)
+  const to = new Date(`${toDate}T00:00:00`)
+  return Math.round((to - from) / oneDay)
+}
+
+function recentReports(reports, days = 7) {
+  const today = new Date().toISOString().slice(0, 10)
+  return reports.filter((report) => daysBetween(report.date, today) >= 0 && daysBetween(report.date, today) < days)
+}
+
+function isLowIntentAffiliateLink(link) {
+  const value = link.toLowerCase()
+  return (
+    isGenericRakutenLink(value) ||
+    (value.includes('hb.afl.rakuten.co.jp/hsc/') && value.includes('link_type=text')) ||
+    value.includes('pageijoic2hvc')
+  )
+}
+
+function createZeroRewardTasks({ totals, affiliateSettings, postScore, roomStats }) {
+  const tasks = []
+
+  if (totals.clicks < 10) {
+    tasks.push({
+      title: '24時間以内に商品別リンク付きROOM投稿を3本作る',
+      channel: 'ROOM',
+      impact: '高',
+    })
+    tasks.push({
+      title: '投稿ごとに「誰向け・悩み・使う理由」を必ず1行目に入れる',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (isLowIntentAffiliateLink(affiliateSettings.affiliateLink)) {
+    tasks.push({
+      title: '楽天市場トップリンクではなく、紹介商品の個別アフィリエイトリンクへ差し替える',
+      channel: '商品選定',
+      impact: '高',
+    })
+  }
+
+  if (postScore < 5) {
+    tasks.push({
+      title: 'クリック投稿ビルダーの6項目を埋めて投稿文を作り直す',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (roomStats.doneTotal < 15) {
+    tasks.push({
+      title: 'ROOMキューで今日15件だけ候補確認して反応のある商品テーマを探す',
+      channel: 'ROOM',
+      impact: '中',
+    })
+  }
+
+  tasks.push({
+    title: '明日同じ時刻にクリック数だけ確認し、0なら商品テーマを変える',
+    channel: '分析',
+    impact: '中',
+  })
+
+  return tasks.map((task) => ({
+    id: crypto.randomUUID(),
+    ...task,
+    done: false,
+    source: 'rescue',
+  }))
+}
+
 function createAutoTasks({ totals, bestContent, weakestContent, latestReport }) {
   const tasks = []
 
@@ -254,7 +329,7 @@ function App() {
   const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
   const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
   const [copyMessage, setCopyMessage] = useState('')
-  const [automationMessage, setAutomationMessage] = useState('自動運転はオンです。数字を入れると改善タスクを自動で作ります。')
+  const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
 
   useEffect(() => {
     localStorage.setItem(REPORTS_KEY, JSON.stringify(reports))
@@ -359,6 +434,39 @@ function App() {
     [Boolean(postDraft.proof.trim()), '実感・根拠'],
   ]
   const postScore = postScoreItems.filter(([done]) => done).length
+  const last7Reports = recentReports(reports, 7)
+  const last7Clicks = last7Reports.reduce((sum, report) => sum + toNumber(report.clicks), 0)
+  const last7Orders = last7Reports.reduce((sum, report) => sum + toNumber(report.orders), 0)
+  const last7Reward = last7Reports.reduce((sum, report) => sum + toNumber(report.reward), 0)
+  const lowIntentLink = isLowIntentAffiliateLink(affiliateSettings.affiliateLink)
+  const zeroRewardReasons = [
+    last7Clicks < 10 && {
+      title: '露出・クリック不足',
+      body: `直近7日クリックが${last7Clicks}件です。報酬以前に、購入ページへ人がほぼ移動していません。`,
+      level: 'critical',
+    },
+    lowIntentLink && {
+      title: 'リンクの購買意図が弱い',
+      body: '現在の既定リンクは楽天市場トップ系のテキストリンクです。商品紹介では個別商品リンクの方がクリック後の購入行動につながりやすいです。',
+      level: 'critical',
+    },
+    postScore < 5 && {
+      title: '投稿の訴求材料が不足',
+      body: `クリック投稿ビルダーは${postScore}/6項目です。誰向けか、悩み、使う理由、根拠がないと押す理由が弱くなります。`,
+      level: 'warning',
+    },
+    roomStats.doneTotal < 15 && {
+      title: '検証量が少ない',
+      body: `ROOMキューの確認済みが${roomStats.doneTotal}件です。まずは少量でも毎日15件、反応テーマを探す必要があります。`,
+      level: 'warning',
+    },
+    last7Orders === 0 && last7Clicks >= 10 && {
+      title: 'クリック後の購入理由が弱い',
+      body: 'クリックはあるのに売上がない状態です。商品単価、レビュー数、送料、クーポン、比較軸を見直してください。',
+      level: 'warning',
+    },
+  ].filter(Boolean)
+  const zeroRewardSeverity = last7Reward === 0 ? '要対策' : '改善継続'
 
   const updatePostDraft = (field, value) => {
     setPostDraft((current) => ({ ...current, [field]: value }))
@@ -384,6 +492,17 @@ function App() {
       )
       return [...nextTasks, ...current]
     })
+  }
+
+  const runZeroRewardRescue = () => {
+    const rescueTasks = createZeroRewardTasks({
+      totals,
+      affiliateSettings,
+      postScore,
+      roomStats,
+    })
+    setTasks((current) => [...uniqueTasks(current, rescueTasks), ...current])
+    setAutomationMessage('ゼロ報酬対策タスクを追加しました。まずクリックを作る施策から始めます。')
   }
 
   const addReport = (event) => {
@@ -571,6 +690,39 @@ function App() {
         </article>
       </section>
 
+      <section className="diagnosis-section" aria-label="ゼロ報酬の原因分析">
+        <article className="diagnosis-main">
+          <div>
+            <p className="eyebrow">Cause analysis</p>
+            <h2>報酬ゼロの原因は、まずクリック不足です</h2>
+            <p>
+              スクリーンショットでは売上金額・成果報酬が0円で、クリックも一部の日に1件程度です。
+              この状態では、成約率改善より先に「商品別リンクへ移動する人」を増やす必要があります。
+            </p>
+          </div>
+          <div className={`diagnosis-status ${last7Reward === 0 ? 'critical' : ''}`}>
+            <span>{zeroRewardSeverity}</span>
+            <strong>{formatCurrency(last7Reward)}</strong>
+            <small>直近7日報酬 / クリック {formatNumber(last7Clicks)} / 売上件数 {formatNumber(last7Orders)}</small>
+          </div>
+        </article>
+
+        <div className="reason-grid">
+          {zeroRewardReasons.map((reason) => (
+            <article className={`reason-card ${reason.level}`} key={reason.title}>
+              <h3>{reason.title}</h3>
+              <p>{reason.body}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="rescue-actions">
+          <button type="button" onClick={runZeroRewardRescue}>対策タスクを自動追加</button>
+          <a href="#click-studio">商品別投稿を作る</a>
+          <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">楽天レポートで確認</a>
+        </div>
+      </section>
+
       <section className="click-studio" id="click-studio">
         <div className="studio-heading">
           <div>
@@ -613,21 +765,21 @@ function App() {
         </div>
       </section>
 
-      <section className="automation-section" aria-label="自動運転">
+      <section className="automation-section" aria-label="半自動運用">
         <article className="automation-panel">
           <div>
-            <p className="eyebrow">Autopilot</p>
-            <h2>数字から改善タスクを自動で作る</h2>
+            <p className="eyebrow">Semi autopilot</p>
+            <h2>自動で診断し、実行は手動確認する</h2>
             <p>
               成約率、1クリックあたり報酬、成果が出ている記事、クリックだけ多い記事を見て、
-              今日やるべき改善を自動で未完了タスクへ追加します。
+              今日やるべき改善を未完了タスクへ追加します。楽天ROOMへの投稿、いいね、フォローは自動実行せず、あなたが確認して進めます。
             </p>
             <span className="automation-message">{automationMessage}</span>
           </div>
           <div className="automation-actions">
             <label className="toggle-row">
               <input type="checkbox" checked={autopilot} onChange={(event) => setAutopilot(event.target.checked)} />
-              自動運転をオンにする
+              半自動モードをオンにする
             </label>
             <button type="button" onClick={runAutomation}>今すぐ自動生成</button>
           </div>
@@ -647,6 +799,19 @@ function App() {
             ))}
             {todayTasks.length === 0 && <li>未完了タスクはありません。自動生成を押すと候補を作れます。</li>}
           </ol>
+        </article>
+      </section>
+
+      <section className="automation-truth">
+        <article>
+          <span>自動で動く</span>
+          <strong>原因診断・タスク生成・投稿文作成・進捗管理</strong>
+          <p>入力されたレポート、投稿ビルダー、ROOMキューをもとに改善案を作ります。</p>
+        </article>
+        <article>
+          <span>手動確認が必要</span>
+          <strong>投稿公開・いいね・フォロー・商品購入ページ確認</strong>
+          <p>楽天側の操作を勝手に連打するRPAではありません。規約違反やアカウント制限を避けるため、最終操作は人が確認します。</p>
         </article>
       </section>
 
