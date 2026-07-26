@@ -375,6 +375,109 @@ function reportStatus({ last7Clicks, last7Reward, postScore }) {
   return ['改善継続', 'good']
 }
 
+function reportAgeDays(latestReport) {
+  if (!latestReport?.date) return Infinity
+  return daysBetween(latestReport.date, todayKey())
+}
+
+function buildToolHealthChecks({ autopilot, affiliateReady, lowIntentLink, postScore, roomStats, latestReport }) {
+  return [
+    {
+      title: '診断エンジン',
+      ok: autopilot,
+      detail: autopilot ? '数値入力時に改善タスクを自動生成します。' : '半自動モードがオフです。',
+    },
+    {
+      title: 'アフィリエイトリンク',
+      ok: affiliateReady && !lowIntentLink,
+      detail: affiliateReady
+        ? lowIntentLink
+          ? '楽天市場トップ系リンクです。商品別リンクに変えると改善余地があります。'
+          : '商品別リンクとして使える状態です。'
+        : 'リンクが未設定です。',
+    },
+    {
+      title: '投稿ビルダー',
+      ok: postScore >= 5,
+      detail: `投稿材料は${postScore}/6項目です。`,
+    },
+    {
+      title: 'ROOMキュー',
+      ok: roomStats.totalLimit > 0,
+      detail: roomStats.totalLimit > 0
+        ? `今日の確認上限は${formatNumber(roomStats.totalLimit)}件です。`
+        : '確認キューがありません。',
+    },
+    {
+      title: 'レポート更新',
+      ok: reportAgeDays(latestReport) <= 2,
+      detail: reportAgeDays(latestReport) <= 2
+        ? `最新記録は${latestReport.date}です。`
+        : '直近の記録がありません。今日の数値を入力してください。',
+    },
+  ]
+}
+
+function buildRevenueActions({ last7Clicks, last7Orders, last7Reward, lowIntentLink, postScore, roomStats }) {
+  const actions = []
+
+  if (lowIntentLink) {
+    actions.push({
+      title: '汎用リンクを商品別リンクへ差し替え',
+      detail: '楽天市場トップではなく、紹介する商品の個別ページからアフィリエイトリンクを作ります。',
+      channel: '商品選定',
+      impact: '高',
+    })
+  }
+
+  if (postScore < 5) {
+    actions.push({
+      title: 'クリック投稿ビルダーを5項目以上にする',
+      detail: '誰向け、悩み、メリット、根拠を入れて、押す理由を作ります。',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (last7Clicks < 10) {
+    actions.push({
+      title: '商品別投稿を3本作ってクリック数を検証',
+      detail: '報酬改善の前にクリック母数を作ります。24時間後にクリックだけ確認します。',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (last7Clicks >= 10 && last7Orders === 0) {
+    actions.push({
+      title: 'レビュー数・価格・送料・クーポンを比較して商品を入れ替え',
+      detail: 'クリックはあるのに購入がないため、商品側の買いやすさを見直します。',
+      channel: '商品選定',
+      impact: '高',
+    })
+  }
+
+  if (roomStats.doneTotal < 15) {
+    actions.push({
+      title: 'ROOM候補を15件確認して反応テーマを探す',
+      detail: '少量でよいので毎日テーマ検証を進めます。',
+      channel: 'ROOM',
+      impact: '中',
+    })
+  }
+
+  if (last7Reward > 0) {
+    actions.push({
+      title: '報酬が出た導線を別投稿と関連記事へ横展開',
+      detail: '成果が出た商品カテゴリ、言い回し、投稿時間を再利用します。',
+      channel: 'ブログ',
+      impact: '高',
+    })
+  }
+
+  return actions
+}
+
 function App() {
   const [reports, setReports] = useState(readReports)
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
@@ -552,6 +655,25 @@ function App() {
   const reportMaxClicks = Math.max(1, ...reportRows.map((report) => toNumber(report.clicks)))
   const reportMaxReward = Math.max(1, ...reportRows.map((report) => toNumber(report.reward)))
   const [currentReportStatus, currentReportTone] = reportStatus({ last7Clicks, last7Reward, postScore })
+  const toolHealthChecks = buildToolHealthChecks({
+    autopilot,
+    affiliateReady,
+    lowIntentLink,
+    postScore,
+    roomStats,
+    latestReport,
+  })
+  const healthyChecks = toolHealthChecks.filter((check) => check.ok).length
+  const toolHealthTone = healthyChecks === toolHealthChecks.length ? 'good' : healthyChecks >= 3 ? 'warning' : 'critical'
+  const toolHealthLabel = healthyChecks === toolHealthChecks.length ? '正常稼働' : healthyChecks >= 3 ? '一部要確認' : '要修正'
+  const revenueActions = buildRevenueActions({
+    last7Clicks,
+    last7Orders,
+    last7Reward,
+    lowIntentLink,
+    postScore,
+    roomStats,
+  })
 
   const updatePostDraft = (field, value) => {
     setPostDraft((current) => ({ ...current, [field]: value }))
@@ -588,6 +710,33 @@ function App() {
     })
     setTasks((current) => [...uniqueTasks(current, rescueTasks), ...current])
     setAutomationMessage('ゼロ報酬対策タスクを追加しました。まずクリックを作る施策から始めます。')
+  }
+
+  const runRevenueBoost = () => {
+    const boostTasks = revenueActions.map((action) => ({
+      id: crypto.randomUUID(),
+      title: action.title,
+      channel: action.channel,
+      impact: action.impact,
+      done: false,
+      source: 'boost',
+    }))
+
+    const boostFlow = {
+      id: crypto.randomUUID(),
+      mode: 'kore',
+      keyword: postDraft.productName || '買ってよかった 楽天',
+      maxActions: 15,
+      spanMinutes: 10,
+      doneCount: 0,
+      status: 'ready',
+      nextAt: formatTime(new Date()),
+      memo: '報酬改善エンジンが追加。商品別リンクと投稿文を確認してから実行。',
+    }
+
+    setTasks((current) => [...uniqueTasks(current, boostTasks), ...current])
+    setRoomFlows((current) => [boostFlow, ...current])
+    setAutomationMessage('報酬改善タスクとROOM検証キューを追加しました。商品別リンクから着手してください。')
   }
 
   const saveDailyReport = (event) => {
@@ -886,6 +1035,25 @@ function App() {
           </div>
         </div>
 
+        <div className={`tool-health-summary ${toolHealthTone}`}>
+          <div>
+            <p className="eyebrow">Tool status</p>
+            <h3>ツール稼働状態: {toolHealthLabel}</h3>
+            <p>
+              {healthyChecks}/{toolHealthChecks.length}項目が正常です。自動診断、リンク、投稿準備、ROOMキュー、レポート更新を確認しています。
+            </p>
+          </div>
+          <div className="tool-health-grid">
+            {toolHealthChecks.map((check) => (
+              <article className={check.ok ? 'ok' : 'ng'} key={check.title}>
+                <span>{check.ok ? '正常' : '確認'}</span>
+                <strong>{check.title}</strong>
+                <small>{check.detail}</small>
+              </article>
+            ))}
+          </div>
+        </div>
+
         <div className="report-kpi-grid">
           <article>
             <span>直近7日クリック</span>
@@ -907,6 +1075,32 @@ function App() {
             <strong>{postScore}/6</strong>
             <small>{postScore < 5 ? '投稿ビルダーを埋める' : '投稿可能'}</small>
           </article>
+        </div>
+
+        <div className="revenue-engine">
+          <div className="report-card-title">
+            <div>
+              <h3>報酬改善エンジン</h3>
+              <span>いま報酬に近づくための処理</span>
+            </div>
+            <button type="button" onClick={runRevenueBoost}>改善キューを作成</button>
+          </div>
+          <div className="revenue-action-grid">
+            {revenueActions.map((action) => (
+              <article key={action.title}>
+                <span>効果 {action.impact} / {action.channel}</span>
+                <strong>{action.title}</strong>
+                <p>{action.detail}</p>
+              </article>
+            ))}
+            {revenueActions.length === 0 && (
+              <article>
+                <span>改善継続</span>
+                <strong>大きな詰まりはありません</strong>
+                <p>記録を続け、成果が出た導線を別投稿と関連記事へ横展開してください。</p>
+              </article>
+            )}
+          </div>
         </div>
 
         <div className="report-board">

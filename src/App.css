@@ -512,6 +512,75 @@
   font-size: 26px;
 }
 
+.tool-health-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 18px;
+  border-radius: 8px;
+  background: #eff7f3;
+  padding: 18px;
+}
+
+.tool-health-summary.warning {
+  background: #fffaf0;
+}
+
+.tool-health-summary.critical {
+  background: #fff2f0;
+}
+
+.tool-health-summary h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.tool-health-summary p {
+  margin: 8px 0 0;
+  color: #45505d;
+  line-height: 1.7;
+}
+
+.tool-health-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tool-health-grid article {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  padding: 12px;
+}
+
+.tool-health-grid article span {
+  width: fit-content;
+  border-radius: 999px;
+  background: #dcece5;
+  color: #245848;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.tool-health-grid article.ng span {
+  background: #fff2f0;
+  color: #a02b36;
+}
+
+.tool-health-grid article strong {
+  font-size: 14px;
+}
+
+.tool-health-grid article small {
+  color: #65717e;
+  line-height: 1.5;
+}
+
 .report-kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -535,6 +604,67 @@
 .report-kpi-grid strong {
   font-size: 28px;
   line-height: 1;
+}
+
+.revenue-engine {
+  margin-top: 18px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 16px;
+}
+
+.revenue-engine .report-card-title {
+  align-items: start;
+}
+
+.revenue-engine .report-card-title div {
+  display: grid;
+  gap: 5px;
+}
+
+.revenue-engine button {
+  min-height: 42px;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #a02b36;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px 16px;
+}
+
+.revenue-action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.revenue-action-grid article {
+  display: grid;
+  gap: 8px;
+  border-left: 4px solid #a02b36;
+  border-radius: 8px;
+  background: #fff;
+  padding: 14px;
+}
+
+.revenue-action-grid span {
+  color: #a02b36;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.revenue-action-grid strong {
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.revenue-action-grid p {
+  margin: 0;
+  color: #45505d;
+  line-height: 1.65;
 }
 
 .report-board {
@@ -1317,6 +1447,7 @@ textarea {
   .diagnosis-main,
   .daily-report-section,
   .report-page-heading,
+  .tool-health-summary,
   .report-board,
   .studio-grid,
   .automation-section,
@@ -1334,6 +1465,11 @@ textarea {
 
   .report-kpi-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tool-health-grid,
+  .revenue-action-grid {
+    grid-template-columns: 1fr;
   }
 
   .reason-grid {
