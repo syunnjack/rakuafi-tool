@@ -9,6 +9,7 @@
 .hero,
 .metric-grid,
 .diagnosis-section,
+.daily-report-section,
 .click-studio,
 .automation-section,
 .affiliate-section,
@@ -354,6 +355,100 @@
 .rescue-actions a {
   background: #fff;
   color: #a02b36;
+}
+
+.daily-report-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.daily-report-panel,
+.daily-report-preview {
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+}
+
+.daily-report-panel {
+  padding: 22px;
+}
+
+.daily-report-panel h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.daily-report-panel p {
+  margin: 10px 0 0;
+  color: #45505d;
+  line-height: 1.75;
+}
+
+.daily-status {
+  display: inline-flex;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: #eff7f3;
+  color: #245848;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 7px 12px;
+}
+
+.daily-status.due {
+  background: #fff2f0;
+  color: #a02b36;
+}
+
+.daily-report-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.daily-report-form label {
+  display: grid;
+  gap: 6px;
+  color: #45505d;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.daily-report-form .toggle-row {
+  grid-column: 1 / -1;
+  display: flex;
+}
+
+.daily-report-form button,
+.daily-report-form a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #a02b36;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+.daily-report-form a {
+  background: #fff;
+  color: #a02b36;
+}
+
+.daily-report-preview {
+  min-height: 330px;
+  padding: 16px;
+  line-height: 1.7;
+  resize: vertical;
 }
 
 .automation-section {
@@ -975,6 +1070,7 @@ textarea {
 @media (max-width: 920px) {
   .hero,
   .diagnosis-main,
+  .daily-report-section,
   .studio-grid,
   .automation-section,
   .automation-truth,
@@ -994,6 +1090,7 @@ textarea {
   }
 
   .report-form,
+  .daily-report-form,
   .task-form,
   .content-form,
   .room-form,
@@ -1032,6 +1129,7 @@ textarea {
   .hero,
   .metric-grid,
   .diagnosis-section,
+  .daily-report-section,
   .click-studio,
   .automation-truth,
   .automation-section,

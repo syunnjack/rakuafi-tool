@@ -8,6 +8,7 @@ const AUTOPILOT_KEY = 'task-dashboard.rakutenAutopilot'
 const ROOM_FLOWS_KEY = 'task-dashboard.roomFlows'
 const AFFILIATE_SETTINGS_KEY = 'task-dashboard.rakutenAffiliateSettings'
 const POST_DRAFT_KEY = 'task-dashboard.roomPostDraft'
+const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 
 const defaultReports = [
@@ -110,6 +111,13 @@ const defaultPostDraft = {
   hashtags: '#楽天ROOM #買ってよかった',
 }
 
+const defaultDailyReport = {
+  enabled: true,
+  recipient: 'syunnda1@yahoo.co.jp',
+  sendTime: '09:00',
+  lastSentDate: '',
+}
+
 function readStorage(key, fallback) {
   try {
     const stored = localStorage.getItem(key)
@@ -136,6 +144,10 @@ function formatTime(date) {
     hour: '2-digit',
     minute: '2-digit',
   }).format(date)
+}
+
+function todayKey() {
+  return new Date().toISOString().slice(0, 10)
 }
 
 function toNumber(value) {
@@ -313,6 +325,49 @@ function buildRoomPost(draft) {
   ].filter(Boolean).join('\n\n')
 }
 
+function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, zeroRewardReasons, todayTasks, postScore, roomStats, affiliateSettings }) {
+  const reasonLines = zeroRewardReasons.length > 0
+    ? zeroRewardReasons.map((reason, index) => `${index + 1}. ${reason.title}: ${reason.body}`).join('\n')
+    : '大きな異常はありません。クリックと報酬の推移を継続確認してください。'
+  const taskLines = todayTasks.length > 0
+    ? todayTasks.map((task, index) => `${index + 1}. ${task.title}（${task.channel} / 効果 ${task.impact}）`).join('\n')
+    : '未完了タスクはありません。対策タスクを自動追加してください。'
+
+  return [
+    '楽天アフィリエイト日報',
+    `日付: ${todayKey()}`,
+    '',
+    '【累計サマリー】',
+    `クリック: ${formatNumber(totals.clicks)}`,
+    `注文: ${formatNumber(totals.orders)}`,
+    `売上: ${formatCurrency(totals.sales)}`,
+    `報酬: ${formatCurrency(totals.reward)}`,
+    `成約率: ${totals.conversionRate.toFixed(1)}%`,
+    `1クリック報酬: ${formatCurrency(totals.rewardPerClick)}`,
+    '',
+    '【直近7日】',
+    `クリック: ${formatNumber(last7Clicks)}`,
+    `売上件数: ${formatNumber(last7Orders)}`,
+    `報酬: ${formatCurrency(last7Reward)}`,
+    '',
+    '【原因分析】',
+    reasonLines,
+    '',
+    '【今日やること】',
+    taskLines,
+    '',
+    '【投稿準備】',
+    `クリック投稿ビルダー: ${postScore}/6`,
+    `ROOM確認済み: ${formatNumber(roomStats.doneTotal)} / 実行上限 ${formatNumber(roomStats.totalLimit)}`,
+    '',
+    '【リンク設定】',
+    `導線名: ${affiliateSettings.campaignName}`,
+    `メモ: ${affiliateSettings.targetMemo}`,
+    '',
+    'この日報は rakuafi-tool で生成されました。',
+  ].join('\n')
+}
+
 function App() {
   const [reports, setReports] = useState(readReports)
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
@@ -328,6 +383,7 @@ function App() {
   const [roomForm, setRoomForm] = useState(emptyRoomFlow)
   const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
   const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
+  const [dailyReport, setDailyReport] = useState(() => readStorage(DAILY_REPORT_KEY, defaultDailyReport))
   const [copyMessage, setCopyMessage] = useState('')
   const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
 
@@ -364,6 +420,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem(POST_DRAFT_KEY, JSON.stringify(postDraft))
   }, [postDraft])
+
+  useEffect(() => {
+    localStorage.setItem(DAILY_REPORT_KEY, JSON.stringify(dailyReport))
+  }, [dailyReport])
 
   const sortedReports = useMemo(
     () => [...reports].sort((a, b) => b.date.localeCompare(a.date)),
@@ -467,6 +527,20 @@ function App() {
     },
   ].filter(Boolean)
   const zeroRewardSeverity = last7Reward === 0 ? '要対策' : '改善継続'
+  const dailyReportBody = buildDailyReportBody({
+    totals,
+    last7Clicks,
+    last7Orders,
+    last7Reward,
+    zeroRewardReasons,
+    todayTasks,
+    postScore,
+    roomStats,
+    affiliateSettings,
+  })
+  const dailyReportSubject = `楽天アフィリエイト日報 ${todayKey()}`
+  const dailyReportDue = dailyReport.enabled && dailyReport.lastSentDate !== todayKey()
+  const dailyReportMailto = `mailto:${encodeURIComponent(dailyReport.recipient)}?subject=${encodeURIComponent(dailyReportSubject)}&body=${encodeURIComponent(dailyReportBody)}`
 
   const updatePostDraft = (field, value) => {
     setPostDraft((current) => ({ ...current, [field]: value }))
@@ -503,6 +577,22 @@ function App() {
     })
     setTasks((current) => [...uniqueTasks(current, rescueTasks), ...current])
     setAutomationMessage('ゼロ報酬対策タスクを追加しました。まずクリックを作る施策から始めます。')
+  }
+
+  const saveDailyReport = (event) => {
+    event.preventDefault()
+    setDailyReport((current) => ({
+      ...current,
+      recipient: dailyReport.recipient.trim() || defaultDailyReport.recipient,
+      sendTime: dailyReport.sendTime || defaultDailyReport.sendTime,
+    }))
+  }
+
+  const markDailyReportSent = () => {
+    setDailyReport((current) => ({
+      ...current,
+      lastSentDate: todayKey(),
+    }))
   }
 
   const addReport = (event) => {
@@ -721,6 +811,51 @@ function App() {
           <a href="#click-studio">商品別投稿を作る</a>
           <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">楽天レポートで確認</a>
         </div>
+      </section>
+
+      <section className="daily-report-section" aria-label="日報メール">
+        <article className="daily-report-panel">
+          <div>
+            <p className="eyebrow">Daily email</p>
+            <h2>1日1回、日報メールを作成</h2>
+            <p>
+              宛先は syunnda1@yahoo.co.jp です。ブラウザから無人送信はできないため、
+              日報本文を自動生成してメールアプリを開き、送信済み日付を管理します。
+            </p>
+            <span className={`daily-status ${dailyReportDue ? 'due' : ''}`}>
+              {dailyReportDue ? '本日の日報は未送信' : '本日の日報は送信済み'}
+            </span>
+          </div>
+          <form className="daily-report-form" onSubmit={saveDailyReport}>
+            <label>
+              宛先
+              <input
+                type="email"
+                value={dailyReport.recipient}
+                onChange={(event) => setDailyReport({ ...dailyReport, recipient: event.target.value })}
+              />
+            </label>
+            <label>
+              送信目安
+              <input
+                type="time"
+                value={dailyReport.sendTime}
+                onChange={(event) => setDailyReport({ ...dailyReport, sendTime: event.target.value })}
+              />
+            </label>
+            <label className="toggle-row">
+              <input
+                type="checkbox"
+                checked={dailyReport.enabled}
+                onChange={(event) => setDailyReport({ ...dailyReport, enabled: event.target.checked })}
+              />
+              日報を有効にする
+            </label>
+            <button type="submit">設定保存</button>
+            <a href={dailyReportMailto} onClick={markDailyReportSent}>日報メールを作成</a>
+          </form>
+        </article>
+        <textarea className="daily-report-preview" readOnly value={dailyReportBody} aria-label="日報プレビュー" />
       </section>
 
       <section className="click-studio" id="click-studio">
