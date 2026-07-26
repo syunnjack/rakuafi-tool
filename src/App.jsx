@@ -368,6 +368,13 @@ function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, z
   ].join('\n')
 }
 
+function reportStatus({ last7Clicks, last7Reward, postScore }) {
+  if (last7Clicks < 10) return ['クリック不足', 'critical']
+  if (last7Reward === 0) return ['購入導線を改善', 'warning']
+  if (postScore < 5) return ['投稿材料を補強', 'warning']
+  return ['改善継続', 'good']
+}
+
 function App() {
   const [reports, setReports] = useState(readReports)
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
@@ -541,6 +548,10 @@ function App() {
   const dailyReportSubject = `楽天アフィリエイト日報 ${todayKey()}`
   const dailyReportDue = dailyReport.enabled && dailyReport.lastSentDate !== todayKey()
   const dailyReportMailto = `mailto:${encodeURIComponent(dailyReport.recipient)}?subject=${encodeURIComponent(dailyReportSubject)}&body=${encodeURIComponent(dailyReportBody)}`
+  const reportRows = [...sortedReports].reverse().slice(-14)
+  const reportMaxClicks = Math.max(1, ...reportRows.map((report) => toNumber(report.clicks)))
+  const reportMaxReward = Math.max(1, ...reportRows.map((report) => toNumber(report.reward)))
+  const [currentReportStatus, currentReportTone] = reportStatus({ last7Clicks, last7Reward, postScore })
 
   const updatePostDraft = (field, value) => {
     setPostDraft((current) => ({ ...current, [field]: value }))
@@ -744,6 +755,7 @@ function App() {
             大きな一発狙いではなく、昨日より1つ良くするためのダッシュボードです。
           </p>
           <div className="hero-actions">
+            <a href="#report-page">レポートを見る</a>
             <a href="#click-studio">クリック投稿を作る</a>
             <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">
               楽天レポートを開く
@@ -856,6 +868,118 @@ function App() {
           </form>
         </article>
         <textarea className="daily-report-preview" readOnly value={dailyReportBody} aria-label="日報プレビュー" />
+      </section>
+
+      <section className="report-page" id="report-page" aria-label="アフィリエイトレポートページ">
+        <div className="report-page-heading">
+          <div>
+            <p className="eyebrow">Report page</p>
+            <h2>いつでも見られる報酬レポート</h2>
+            <p>
+              メール送信を待たずに、このページを開くだけでクリック、売上、報酬、原因、今日やることを確認できます。
+            </p>
+          </div>
+          <div className={`report-health ${currentReportTone}`}>
+            <span>現在の状態</span>
+            <strong>{currentReportStatus}</strong>
+            <small>更新日 {todayKey()}</small>
+          </div>
+        </div>
+
+        <div className="report-kpi-grid">
+          <article>
+            <span>直近7日クリック</span>
+            <strong>{formatNumber(last7Clicks)}</strong>
+            <small>{last7Clicks < 10 ? 'まずクリック数を増やす段階' : 'クリック導線あり'}</small>
+          </article>
+          <article>
+            <span>直近7日売上件数</span>
+            <strong>{formatNumber(last7Orders)}</strong>
+            <small>{last7Orders === 0 ? '商品選定と訴求を確認' : '購入発生あり'}</small>
+          </article>
+          <article>
+            <span>直近7日報酬</span>
+            <strong>{formatCurrency(last7Reward)}</strong>
+            <small>{last7Reward === 0 ? '対策タスクを実行' : '伸びた導線を横展開'}</small>
+          </article>
+          <article>
+            <span>投稿準備</span>
+            <strong>{postScore}/6</strong>
+            <small>{postScore < 5 ? '投稿ビルダーを埋める' : '投稿可能'}</small>
+          </article>
+        </div>
+
+        <div className="report-board">
+          <article className="report-chart-card">
+            <div className="report-card-title">
+              <h3>日別クリックと報酬</h3>
+              <span>最大14件</span>
+            </div>
+            <div className="report-bars" aria-label="日別クリックと報酬グラフ">
+              {reportRows.length > 0 ? reportRows.map((report) => {
+                const clickHeight = Math.max(4, (toNumber(report.clicks) / reportMaxClicks) * 100)
+                const rewardHeight = Math.max(4, (toNumber(report.reward) / reportMaxReward) * 100)
+                return (
+                  <div className="report-day" key={report.id}>
+                    <div className="bar-pair">
+                      <i className="click-bar" style={{ height: `${clickHeight}%` }} />
+                      <i className="reward-bar" style={{ height: `${rewardHeight}%` }} />
+                    </div>
+                    <span>{report.date.slice(5).replace('-', '/')}</span>
+                  </div>
+                )
+              }) : <p className="empty-text">日次レポートを入力するとグラフが表示されます。</p>}
+            </div>
+            <div className="chart-legend">
+              <span><i className="click-bar" />クリック</span>
+              <span><i className="reward-bar" />報酬</span>
+            </div>
+          </article>
+
+          <article className="report-action-card">
+            <div className="report-card-title">
+              <h3>今日見るポイント</h3>
+              <span>{zeroRewardReasons.length}件</span>
+            </div>
+            <ul>
+              {zeroRewardReasons.map((reason) => (
+                <li key={reason.title}>
+                  <strong>{reason.title}</strong>
+                  <span>{reason.body}</span>
+                </li>
+              ))}
+              {zeroRewardReasons.length === 0 && <li><strong>異常なし</strong><span>記録を継続して、成果が出た導線を横展開してください。</span></li>}
+            </ul>
+          </article>
+        </div>
+
+        <div className="report-table-card">
+          <div className="report-card-title">
+            <h3>日別レポート履歴</h3>
+            <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">楽天公式レポート</a>
+          </div>
+          <div className="report-table">
+            <div className="report-table-head">
+              <span>日付</span>
+              <span>クリック</span>
+              <span>注文</span>
+              <span>売上</span>
+              <span>報酬</span>
+              <span>メモ</span>
+            </div>
+            {sortedReports.map((report) => (
+              <div className="report-table-row" key={report.id}>
+                <time>{report.date}</time>
+                <span>{formatNumber(toNumber(report.clicks))}</span>
+                <span>{formatNumber(toNumber(report.orders))}</span>
+                <span>{formatCurrency(toNumber(report.sales))}</span>
+                <strong>{formatCurrency(toNumber(report.reward))}</strong>
+                <span>{report.memo || '未入力'}</span>
+              </div>
+            ))}
+            {sortedReports.length === 0 && <p className="empty-text">まだレポート記録がありません。下の日次レポートから入力してください。</p>}
+          </div>
+        </div>
       </section>
 
       <section className="click-studio" id="click-studio">
