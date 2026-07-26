@@ -358,6 +358,16 @@
   color: #a02b36;
 }
 
+.rescue-message {
+  margin: 14px 0 0;
+  border-radius: 8px;
+  background: #eff7f3;
+  color: #245848;
+  font-weight: 800;
+  line-height: 1.7;
+  padding: 12px 14px;
+}
+
 .daily-report-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);

@@ -495,6 +495,7 @@ function App() {
   const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
   const [dailyReport, setDailyReport] = useState(() => readStorage(DAILY_REPORT_KEY, defaultDailyReport))
   const [copyMessage, setCopyMessage] = useState('')
+  const [rescueMessage, setRescueMessage] = useState('')
   const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
 
   useEffect(() => {
@@ -678,6 +679,7 @@ function App() {
   const updatePostDraft = (field, value) => {
     setPostDraft((current) => ({ ...current, [field]: value }))
     setCopyMessage('')
+    setRescueMessage('')
   }
 
   const copyPost = async () => {
@@ -708,8 +710,18 @@ function App() {
       postScore,
       roomStats,
     })
-    setTasks((current) => [...uniqueTasks(current, rescueTasks), ...current])
-    setAutomationMessage('ゼロ報酬対策タスクを追加しました。まずクリックを作る施策から始めます。')
+    setTasks((current) => {
+      const nextTasks = uniqueTasks(current, rescueTasks)
+      const message = nextTasks.length > 0
+        ? `${nextTasks.length}件の対策タスクを追加しました。下の改善タスクに反映されています。`
+        : '追加できる新しい対策タスクはありません。既存の改善タスクを進めてください。'
+      setRescueMessage(message)
+      setAutomationMessage(message)
+      return [...nextTasks, ...current]
+    })
+    window.setTimeout(() => {
+      document.querySelector('#today-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
   }
 
   const runRevenueBoost = () => {
@@ -969,9 +981,11 @@ function App() {
 
         <div className="rescue-actions">
           <button type="button" onClick={runZeroRewardRescue}>対策タスクを自動追加</button>
+          <a href="#today-work">改善タスクを見る</a>
           <a href="#click-studio">商品別投稿を作る</a>
           <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">楽天レポートで確認</a>
         </div>
+        {rescueMessage && <p className="rescue-message" role="status">{rescueMessage}</p>}
       </section>
 
       <section className="daily-report-section" aria-label="日報メール">
@@ -1373,7 +1387,7 @@ function App() {
                 </button>
                 <div>
                   <strong>{task.title}</strong>
-                  <span>{task.channel} / 効果 {task.impact}{task.source === 'auto' ? ' / 自動' : ''}</span>
+                  <span>{task.channel} / 効果 {task.impact}{task.source ? ` / ${task.source === 'auto' ? '自動' : task.source === 'rescue' ? '対策' : task.source === 'boost' ? '改善' : task.source}` : ''}</span>
                 </div>
                 <button type="button" className="delete-button" onClick={() => deleteTask(task.id)}>削除</button>
               </div>
