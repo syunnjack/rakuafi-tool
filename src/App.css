@@ -591,6 +591,77 @@
   line-height: 1.5;
 }
 
+.auto-improve-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 14px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  padding: 18px;
+}
+
+.auto-improve-panel.running {
+  border-left: 5px solid #245848;
+}
+
+.auto-improve-panel.paused {
+  border-left: 5px solid #a02b36;
+}
+
+.auto-improve-panel h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.auto-improve-panel p {
+  margin: 8px 0 0;
+  color: #45505d;
+  line-height: 1.7;
+}
+
+.auto-improve-panel span {
+  display: inline-flex;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: #eff7f3;
+  color: #245848;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+}
+
+.auto-improve-panel.paused span {
+  background: #fff2f0;
+  color: #a02b36;
+}
+
+.auto-improve-panel small {
+  display: block;
+  margin-top: 8px;
+  color: #65717e;
+  line-height: 1.6;
+}
+
+.auto-improve-actions {
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+}
+
+.auto-improve-actions button {
+  min-height: 42px;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #a02b36;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px 16px;
+}
+
 .report-kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -614,6 +685,72 @@
 .report-kpi-grid strong {
   font-size: 28px;
   line-height: 1;
+}
+
+.weekly-performance {
+  margin-top: 18px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 16px;
+}
+
+.weekly-performance .report-card-title div {
+  display: grid;
+  gap: 5px;
+}
+
+.weekly-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.weekly-grid article {
+  display: grid;
+  gap: 7px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 14px;
+}
+
+.weekly-grid article.up {
+  border-left: 4px solid #245848;
+}
+
+.weekly-grid article.down {
+  border-left: 4px solid #a02b36;
+}
+
+.weekly-grid article.flat {
+  border-left: 4px solid #8b949e;
+}
+
+.weekly-grid span,
+.weekly-grid small,
+.weekly-note {
+  color: #65717e;
+}
+
+.weekly-grid strong {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.weekly-grid article.up small {
+  color: #245848;
+  font-weight: 800;
+}
+
+.weekly-grid article.down small {
+  color: #a02b36;
+  font-weight: 800;
+}
+
+.weekly-note {
+  margin: 12px 0 0;
+  line-height: 1.7;
 }
 
 .revenue-engine {
@@ -1458,6 +1595,7 @@ textarea {
   .daily-report-section,
   .report-page-heading,
   .tool-health-summary,
+  .auto-improve-panel,
   .report-board,
   .studio-grid,
   .automation-section,
@@ -1474,6 +1612,10 @@ textarea {
   }
 
   .report-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .weekly-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1512,6 +1654,10 @@ textarea {
   }
 
   .automation-actions {
+    justify-items: stretch;
+  }
+
+  .auto-improve-actions {
     justify-items: stretch;
   }
 
@@ -1560,6 +1706,10 @@ textarea {
   }
 
   .report-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weekly-grid {
     grid-template-columns: 1fr;
   }
 

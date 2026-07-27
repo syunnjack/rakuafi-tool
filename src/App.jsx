@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 const REPORTS_KEY = 'task-dashboard.rakutenReports'
@@ -9,6 +9,7 @@ const ROOM_FLOWS_KEY = 'task-dashboard.roomFlows'
 const AFFILIATE_SETTINGS_KEY = 'task-dashboard.rakutenAffiliateSettings'
 const POST_DRAFT_KEY = 'task-dashboard.roomPostDraft'
 const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
+const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 
 const defaultReports = [
@@ -118,6 +119,12 @@ const defaultDailyReport = {
   lastSentDate: '',
 }
 
+const defaultAutoImprove = {
+  enabled: true,
+  lastRunDate: '',
+  lastResult: 'まだ自動改善処理は実行されていません。',
+}
+
 function readStorage(key, fallback) {
   try {
     const stored = localStorage.getItem(key)
@@ -174,6 +181,34 @@ function daysBetween(fromDate, toDate) {
 function recentReports(reports, days = 7) {
   const today = new Date().toISOString().slice(0, 10)
   return reports.filter((report) => daysBetween(report.date, today) >= 0 && daysBetween(report.date, today) < days)
+}
+
+function reportsInDayRange(reports, fromDaysAgo, toDaysAgo) {
+  const today = new Date().toISOString().slice(0, 10)
+  return reports.filter((report) => {
+    const age = daysBetween(report.date, today)
+    return age >= fromDaysAgo && age < toDaysAgo
+  })
+}
+
+function sumReports(reports) {
+  return {
+    clicks: reports.reduce((sum, report) => sum + toNumber(report.clicks), 0),
+    orders: reports.reduce((sum, report) => sum + toNumber(report.orders), 0),
+    sales: reports.reduce((sum, report) => sum + toNumber(report.sales), 0),
+    reward: reports.reduce((sum, report) => sum + toNumber(report.reward), 0),
+  }
+}
+
+function deltaValue(current, previous) {
+  if (previous === 0 && current === 0) return { amount: 0, percent: 0, direction: 'flat' }
+  if (previous === 0) return { amount: current, percent: 100, direction: 'up' }
+  const amount = current - previous
+  return {
+    amount,
+    percent: (amount / previous) * 100,
+    direction: amount > 0 ? 'up' : amount < 0 ? 'down' : 'flat',
+  }
 }
 
 function isLowIntentAffiliateLink(link) {
@@ -478,6 +513,19 @@ function buildRevenueActions({ last7Clicks, last7Orders, last7Reward, lowIntentL
   return actions
 }
 
+function defaultImprovementDraft() {
+  return {
+    productName: '楽天で買える実用品',
+    productLink: '',
+    audience: '忙しくて買い物の失敗を減らしたい方',
+    problem: 'どれを選べばよいか迷う',
+    benefit: 'レビューや価格を見ながら、自分に合う商品を比較できます',
+    proof: '楽天の商品ページでレビュー、送料、クーポン、在庫を確認できます',
+    priceHook: '最新価格とクーポンは商品ページで確認してください',
+    hashtags: '#楽天ROOM #楽天市場 #買ってよかった',
+  }
+}
+
 function App() {
   const [reports, setReports] = useState(readReports)
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
@@ -494,6 +542,7 @@ function App() {
   const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
   const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
   const [dailyReport, setDailyReport] = useState(() => readStorage(DAILY_REPORT_KEY, defaultDailyReport))
+  const [autoImprove, setAutoImprove] = useState(() => readStorage(AUTO_IMPROVE_KEY, defaultAutoImprove))
   const [copyMessage, setCopyMessage] = useState('')
   const [rescueMessage, setRescueMessage] = useState('')
   const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
@@ -535,6 +584,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem(DAILY_REPORT_KEY, JSON.stringify(dailyReport))
   }, [dailyReport])
+
+  useEffect(() => {
+    localStorage.setItem(AUTO_IMPROVE_KEY, JSON.stringify(autoImprove))
+  }, [autoImprove])
 
   const sortedReports = useMemo(
     () => [...reports].sort((a, b) => b.date.localeCompare(a.date)),
@@ -606,9 +659,42 @@ function App() {
   ]
   const postScore = postScoreItems.filter(([done]) => done).length
   const last7Reports = recentReports(reports, 7)
+  const previous7Reports = reportsInDayRange(reports, 7, 14)
+  const last7Summary = sumReports(last7Reports)
+  const previous7Summary = sumReports(previous7Reports)
   const last7Clicks = last7Reports.reduce((sum, report) => sum + toNumber(report.clicks), 0)
   const last7Orders = last7Reports.reduce((sum, report) => sum + toNumber(report.orders), 0)
   const last7Reward = last7Reports.reduce((sum, report) => sum + toNumber(report.reward), 0)
+  const weeklyDeltas = [
+    {
+      label: 'クリック',
+      current: last7Summary.clicks,
+      previous: previous7Summary.clicks,
+      delta: deltaValue(last7Summary.clicks, previous7Summary.clicks),
+      format: formatNumber,
+    },
+    {
+      label: '売上件数',
+      current: last7Summary.orders,
+      previous: previous7Summary.orders,
+      delta: deltaValue(last7Summary.orders, previous7Summary.orders),
+      format: formatNumber,
+    },
+    {
+      label: '売上金額',
+      current: last7Summary.sales,
+      previous: previous7Summary.sales,
+      delta: deltaValue(last7Summary.sales, previous7Summary.sales),
+      format: formatCurrency,
+    },
+    {
+      label: '成果報酬',
+      current: last7Summary.reward,
+      previous: previous7Summary.reward,
+      delta: deltaValue(last7Summary.reward, previous7Summary.reward),
+      format: formatCurrency,
+    },
+  ]
   const lowIntentLink = isLowIntentAffiliateLink(affiliateSettings.affiliateLink)
   const zeroRewardReasons = [
     last7Clicks < 10 && {
@@ -667,14 +753,84 @@ function App() {
   const healthyChecks = toolHealthChecks.filter((check) => check.ok).length
   const toolHealthTone = healthyChecks === toolHealthChecks.length ? 'good' : healthyChecks >= 3 ? 'warning' : 'critical'
   const toolHealthLabel = healthyChecks === toolHealthChecks.length ? '正常稼働' : healthyChecks >= 3 ? '一部要確認' : '要修正'
-  const revenueActions = buildRevenueActions({
-    last7Clicks,
-    last7Orders,
-    last7Reward,
-    lowIntentLink,
-    postScore,
-    roomStats,
-  })
+  const revenueActions = useMemo(
+    () => buildRevenueActions({
+      last7Clicks,
+      last7Orders,
+      last7Reward,
+      lowIntentLink,
+      postScore,
+      roomStats,
+    }),
+    [last7Clicks, last7Orders, last7Reward, lowIntentLink, postScore, roomStats],
+  )
+
+  const runImprovementProcessing = useCallback((mode = 'manual') => {
+    const boostTasks = revenueActions.map((action) => ({
+      id: crypto.randomUUID(),
+      title: action.title,
+      channel: action.channel,
+      impact: action.impact,
+      done: false,
+      source: mode === 'auto' ? 'auto-improve' : 'boost',
+    }))
+
+    const shouldAddRoomFlow = last7Clicks < 10 || roomStats.doneTotal < 15
+    const boostFlow = shouldAddRoomFlow ? {
+      id: crypto.randomUUID(),
+      mode: 'kore',
+      keyword: postDraft.productName || '買ってよかった 楽天',
+      maxActions: 15,
+      spanMinutes: 10,
+      doneCount: 0,
+      status: 'ready',
+      nextAt: formatTime(new Date()),
+      memo: mode === 'auto'
+        ? '自動改善処理が追加。商品別リンクと投稿文を確認してから実行。'
+        : '報酬改善エンジンが追加。商品別リンクと投稿文を確認してから実行。',
+    } : null
+
+    const draftPatch = defaultImprovementDraft()
+    setPostDraft((current) => ({
+      ...current,
+      productName: current.productName || draftPatch.productName,
+      audience: current.audience || draftPatch.audience,
+      problem: current.problem || draftPatch.problem,
+      benefit: current.benefit || draftPatch.benefit,
+      proof: current.proof || draftPatch.proof,
+      priceHook: current.priceHook || draftPatch.priceHook,
+      hashtags: current.hashtags || draftPatch.hashtags,
+    }))
+
+    let addedTasks = 0
+    setTasks((current) => {
+      const nextTasks = uniqueTasks(current, boostTasks)
+      addedTasks = nextTasks.length
+      return [...nextTasks, ...current]
+    })
+
+    if (boostFlow) {
+      setRoomFlows((current) => {
+        const hasAutoFlow = current.some((flow) => flow.memo.includes('自動改善処理') && flow.status !== 'done')
+        return hasAutoFlow ? current : [boostFlow, ...current]
+      })
+    }
+
+    const result = `${mode === 'auto' ? '自動改善' : '改善'}処理を実行しました。タスク${addedTasks}件、ROOMキュー${boostFlow ? '1件候補' : '追加なし'}、投稿ドラフトを補完。`
+    setAutoImprove((current) => ({
+      ...current,
+      lastRunDate: todayKey(),
+      lastResult: result,
+    }))
+    setAutomationMessage(result)
+    setRescueMessage(result)
+  }, [last7Clicks, postDraft.productName, revenueActions, roomStats.doneTotal])
+
+  useEffect(() => {
+    if (!autoImprove.enabled) return
+    if (autoImprove.lastRunDate === todayKey()) return
+    runImprovementProcessing('auto')
+  }, [autoImprove.enabled, autoImprove.lastRunDate, runImprovementProcessing])
 
   const updatePostDraft = (field, value) => {
     setPostDraft((current) => ({ ...current, [field]: value }))
@@ -725,30 +881,10 @@ function App() {
   }
 
   const runRevenueBoost = () => {
-    const boostTasks = revenueActions.map((action) => ({
-      id: crypto.randomUUID(),
-      title: action.title,
-      channel: action.channel,
-      impact: action.impact,
-      done: false,
-      source: 'boost',
-    }))
-
-    const boostFlow = {
-      id: crypto.randomUUID(),
-      mode: 'kore',
-      keyword: postDraft.productName || '買ってよかった 楽天',
-      maxActions: 15,
-      spanMinutes: 10,
-      doneCount: 0,
-      status: 'ready',
-      nextAt: formatTime(new Date()),
-      memo: '報酬改善エンジンが追加。商品別リンクと投稿文を確認してから実行。',
-    }
-
-    setTasks((current) => [...uniqueTasks(current, boostTasks), ...current])
-    setRoomFlows((current) => [boostFlow, ...current])
-    setAutomationMessage('報酬改善タスクとROOM検証キューを追加しました。商品別リンクから着手してください。')
+    runImprovementProcessing('manual')
+    window.setTimeout(() => {
+      document.querySelector('#today-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
   }
 
   const saveDailyReport = (event) => {
@@ -1068,6 +1204,30 @@ function App() {
           </div>
         </div>
 
+        <div className={`auto-improve-panel ${autoImprove.enabled ? 'running' : 'paused'}`}>
+          <div>
+            <p className="eyebrow">Auto improvement</p>
+            <h3>{autoImprove.enabled ? '自動改善処理は有効です' : '自動改善処理は停止中です'}</h3>
+            <p>
+              ページを開いた日に1回、報酬改善タスク、ROOM検証キュー、投稿ドラフト補完を自動実行します。
+              楽天ROOMへの最終投稿やいいね操作は手動確認です。
+            </p>
+            <span>{autoImprove.lastRunDate ? `最終実行: ${autoImprove.lastRunDate}` : 'まだ実行されていません'}</span>
+            <small>{autoImprove.lastResult}</small>
+          </div>
+          <div className="auto-improve-actions">
+            <label className="toggle-row">
+              <input
+                type="checkbox"
+                checked={autoImprove.enabled}
+                onChange={(event) => setAutoImprove({ ...autoImprove, enabled: event.target.checked })}
+              />
+              毎日自動で改善処理する
+            </label>
+            <button type="button" onClick={() => runImprovementProcessing('manual')}>今すぐ改善処理</button>
+          </div>
+        </div>
+
         <div className="report-kpi-grid">
           <article>
             <span>直近7日クリック</span>
@@ -1089,6 +1249,30 @@ function App() {
             <strong>{postScore}/6</strong>
             <small>{postScore < 5 ? '投稿ビルダーを埋める' : '投稿可能'}</small>
           </article>
+        </div>
+
+        <div className="weekly-performance">
+          <div className="report-card-title">
+            <div>
+              <h3>一週間前からのパフォーマンス改善</h3>
+              <span>直近7日と、その前の7日を比較</span>
+            </div>
+          </div>
+          <div className="weekly-grid">
+            {weeklyDeltas.map((item) => (
+              <article className={item.delta.direction} key={item.label}>
+                <span>{item.label}</span>
+                <strong>{item.format(item.current)}</strong>
+                <small>
+                  前週 {item.format(item.previous)} / {item.delta.direction === 'up' ? '+' : ''}{item.format(item.delta.amount)}
+                  {' '}({item.delta.direction === 'up' ? '+' : ''}{item.delta.percent.toFixed(0)}%)
+                </small>
+              </article>
+            ))}
+          </div>
+          {previous7Reports.length === 0 && (
+            <p className="weekly-note">前週データがまだありません。今日から記録すると、7日後に改善幅がより正確に見えます。</p>
+          )}
         </div>
 
         <div className="revenue-engine">
