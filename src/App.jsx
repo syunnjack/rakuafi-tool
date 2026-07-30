@@ -620,6 +620,83 @@ function buildRevenueActions({ last7Clicks, last7Orders, last7Reward, lowIntentL
   return actions
 }
 
+function buildProductRoi(clickCampaigns) {
+  return clickCampaigns
+    .filter((campaign) => toNumber(campaign.clicksAfter24h) > 0 || toNumber(campaign.ordersAfter24h) > 0 || toNumber(campaign.rewardAfter24h) > 0)
+    .map((campaign) => {
+      const clicks = toNumber(campaign.clicksAfter24h)
+      const orders = toNumber(campaign.ordersAfter24h)
+      const reward = toNumber(campaign.rewardAfter24h)
+      return {
+        id: campaign.id,
+        productName: campaign.productName || '商品名未入力',
+        channel: campaign.channel || '未設定',
+        clicks,
+        orders,
+        reward,
+        rewardPerClick: clicks ? reward / clicks : 0,
+        conversionRate: clicks ? (orders / clicks) * 100 : 0,
+      }
+    })
+    .sort((a, b) => b.reward - a.reward || b.rewardPerClick - a.rewardPerClick)
+}
+
+function buildChannelRoi(clickCampaigns, contents) {
+  const totals = new Map()
+  const addTo = (channelKey, clicks, orders, reward, kind) => {
+    const channel = channelKey || '未設定'
+    const current = totals.get(channel) ?? { channel, clicks: 0, orders: 0, reward: 0, productCount: 0, contentCount: 0 }
+    current.clicks += clicks
+    current.orders += orders
+    current.reward += reward
+    if (kind === 'product') current.productCount += 1
+    if (kind === 'content') current.contentCount += 1
+    totals.set(channel, current)
+  }
+
+  clickCampaigns.forEach((campaign) => {
+    const clicks = toNumber(campaign.clicksAfter24h)
+    const orders = toNumber(campaign.ordersAfter24h)
+    const reward = toNumber(campaign.rewardAfter24h)
+    if (clicks === 0 && orders === 0 && reward === 0) return
+    addTo(campaign.channel, clicks, orders, reward, 'product')
+  })
+
+  contents.forEach((content) => {
+    const clicks = toNumber(content.clicks)
+    const reward = toNumber(content.reward)
+    if (clicks === 0 && reward === 0) return
+    addTo(content.channel, clicks, 0, reward, 'content')
+  })
+
+  return [...totals.values()]
+    .map((item) => ({
+      ...item,
+      rewardPerClick: item.clicks ? item.reward / item.clicks : 0,
+      conversionRate: item.clicks ? (item.orders / item.clicks) * 100 : 0,
+    }))
+    .sort((a, b) => b.reward - a.reward || b.rewardPerClick - a.rewardPerClick)
+}
+
+function buildRoiInsight(productRoi, channelRoi) {
+  if (productRoi.length === 0 && channelRoi.length === 0) {
+    return 'まだ実績データがありません。クリック獲得ツールで投稿し、24時間後の数字を入力すると商品別・チャネル別のROIが表示されます。'
+  }
+  const topProduct = productRoi[0]
+  const topChannel = channelRoi[0]
+  const lines = []
+  if (topProduct && topProduct.reward > 0) {
+    lines.push(`最も報酬効率が良い商品は「${topProduct.productName}」(1クリック${formatCurrency(topProduct.rewardPerClick)})。同じ切り口で別商品へ横展開してください。`)
+  }
+  if (topChannel && topChannel.reward > 0) {
+    lines.push(`最も報酬が出ているチャネルは${topChannel.channel}(合計${formatCurrency(topChannel.reward)})。次の投稿量もここへ厚めに配分してください。`)
+  }
+  if (lines.length === 0) {
+    lines.push('クリックは記録されていますが、まだ報酬発生はありません。商品単価やクーポン訴求を見直してください。')
+  }
+  return lines.join(' ')
+}
+
 function defaultImprovementDraft() {
   return {
     productName: '楽天で買える実用品',
@@ -897,6 +974,9 @@ function App() {
     }),
     [last7Clicks, last7Orders, last7Reward, lowIntentLink, postScore, roomStats],
   )
+  const productRoi = useMemo(() => buildProductRoi(clickCampaigns), [clickCampaigns])
+  const channelRoi = useMemo(() => buildChannelRoi(clickCampaigns, contents), [clickCampaigns, contents])
+  const roiInsight = useMemo(() => buildRoiInsight(productRoi, channelRoi), [productRoi, channelRoi])
 
   const runImprovementProcessing = useCallback((mode = 'manual') => {
     const boostTasks = revenueActions.map((action) => ({
@@ -1741,6 +1821,80 @@ function App() {
               </div>
             ))}
             {sortedReports.length === 0 && <p className="empty-text">まだレポート記録がありません。下の日次レポートから入力してください。</p>}
+          </div>
+        </div>
+      </section>
+
+      <section className="roi-section" id="roi-analysis" aria-label="商品別・チャネル別ROI分析">
+        <div className="report-card-title">
+          <div>
+            <p className="eyebrow">ROI analysis</p>
+            <h2>商品別・チャネル別ROI</h2>
+            <p>{roiInsight}</p>
+          </div>
+        </div>
+
+        <div className="roi-table-card">
+          <div className="report-card-title">
+            <h3>商品別ROI</h3>
+            <span>{productRoi.length}件</span>
+          </div>
+          <div className="roi-table product-roi-table">
+            <div className="roi-table-head">
+              <span>商品</span>
+              <span>チャネル</span>
+              <span>クリック</span>
+              <span>注文</span>
+              <span>報酬</span>
+              <span>1クリック報酬</span>
+              <span>成約率</span>
+            </div>
+            {productRoi.map((item) => (
+              <div className="roi-table-row" key={item.id}>
+                <strong>{item.productName}</strong>
+                <span>{item.channel}</span>
+                <span>{formatNumber(item.clicks)}</span>
+                <span>{formatNumber(item.orders)}</span>
+                <span>{formatCurrency(item.reward)}</span>
+                <span>{formatCurrency(item.rewardPerClick)}</span>
+                <span>{item.conversionRate.toFixed(1)}%</span>
+              </div>
+            ))}
+            {productRoi.length === 0 && (
+              <p className="empty-text">クリック獲得ツールで投稿結果(クリック/注文/報酬)を入力すると、商品別ROIが表示されます。</p>
+            )}
+          </div>
+        </div>
+
+        <div className="roi-table-card">
+          <div className="report-card-title">
+            <h3>チャネル別ROI</h3>
+            <span>{channelRoi.length}件</span>
+          </div>
+          <div className="roi-table channel-roi-table">
+            <div className="roi-table-head">
+              <span>チャネル</span>
+              <span>クリック</span>
+              <span>注文</span>
+              <span>報酬</span>
+              <span>1クリック報酬</span>
+              <span>成約率</span>
+              <span>件数</span>
+            </div>
+            {channelRoi.map((item) => (
+              <div className="roi-table-row" key={item.channel}>
+                <strong>{item.channel}</strong>
+                <span>{formatNumber(item.clicks)}</span>
+                <span>{formatNumber(item.orders)}</span>
+                <span>{formatCurrency(item.reward)}</span>
+                <span>{formatCurrency(item.rewardPerClick)}</span>
+                <span>{item.conversionRate.toFixed(1)}%</span>
+                <span>{formatNumber(item.productCount + item.contentCount)}</span>
+              </div>
+            ))}
+            {channelRoi.length === 0 && (
+              <p className="empty-text">まだチャネル別の実績データがありません。</p>
+            )}
           </div>
         </div>
       </section>

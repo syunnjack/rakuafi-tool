@@ -12,6 +12,7 @@
 .click-acquisition,
 .daily-report-section,
 .report-page,
+.roi-section,
 .click-studio,
 .automation-section,
 .affiliate-section,
@@ -1226,6 +1227,65 @@
   font-weight: 800;
 }
 
+.roi-section {
+  margin-bottom: 16px;
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+  padding: 24px;
+}
+
+.roi-section .report-card-title p {
+  margin: 8px 0 0;
+  color: #45505d;
+  line-height: 1.7;
+}
+
+.roi-table-card {
+  margin-top: 16px;
+}
+
+.roi-table {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.roi-table-head,
+.roi-table-row {
+  display: grid;
+  gap: 10px;
+  align-items: center;
+}
+
+.product-roi-table .roi-table-head,
+.product-roi-table .roi-table-row {
+  grid-template-columns: minmax(160px, 1.6fr) 90px 90px 70px 100px 110px 80px;
+}
+
+.channel-roi-table .roi-table-head,
+.channel-roi-table .roi-table-row {
+  grid-template-columns: 110px 90px 70px 100px 110px 80px minmax(60px, 1fr);
+}
+
+.roi-table-head {
+  color: #65717e;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.roi-table-row {
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid rgba(23, 32, 42, 0.08);
+  padding: 11px;
+}
+
+.roi-table-row strong {
+  font-weight: 800;
+}
+
 .automation-section {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
@@ -1895,6 +1955,8 @@ textarea {
   .daily-report-form,
   .report-table-head,
   .report-table-row,
+  .roi-table-head,
+  .roi-table-row,
   .task-form,
   .content-form,
   .room-form,
@@ -1945,6 +2007,7 @@ textarea {
   .diagnosis-section,
   .daily-report-section,
   .report-page,
+  .roi-section,
   .click-studio,
   .automation-truth,
   .automation-section,
