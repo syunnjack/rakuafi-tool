@@ -1,16 +1,15 @@
-# task-dashboard
+# rakuafi-tool
 
-React + Vite で作成したタスクダッシュボードです。
+楽天アフィリエイト運用を支援する React + Vite アプリです。
 
 ## Deploy
 
-このリポジトリは GitHub Pages での公開を前提にしています。
+このリポジトリは GitHub Pages へのデプロイを前提としています。
+現在、独自ドメインは割り当てていません。`darekore.jp` は `task-dashboard` 専用です。
 
-- Production domain: `darekore.jp`
 - Build command: `npm run build`
 - Build output directory: `dist`
-
-`main` ブランチへ反映されると、GitHub Actions が自動でビルドして GitHub Pages へデプロイします。
+- Deploy trigger: `main` ブランチへの push
 
 ## Commands
 

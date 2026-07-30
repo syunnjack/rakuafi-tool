@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 const REPORTS_KEY = 'task-dashboard.rakutenReports'
@@ -7,6 +7,10 @@ const CONTENT_KEY = 'task-dashboard.rakutenContent'
 const AUTOPILOT_KEY = 'task-dashboard.rakutenAutopilot'
 const ROOM_FLOWS_KEY = 'task-dashboard.roomFlows'
 const AFFILIATE_SETTINGS_KEY = 'task-dashboard.rakutenAffiliateSettings'
+const POST_DRAFT_KEY = 'task-dashboard.roomPostDraft'
+const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
+const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
+const CLICK_CAMPAIGNS_KEY = 'task-dashboard.clickCampaigns'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 
 const defaultReports = [
@@ -98,6 +102,73 @@ const defaultAffiliateSettings = {
   targetMemo: '日本最大級ショッピングサイト！お買い物なら楽天市場',
 }
 
+const defaultPostDraft = {
+  productName: '',
+  productLink: '',
+  audience: '',
+  problem: '',
+  benefit: '',
+  proof: '',
+  priceHook: '',
+  hashtags: '#楽天ROOM #買ってよかった',
+}
+
+const emptyClickCampaign = {
+  productName: '',
+  productLink: '',
+  audience: '',
+  problem: '',
+  benefit: '',
+  proof: '',
+  priceHook: '',
+  campaignName: '',
+  discountHook: '',
+  couponUrl: '',
+  channel: 'ROOM',
+  status: 'draft',
+  postedDate: '',
+  clicksAfter24h: '',
+  ordersAfter24h: '',
+  rewardAfter24h: '',
+  note: '',
+}
+
+const defaultClickCampaigns = [
+  {
+    id: 'campaign-starter-1',
+    productName: '商品別リンクを入れてください',
+    productLink: '',
+    audience: '買う前に失敗したくない人',
+    problem: '似た商品が多くて選べない',
+    benefit: '比較ポイントを短く見られる',
+    proof: 'レビュー数、価格、送料、クーポンを商品ページで確認',
+    priceHook: '最新価格は楽天の商品ページで確認',
+    campaignName: '楽天キャンペーン確認待ち',
+    discountHook: '買いまわり、ポイントアップ、クーポンを確認',
+    couponUrl: 'https://event.rakuten.co.jp/',
+    channel: 'ROOM',
+    status: 'draft',
+    postedDate: '',
+    clicksAfter24h: '',
+    ordersAfter24h: '',
+    rewardAfter24h: '',
+    note: 'まずは本当に紹介する商品の個別アフィリエイトリンクへ差し替えます。',
+  },
+]
+
+const defaultDailyReport = {
+  enabled: true,
+  recipient: 'syunnda1@yahoo.co.jp',
+  sendTime: '09:00',
+  lastSentDate: '',
+}
+
+const defaultAutoImprove = {
+  enabled: true,
+  lastRunDate: '',
+  lastResult: 'まだ自動改善処理は実行されていません。',
+}
+
 function readStorage(key, fallback) {
   try {
     const stored = localStorage.getItem(key)
@@ -126,6 +197,10 @@ function formatTime(date) {
   }).format(date)
 }
 
+function todayKey() {
+  return new Date().toISOString().slice(0, 10)
+}
+
 function toNumber(value) {
   const parsed = Number(value)
   return Number.isFinite(parsed) ? parsed : 0
@@ -138,6 +213,109 @@ function impactScore(impact) {
 function uniqueTasks(currentTasks, nextTasks) {
   const existingTitles = new Set(currentTasks.map((task) => task.title))
   return nextTasks.filter((task) => !existingTitles.has(task.title))
+}
+
+function daysBetween(fromDate, toDate) {
+  const oneDay = 24 * 60 * 60 * 1000
+  const from = new Date(`${fromDate}T00:00:00`)
+  const to = new Date(`${toDate}T00:00:00`)
+  return Math.round((to - from) / oneDay)
+}
+
+function recentReports(reports, days = 7) {
+  const today = new Date().toISOString().slice(0, 10)
+  return reports.filter((report) => daysBetween(report.date, today) >= 0 && daysBetween(report.date, today) < days)
+}
+
+function reportsInDayRange(reports, fromDaysAgo, toDaysAgo) {
+  const today = new Date().toISOString().slice(0, 10)
+  return reports.filter((report) => {
+    const age = daysBetween(report.date, today)
+    return age >= fromDaysAgo && age < toDaysAgo
+  })
+}
+
+function sumReports(reports) {
+  return {
+    clicks: reports.reduce((sum, report) => sum + toNumber(report.clicks), 0),
+    orders: reports.reduce((sum, report) => sum + toNumber(report.orders), 0),
+    sales: reports.reduce((sum, report) => sum + toNumber(report.sales), 0),
+    reward: reports.reduce((sum, report) => sum + toNumber(report.reward), 0),
+  }
+}
+
+function deltaValue(current, previous) {
+  if (previous === 0 && current === 0) return { amount: 0, percent: 0, direction: 'flat' }
+  if (previous === 0) return { amount: current, percent: 100, direction: 'up' }
+  const amount = current - previous
+  return {
+    amount,
+    percent: (amount / previous) * 100,
+    direction: amount > 0 ? 'up' : amount < 0 ? 'down' : 'flat',
+  }
+}
+
+function isLowIntentAffiliateLink(link) {
+  const value = link.toLowerCase()
+  return (
+    isGenericRakutenLink(value) ||
+    (value.includes('hb.afl.rakuten.co.jp/hsc/') && value.includes('link_type=text')) ||
+    value.includes('pageijoic2hvc')
+  )
+}
+
+function createZeroRewardTasks({ totals, affiliateSettings, postScore, roomStats }) {
+  const tasks = []
+
+  if (totals.clicks < 10) {
+    tasks.push({
+      title: '24時間以内に商品別リンク付きROOM投稿を3本作る',
+      channel: 'ROOM',
+      impact: '高',
+    })
+    tasks.push({
+      title: '投稿ごとに「誰向け・悩み・使う理由」を必ず1行目に入れる',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (isLowIntentAffiliateLink(affiliateSettings.affiliateLink)) {
+    tasks.push({
+      title: '楽天市場トップリンクではなく、紹介商品の個別アフィリエイトリンクへ差し替える',
+      channel: '商品選定',
+      impact: '高',
+    })
+  }
+
+  if (postScore < 5) {
+    tasks.push({
+      title: 'クリック投稿ビルダーの6項目を埋めて投稿文を作り直す',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (roomStats.doneTotal < 15) {
+    tasks.push({
+      title: 'ROOMキューで今日15件だけ候補確認して反応のある商品テーマを探す',
+      channel: 'ROOM',
+      impact: '中',
+    })
+  }
+
+  tasks.push({
+    title: '明日同じ時刻にクリック数だけ確認し、0なら商品テーマを変える',
+    channel: '分析',
+    impact: '中',
+  })
+
+  return tasks.map((task) => ({
+    id: crypto.randomUUID(),
+    ...task,
+    done: false,
+    source: 'rescue',
+  }))
 }
 
 function createAutoTasks({ totals, bestContent, weakestContent, latestReport }) {
@@ -203,8 +381,260 @@ function roomModeLabel(mode) {
   return roomModes.find((item) => item.value === mode)?.label ?? mode
 }
 
+function readReports() {
+  return readStorage(REPORTS_KEY, defaultReports).filter((report) => !String(report.id).startsWith('sample-'))
+}
+
+function isGenericRakutenLink(link) {
+  const value = link.toLowerCase()
+  return value.includes('page%22%3a%22shop') || value.includes('"page":"shop"')
+}
+
+function buildRoomPost(draft) {
+  const opening = draft.audience && draft.problem
+    ? `${draft.problem}で困っている${draft.audience}へ。`
+    : draft.problem || `${draft.productName}を探している方へ。`
+  const details = [draft.benefit, draft.proof, draft.priceHook].filter(Boolean)
+  return [
+    `【${draft.productName || '商品名を入力'}】`,
+    opening,
+    ...details,
+    '気になる方は、商品ページで詳細と最新価格をチェックしてみてください。',
+    draft.hashtags,
+  ].filter(Boolean).join('\n\n')
+}
+
+function buildClickPost(campaign) {
+  const campaignHook = campaign.campaignName
+    ? `開催中/注目キャンペーン: ${campaign.campaignName}${campaign.discountHook ? ` (${campaign.discountHook})` : ''}`
+    : ''
+  const couponHook = campaign.couponUrl ? `クーポン確認: ${campaign.couponUrl}` : ''
+  const lines = [
+    `【${campaign.productName || '商品名を入力'}】`,
+    campaign.problem && campaign.audience
+      ? `${campaign.problem}と感じている${campaign.audience}向け。`
+      : campaign.problem || campaign.audience,
+    campaign.benefit,
+    campaign.proof ? `選んだ理由: ${campaign.proof}` : '',
+    campaign.priceHook,
+    campaignHook,
+    couponHook,
+    campaign.productLink ? `商品リンク: ${campaign.productLink}` : '',
+    '価格、在庫、ポイント、クーポン条件は楽天の商品ページで必ず確認してください。',
+  ]
+  return lines.filter(Boolean).join('\n\n')
+}
+
+function clickCampaignScore(campaign) {
+  return [
+    campaign.productName,
+    campaign.productLink?.startsWith('http') && !isGenericRakutenLink(campaign.productLink),
+    campaign.audience,
+    campaign.problem,
+    campaign.benefit,
+    campaign.proof,
+    campaign.campaignName || campaign.discountHook || campaign.couponUrl,
+  ].filter(Boolean).length
+}
+
+function clickCampaignVerdict(campaign) {
+  const clicks = toNumber(campaign.clicksAfter24h)
+  const orders = toNumber(campaign.ordersAfter24h)
+  const reward = toNumber(campaign.rewardAfter24h)
+  if (campaign.status !== 'posted' && campaign.status !== 'winner' && campaign.status !== 'failed') {
+    return ['未投稿: まず投稿して24時間後に数字を入れます', 'draft']
+  }
+  if (reward > 0 || orders > 0) return ['勝ち商品: 同じ切り口で別商品へ横展開', 'winner']
+  if (clicks > 0) return ['クリックあり: 商品条件、価格、クーポン訴求を改善', 'warm']
+  return ['クリック0: 1行目、商品、キャンペーン訴求を変えて再投稿', 'failed']
+}
+
+function normalizeCampaign(campaign) {
+  return {
+    ...emptyClickCampaign,
+    ...campaign,
+    productName: campaign.productName?.trim() ?? '',
+    productLink: campaign.productLink?.trim() ?? '',
+    audience: campaign.audience?.trim() ?? '',
+    problem: campaign.problem?.trim() ?? '',
+    benefit: campaign.benefit?.trim() ?? '',
+    proof: campaign.proof?.trim() ?? '',
+    priceHook: campaign.priceHook?.trim() ?? '',
+    campaignName: campaign.campaignName?.trim() ?? '',
+    discountHook: campaign.discountHook?.trim() ?? '',
+    couponUrl: campaign.couponUrl?.trim() ?? '',
+    note: campaign.note?.trim() ?? '',
+  }
+}
+
+function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, zeroRewardReasons, todayTasks, postScore, roomStats, affiliateSettings }) {
+  const reasonLines = zeroRewardReasons.length > 0
+    ? zeroRewardReasons.map((reason, index) => `${index + 1}. ${reason.title}: ${reason.body}`).join('\n')
+    : '大きな異常はありません。クリックと報酬の推移を継続確認してください。'
+  const taskLines = todayTasks.length > 0
+    ? todayTasks.map((task, index) => `${index + 1}. ${task.title}（${task.channel} / 効果 ${task.impact}）`).join('\n')
+    : '未完了タスクはありません。対策タスクを自動追加してください。'
+
+  return [
+    '楽天アフィリエイト日報',
+    `日付: ${todayKey()}`,
+    '',
+    '【累計サマリー】',
+    `クリック: ${formatNumber(totals.clicks)}`,
+    `注文: ${formatNumber(totals.orders)}`,
+    `売上: ${formatCurrency(totals.sales)}`,
+    `報酬: ${formatCurrency(totals.reward)}`,
+    `成約率: ${totals.conversionRate.toFixed(1)}%`,
+    `1クリック報酬: ${formatCurrency(totals.rewardPerClick)}`,
+    '',
+    '【直近7日】',
+    `クリック: ${formatNumber(last7Clicks)}`,
+    `売上件数: ${formatNumber(last7Orders)}`,
+    `報酬: ${formatCurrency(last7Reward)}`,
+    '',
+    '【原因分析】',
+    reasonLines,
+    '',
+    '【今日やること】',
+    taskLines,
+    '',
+    '【投稿準備】',
+    `クリック投稿ビルダー: ${postScore}/6`,
+    `ROOM確認済み: ${formatNumber(roomStats.doneTotal)} / 実行上限 ${formatNumber(roomStats.totalLimit)}`,
+    '',
+    '【リンク設定】',
+    `導線名: ${affiliateSettings.campaignName}`,
+    `メモ: ${affiliateSettings.targetMemo}`,
+    '',
+    'この日報は rakuafi-tool で生成されました。',
+  ].join('\n')
+}
+
+function reportStatus({ last7Clicks, last7Reward, postScore }) {
+  if (last7Clicks < 10) return ['クリック不足', 'critical']
+  if (last7Reward === 0) return ['購入導線を改善', 'warning']
+  if (postScore < 5) return ['投稿材料を補強', 'warning']
+  return ['改善継続', 'good']
+}
+
+function reportAgeDays(latestReport) {
+  if (!latestReport?.date) return Infinity
+  return daysBetween(latestReport.date, todayKey())
+}
+
+function buildToolHealthChecks({ autopilot, affiliateReady, lowIntentLink, postScore, roomStats, latestReport }) {
+  return [
+    {
+      title: '診断エンジン',
+      ok: autopilot,
+      detail: autopilot ? '数値入力時に改善タスクを自動生成します。' : '半自動モードがオフです。',
+    },
+    {
+      title: 'アフィリエイトリンク',
+      ok: affiliateReady && !lowIntentLink,
+      detail: affiliateReady
+        ? lowIntentLink
+          ? '楽天市場トップ系リンクです。商品別リンクに変えると改善余地があります。'
+          : '商品別リンクとして使える状態です。'
+        : 'リンクが未設定です。',
+    },
+    {
+      title: '投稿ビルダー',
+      ok: postScore >= 5,
+      detail: `投稿材料は${postScore}/6項目です。`,
+    },
+    {
+      title: 'ROOMキュー',
+      ok: roomStats.totalLimit > 0,
+      detail: roomStats.totalLimit > 0
+        ? `今日の確認上限は${formatNumber(roomStats.totalLimit)}件です。`
+        : '確認キューがありません。',
+    },
+    {
+      title: 'レポート更新',
+      ok: reportAgeDays(latestReport) <= 2,
+      detail: reportAgeDays(latestReport) <= 2
+        ? `最新記録は${latestReport.date}です。`
+        : '直近の記録がありません。今日の数値を入力してください。',
+    },
+  ]
+}
+
+function buildRevenueActions({ last7Clicks, last7Orders, last7Reward, lowIntentLink, postScore, roomStats }) {
+  const actions = []
+
+  if (lowIntentLink) {
+    actions.push({
+      title: '汎用リンクを商品別リンクへ差し替え',
+      detail: '楽天市場トップではなく、紹介する商品の個別ページからアフィリエイトリンクを作ります。',
+      channel: '商品選定',
+      impact: '高',
+    })
+  }
+
+  if (postScore < 5) {
+    actions.push({
+      title: 'クリック投稿ビルダーを5項目以上にする',
+      detail: '誰向け、悩み、メリット、根拠を入れて、押す理由を作ります。',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (last7Clicks < 10) {
+    actions.push({
+      title: '商品別投稿を3本作ってクリック数を検証',
+      detail: '報酬改善の前にクリック母数を作ります。24時間後にクリックだけ確認します。',
+      channel: 'ROOM',
+      impact: '高',
+    })
+  }
+
+  if (last7Clicks >= 10 && last7Orders === 0) {
+    actions.push({
+      title: 'レビュー数・価格・送料・クーポンを比較して商品を入れ替え',
+      detail: 'クリックはあるのに購入がないため、商品側の買いやすさを見直します。',
+      channel: '商品選定',
+      impact: '高',
+    })
+  }
+
+  if (roomStats.doneTotal < 15) {
+    actions.push({
+      title: 'ROOM候補を15件確認して反応テーマを探す',
+      detail: '少量でよいので毎日テーマ検証を進めます。',
+      channel: 'ROOM',
+      impact: '中',
+    })
+  }
+
+  if (last7Reward > 0) {
+    actions.push({
+      title: '報酬が出た導線を別投稿と関連記事へ横展開',
+      detail: '成果が出た商品カテゴリ、言い回し、投稿時間を再利用します。',
+      channel: 'ブログ',
+      impact: '高',
+    })
+  }
+
+  return actions
+}
+
+function defaultImprovementDraft() {
+  return {
+    productName: '楽天で買える実用品',
+    productLink: '',
+    audience: '忙しくて買い物の失敗を減らしたい方',
+    problem: 'どれを選べばよいか迷う',
+    benefit: 'レビューや価格を見ながら、自分に合う商品を比較できます',
+    proof: '楽天の商品ページでレビュー、送料、クーポン、在庫を確認できます',
+    priceHook: '最新価格とクーポンは商品ページで確認してください',
+    hashtags: '#楽天ROOM #楽天市場 #買ってよかった',
+  }
+}
+
 function App() {
-  const [reports, setReports] = useState(() => readStorage(REPORTS_KEY, defaultReports))
+  const [reports, setReports] = useState(readReports)
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
   const [contents, setContents] = useState(() => readStorage(CONTENT_KEY, defaultContent))
   const [roomFlows, setRoomFlows] = useState(() => readStorage(ROOM_FLOWS_KEY, defaultRoomFlows))
@@ -217,7 +647,15 @@ function App() {
   const [contentForm, setContentForm] = useState(emptyContent)
   const [roomForm, setRoomForm] = useState(emptyRoomFlow)
   const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
-  const [automationMessage, setAutomationMessage] = useState('自動運転はオンです。数字を入れると改善タスクを自動で作ります。')
+  const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
+  const [campaignForm, setCampaignForm] = useState(emptyClickCampaign)
+  const [clickCampaigns, setClickCampaigns] = useState(() => readStorage(CLICK_CAMPAIGNS_KEY, defaultClickCampaigns))
+  const [dailyReport, setDailyReport] = useState(() => readStorage(DAILY_REPORT_KEY, defaultDailyReport))
+  const [autoImprove, setAutoImprove] = useState(() => readStorage(AUTO_IMPROVE_KEY, defaultAutoImprove))
+  const [copyMessage, setCopyMessage] = useState('')
+  const [campaignMessage, setCampaignMessage] = useState('')
+  const [rescueMessage, setRescueMessage] = useState('')
+  const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
 
   useEffect(() => {
     localStorage.setItem(REPORTS_KEY, JSON.stringify(reports))
@@ -249,6 +687,22 @@ function App() {
     localStorage.setItem(AUTOPILOT_KEY, JSON.stringify(autopilot))
   }, [autopilot])
 
+  useEffect(() => {
+    localStorage.setItem(POST_DRAFT_KEY, JSON.stringify(postDraft))
+  }, [postDraft])
+
+  useEffect(() => {
+    localStorage.setItem(CLICK_CAMPAIGNS_KEY, JSON.stringify(clickCampaigns))
+  }, [clickCampaigns])
+
+  useEffect(() => {
+    localStorage.setItem(DAILY_REPORT_KEY, JSON.stringify(dailyReport))
+  }, [dailyReport])
+
+  useEffect(() => {
+    localStorage.setItem(AUTO_IMPROVE_KEY, JSON.stringify(autoImprove))
+  }, [autoImprove])
+
   const sortedReports = useMemo(
     () => [...reports].sort((a, b) => b.date.localeCompare(a.date)),
     [reports],
@@ -277,7 +731,9 @@ function App() {
   const latestReport = sortedReports[0]
 
   const suggestions = [
-    totals.conversionRate < 3
+    totals.clicks === 0
+      ? '商品別リンクと悩み訴求を揃えた投稿を1本作り、24時間後のクリックを確認する'
+      : totals.conversionRate < 3
       ? 'クリックはあるので、記事冒頭・比較表・購入直前の3か所に楽天リンクを置く'
       : '成約率は悪くないので、成果記事への導線をSNSと関連記事から増やす',
     totals.rewardPerClick < 5
@@ -305,6 +761,344 @@ function App() {
   }, [roomFlows])
 
   const affiliateReady = affiliateSettings.affiliateLink.trim().startsWith('http')
+  const generatedPost = buildRoomPost(postDraft)
+  const postLinkReady = postDraft.productLink.trim().startsWith('http')
+  const postScoreItems = [
+    [Boolean(postDraft.productName.trim()), '商品名'],
+    [postLinkReady && !isGenericRakutenLink(postDraft.productLink), '商品別リンク'],
+    [Boolean(postDraft.audience.trim()), '対象ユーザー'],
+    [Boolean(postDraft.problem.trim()), '悩み'],
+    [Boolean(postDraft.benefit.trim()), '使うメリット'],
+    [Boolean(postDraft.proof.trim()), '実感・根拠'],
+  ]
+  const postScore = postScoreItems.filter(([done]) => done).length
+  const campaignPreview = buildClickPost(campaignForm)
+  const campaignScore = clickCampaignScore(campaignForm)
+  const campaignStats = useMemo(() => {
+    const posted = clickCampaigns.filter((campaign) => campaign.status === 'posted' || campaign.status === 'winner' || campaign.status === 'failed')
+    const winners = clickCampaigns.filter((campaign) => clickCampaignVerdict(campaign)[1] === 'winner')
+    const zeroClick = clickCampaigns.filter((campaign) => clickCampaignVerdict(campaign)[1] === 'failed')
+    const totalClicks = clickCampaigns.reduce((sum, campaign) => sum + toNumber(campaign.clicksAfter24h), 0)
+    return {
+      drafts: clickCampaigns.length - posted.length,
+      posted: posted.length,
+      winners: winners.length,
+      zeroClick: zeroClick.length,
+      totalClicks,
+    }
+  }, [clickCampaigns])
+  const todayCampaigns = clickCampaigns
+    .filter((campaign) => campaign.status === 'draft')
+    .sort((a, b) => clickCampaignScore(b) - clickCampaignScore(a))
+    .slice(0, 3)
+  const last7Reports = recentReports(reports, 7)
+  const previous7Reports = reportsInDayRange(reports, 7, 14)
+  const last7Summary = sumReports(last7Reports)
+  const previous7Summary = sumReports(previous7Reports)
+  const last7Clicks = last7Reports.reduce((sum, report) => sum + toNumber(report.clicks), 0)
+  const last7Orders = last7Reports.reduce((sum, report) => sum + toNumber(report.orders), 0)
+  const last7Reward = last7Reports.reduce((sum, report) => sum + toNumber(report.reward), 0)
+  const weeklyDeltas = [
+    {
+      label: 'クリック',
+      current: last7Summary.clicks,
+      previous: previous7Summary.clicks,
+      delta: deltaValue(last7Summary.clicks, previous7Summary.clicks),
+      format: formatNumber,
+    },
+    {
+      label: '売上件数',
+      current: last7Summary.orders,
+      previous: previous7Summary.orders,
+      delta: deltaValue(last7Summary.orders, previous7Summary.orders),
+      format: formatNumber,
+    },
+    {
+      label: '売上金額',
+      current: last7Summary.sales,
+      previous: previous7Summary.sales,
+      delta: deltaValue(last7Summary.sales, previous7Summary.sales),
+      format: formatCurrency,
+    },
+    {
+      label: '成果報酬',
+      current: last7Summary.reward,
+      previous: previous7Summary.reward,
+      delta: deltaValue(last7Summary.reward, previous7Summary.reward),
+      format: formatCurrency,
+    },
+  ]
+  const lowIntentLink = isLowIntentAffiliateLink(affiliateSettings.affiliateLink)
+  const zeroRewardReasons = [
+    last7Clicks < 10 && {
+      title: '露出・クリック不足',
+      body: `直近7日クリックが${last7Clicks}件です。報酬以前に、購入ページへ人がほぼ移動していません。`,
+      level: 'critical',
+    },
+    lowIntentLink && {
+      title: 'リンクの購買意図が弱い',
+      body: '現在の既定リンクは楽天市場トップ系のテキストリンクです。商品紹介では個別商品リンクの方がクリック後の購入行動につながりやすいです。',
+      level: 'critical',
+    },
+    postScore < 5 && {
+      title: '投稿の訴求材料が不足',
+      body: `クリック投稿ビルダーは${postScore}/6項目です。誰向けか、悩み、使う理由、根拠がないと押す理由が弱くなります。`,
+      level: 'warning',
+    },
+    roomStats.doneTotal < 15 && {
+      title: '検証量が少ない',
+      body: `ROOMキューの確認済みが${roomStats.doneTotal}件です。まずは少量でも毎日15件、反応テーマを探す必要があります。`,
+      level: 'warning',
+    },
+    last7Orders === 0 && last7Clicks >= 10 && {
+      title: 'クリック後の購入理由が弱い',
+      body: 'クリックはあるのに売上がない状態です。商品単価、レビュー数、送料、クーポン、比較軸を見直してください。',
+      level: 'warning',
+    },
+  ].filter(Boolean)
+  const zeroRewardSeverity = last7Reward === 0 ? '要対策' : '改善継続'
+  const dailyReportBody = buildDailyReportBody({
+    totals,
+    last7Clicks,
+    last7Orders,
+    last7Reward,
+    zeroRewardReasons,
+    todayTasks,
+    postScore,
+    roomStats,
+    affiliateSettings,
+  })
+  const dailyReportSubject = `楽天アフィリエイト日報 ${todayKey()}`
+  const dailyReportDue = dailyReport.enabled && dailyReport.lastSentDate !== todayKey()
+  const dailyReportMailto = `mailto:${encodeURIComponent(dailyReport.recipient)}?subject=${encodeURIComponent(dailyReportSubject)}&body=${encodeURIComponent(dailyReportBody)}`
+  const reportRows = [...sortedReports].reverse().slice(-14)
+  const reportMaxClicks = Math.max(1, ...reportRows.map((report) => toNumber(report.clicks)))
+  const reportMaxReward = Math.max(1, ...reportRows.map((report) => toNumber(report.reward)))
+  const [currentReportStatus, currentReportTone] = reportStatus({ last7Clicks, last7Reward, postScore })
+  const toolHealthChecks = buildToolHealthChecks({
+    autopilot,
+    affiliateReady,
+    lowIntentLink,
+    postScore,
+    roomStats,
+    latestReport,
+  })
+  const healthyChecks = toolHealthChecks.filter((check) => check.ok).length
+  const toolHealthTone = healthyChecks === toolHealthChecks.length ? 'good' : healthyChecks >= 3 ? 'warning' : 'critical'
+  const toolHealthLabel = healthyChecks === toolHealthChecks.length ? '正常稼働' : healthyChecks >= 3 ? '一部要確認' : '要修正'
+  const revenueActions = useMemo(
+    () => buildRevenueActions({
+      last7Clicks,
+      last7Orders,
+      last7Reward,
+      lowIntentLink,
+      postScore,
+      roomStats,
+    }),
+    [last7Clicks, last7Orders, last7Reward, lowIntentLink, postScore, roomStats],
+  )
+
+  const runImprovementProcessing = useCallback((mode = 'manual') => {
+    const boostTasks = revenueActions.map((action) => ({
+      id: crypto.randomUUID(),
+      title: action.title,
+      channel: action.channel,
+      impact: action.impact,
+      done: false,
+      source: mode === 'auto' ? 'auto-improve' : 'boost',
+    }))
+
+    const shouldAddRoomFlow = last7Clicks < 10 || roomStats.doneTotal < 15
+    const boostFlow = shouldAddRoomFlow ? {
+      id: crypto.randomUUID(),
+      mode: 'kore',
+      keyword: postDraft.productName || '買ってよかった 楽天',
+      maxActions: 15,
+      spanMinutes: 10,
+      doneCount: 0,
+      status: 'ready',
+      nextAt: formatTime(new Date()),
+      memo: mode === 'auto'
+        ? '自動改善処理が追加。商品別リンクと投稿文を確認してから実行。'
+        : '報酬改善エンジンが追加。商品別リンクと投稿文を確認してから実行。',
+    } : null
+
+    const draftPatch = defaultImprovementDraft()
+    setPostDraft((current) => ({
+      ...current,
+      productName: current.productName || draftPatch.productName,
+      audience: current.audience || draftPatch.audience,
+      problem: current.problem || draftPatch.problem,
+      benefit: current.benefit || draftPatch.benefit,
+      proof: current.proof || draftPatch.proof,
+      priceHook: current.priceHook || draftPatch.priceHook,
+      hashtags: current.hashtags || draftPatch.hashtags,
+    }))
+
+    let addedTasks = 0
+    setTasks((current) => {
+      const nextTasks = uniqueTasks(current, boostTasks)
+      addedTasks = nextTasks.length
+      return [...nextTasks, ...current]
+    })
+
+    if (boostFlow) {
+      setRoomFlows((current) => {
+        const hasAutoFlow = current.some((flow) => flow.memo.includes('自動改善処理') && flow.status !== 'done')
+        return hasAutoFlow ? current : [boostFlow, ...current]
+      })
+    }
+
+    const result = `${mode === 'auto' ? '自動改善' : '改善'}処理を実行しました。タスク${addedTasks}件、ROOMキュー${boostFlow ? '1件候補' : '追加なし'}、投稿ドラフトを補完。`
+    setAutoImprove((current) => ({
+      ...current,
+      lastRunDate: todayKey(),
+      lastResult: result,
+    }))
+    setAutomationMessage(result)
+    setRescueMessage(result)
+  }, [last7Clicks, postDraft.productName, revenueActions, roomStats.doneTotal])
+
+  useEffect(() => {
+    if (!autoImprove.enabled) return
+    if (autoImprove.lastRunDate === todayKey()) return
+    runImprovementProcessing('auto')
+  }, [autoImprove.enabled, autoImprove.lastRunDate, runImprovementProcessing])
+
+  const updatePostDraft = (field, value) => {
+    setPostDraft((current) => ({ ...current, [field]: value }))
+    setCopyMessage('')
+    setRescueMessage('')
+  }
+
+  const copyPost = async () => {
+    try {
+      await navigator.clipboard.writeText(generatedPost)
+      setCopyMessage('投稿文をコピーしました。')
+    } catch {
+      setCopyMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
+
+  const updateCampaignForm = (field, value) => {
+    setCampaignForm((current) => ({ ...current, [field]: value }))
+    setCampaignMessage('')
+  }
+
+  const saveClickCampaign = (event) => {
+    event.preventDefault()
+    const nextCampaign = normalizeCampaign(campaignForm)
+    if (!nextCampaign.productName || !nextCampaign.productLink) {
+      setCampaignMessage('商品名と商品別アフィリエイトURLを入れてください。')
+      return
+    }
+    setClickCampaigns((current) => [{ id: crypto.randomUUID(), ...nextCampaign }, ...current])
+    setCampaignForm(emptyClickCampaign)
+    setCampaignMessage('クリック獲得キャンペーンを保存しました。今日の投稿候補に入ります。')
+  }
+
+  const loadDraftToCampaign = () => {
+    setCampaignForm((current) => ({
+      ...current,
+      productName: postDraft.productName,
+      productLink: postDraft.productLink,
+      audience: postDraft.audience,
+      problem: postDraft.problem,
+      benefit: postDraft.benefit,
+      proof: postDraft.proof,
+      priceHook: postDraft.priceHook,
+      channel: 'ROOM',
+    }))
+    setCampaignMessage('下の投稿ビルダーの内容をキャンペーン作成欄へ読み込みました。')
+  }
+
+  const applyRakutenCampaignPreset = () => {
+    setCampaignForm((current) => ({
+      ...current,
+      campaignName: current.campaignName || '楽天お買い物マラソン / ポイントアップ確認',
+      discountHook: current.discountHook || 'エントリー、買いまわり、クーポン、ポイント倍率を商品ページで確認',
+      couponUrl: current.couponUrl || 'https://event.rakuten.co.jp/campaign/point-up/marathon/',
+      priceHook: current.priceHook || 'クーポンやポイント倍率は開催期間で変わるため、最新条件を商品ページで確認してください。',
+    }))
+    setCampaignMessage('楽天キャンペーン訴求を投稿案へ反映しました。開催中かどうかは公式ページで確認してください。')
+  }
+
+  const copyCampaignPost = async () => {
+    try {
+      await navigator.clipboard.writeText(campaignPreview)
+      setCampaignMessage('キャンペーン反映済みの投稿文をコピーしました。')
+    } catch {
+      setCampaignMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
+
+  const markCampaignPosted = (campaignId) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) =>
+        campaign.id === campaignId
+          ? { ...campaign, status: 'posted', postedDate: todayKey() }
+          : campaign,
+      ),
+    )
+  }
+
+  const updateCampaignMetric = (campaignId, field, value) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) => {
+        if (campaign.id !== campaignId) return campaign
+        const nextCampaign = { ...campaign, [field]: value }
+        const [, tone] = clickCampaignVerdict(nextCampaign)
+        return {
+          ...nextCampaign,
+          status: tone === 'winner' ? 'winner' : tone === 'failed' ? 'failed' : nextCampaign.status,
+        }
+      }),
+    )
+  }
+
+  const duplicateCampaign = (campaign) => {
+    setClickCampaigns((current) => [
+      {
+        ...campaign,
+        id: crypto.randomUUID(),
+        status: 'draft',
+        postedDate: '',
+        clicksAfter24h: '',
+        ordersAfter24h: '',
+        rewardAfter24h: '',
+        productName: `${campaign.productName} 改善案`,
+        note: '前回結果を見て、1行目・商品条件・キャンペーン訴求を変えて再投稿します。',
+      },
+      ...current,
+    ])
+  }
+
+  const deleteCampaign = (campaignId) => {
+    setClickCampaigns((current) => current.filter((campaign) => campaign.id !== campaignId))
+  }
+
+  const addClickImprovementTasks = () => {
+    const targetCampaigns = clickCampaigns.filter((campaign) => clickCampaignVerdict(campaign)[1] === 'failed')
+    const nextTasks = targetCampaigns.length > 0
+      ? targetCampaigns.map((campaign) => ({
+          id: crypto.randomUUID(),
+          title: `${campaign.productName} の1行目、商品条件、クーポン訴求を変えて再投稿する`,
+          channel: campaign.channel,
+          impact: '高',
+          done: false,
+          source: 'click-campaign',
+        }))
+      : [{
+          id: crypto.randomUUID(),
+          title: '商品別リンク、キャンペーン名、クーポンURL入りの投稿案を3本作る',
+          channel: 'ROOM',
+          impact: '高',
+          done: false,
+          source: 'click-campaign',
+        }]
+    setTasks((current) => [...uniqueTasks(current, nextTasks), ...current])
+    setCampaignMessage(`${nextTasks.length}件のクリック改善タスクを追加しました。`)
+  }
 
   const runAutomation = () => {
     setTasks((current) => {
@@ -316,6 +1110,50 @@ function App() {
       )
       return [...nextTasks, ...current]
     })
+  }
+
+  const runZeroRewardRescue = () => {
+    const rescueTasks = createZeroRewardTasks({
+      totals,
+      affiliateSettings,
+      postScore,
+      roomStats,
+    })
+    setTasks((current) => {
+      const nextTasks = uniqueTasks(current, rescueTasks)
+      const message = nextTasks.length > 0
+        ? `${nextTasks.length}件の対策タスクを追加しました。下の改善タスクに反映されています。`
+        : '追加できる新しい対策タスクはありません。既存の改善タスクを進めてください。'
+      setRescueMessage(message)
+      setAutomationMessage(message)
+      return [...nextTasks, ...current]
+    })
+    window.setTimeout(() => {
+      document.querySelector('#today-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
+  }
+
+  const runRevenueBoost = () => {
+    runImprovementProcessing('manual')
+    window.setTimeout(() => {
+      document.querySelector('#today-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
+  }
+
+  const saveDailyReport = (event) => {
+    event.preventDefault()
+    setDailyReport((current) => ({
+      ...current,
+      recipient: dailyReport.recipient.trim() || defaultDailyReport.recipient,
+      sendTime: dailyReport.sendTime || defaultDailyReport.sendTime,
+    }))
+  }
+
+  const markDailyReportSent = () => {
+    setDailyReport((current) => ({
+      ...current,
+      lastSentDate: todayKey(),
+    }))
   }
 
   const addReport = (event) => {
@@ -467,10 +1305,12 @@ function App() {
             大きな一発狙いではなく、昨日より1つ良くするためのダッシュボードです。
           </p>
           <div className="hero-actions">
+            <a href="#click-acquisition">クリック獲得ツールへ</a>
+            <a href="#report-page">レポートを見る</a>
+            <a href="#click-studio">クリック投稿を作る</a>
             <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">
               楽天レポートを開く
             </a>
-            <a href="#today-work">今日の改善へ</a>
           </div>
         </div>
         <aside className="focus-panel" aria-label="今日の注目ポイント">
@@ -503,21 +1343,465 @@ function App() {
         </article>
       </section>
 
-      <section className="automation-section" aria-label="自動運転">
+      <section className="click-acquisition" id="click-acquisition" aria-label="クリック獲得ツール">
+        <div className="click-acquisition-heading">
+          <div>
+            <p className="eyebrow">Click acquisition</p>
+            <h2>商品別リンクと楽天キャンペーンでクリックを作る</h2>
+            <p>
+              報酬はまずクリックが発生しないと始まりません。商品ごとに「誰のどんな悩みに効くか」
+              「今のキャンペーン/クーポンで何が得か」を入れて、投稿、24時間後のクリック確認、改善まで回します。
+            </p>
+          </div>
+          <div className="campaign-score">
+            <strong>{campaignScore}<span>/7</span></strong>
+            <small>{campaignScore >= 6 ? '投稿準備OK' : '不足項目あり'}</small>
+          </div>
+        </div>
+
+        <div className="campaign-kpi-grid">
+          <article><span>保存投稿案</span><strong>{formatNumber(clickCampaigns.length)}</strong><small>商品別キャンペーン</small></article>
+          <article><span>投稿済み</span><strong>{formatNumber(campaignStats.posted)}</strong><small>24時間後に数字確認</small></article>
+          <article><span>24hクリック</span><strong>{formatNumber(campaignStats.totalClicks)}</strong><small>商品別入力の合計</small></article>
+          <article><span>勝ち商品</span><strong>{formatNumber(campaignStats.winners)}</strong><small>注文/報酬あり</small></article>
+        </div>
+
+        <div className="campaign-tools">
+          <form className="campaign-form" onSubmit={saveClickCampaign}>
+            <label>商品名<input value={campaignForm.productName} onChange={(event) => updateCampaignForm('productName', event.target.value)} placeholder="例: 軽量コードレス掃除機" /></label>
+            <label>商品別アフィリエイトURL<input type="url" value={campaignForm.productLink} onChange={(event) => updateCampaignForm('productLink', event.target.value)} placeholder="楽天の商品ページで作った商品別リンク" /></label>
+            <label>誰向け<input value={campaignForm.audience} onChange={(event) => updateCampaignForm('audience', event.target.value)} placeholder="例: 忙しい一人暮らしの人" /></label>
+            <label>悩み<input value={campaignForm.problem} onChange={(event) => updateCampaignForm('problem', event.target.value)} placeholder="例: 掃除機を出すのが面倒" /></label>
+            <label>使うメリット<textarea value={campaignForm.benefit} onChange={(event) => updateCampaignForm('benefit', event.target.value)} placeholder="例: 軽くてすぐ使えるので床のホコリをためにくい" /></label>
+            <label>選んだ根拠<textarea value={campaignForm.proof} onChange={(event) => updateCampaignForm('proof', event.target.value)} placeholder="レビュー、仕様、送料、クーポンなど確認できる根拠" /></label>
+            <label>楽天キャンペーン名<input value={campaignForm.campaignName} onChange={(event) => updateCampaignForm('campaignName', event.target.value)} placeholder="例: お買い物マラソン / 5と0のつく日" /></label>
+            <label>割引・ポイント訴求<input value={campaignForm.discountHook} onChange={(event) => updateCampaignForm('discountHook', event.target.value)} placeholder="例: エントリー、買いまわり、ポイントアップ対象" /></label>
+            <label>クーポン/キャンペーンURL<input type="url" value={campaignForm.couponUrl} onChange={(event) => updateCampaignForm('couponUrl', event.target.value)} placeholder="公式キャンペーンやクーポンページURL" /></label>
+            <label>価格・注意点<input value={campaignForm.priceHook} onChange={(event) => updateCampaignForm('priceHook', event.target.value)} placeholder="価格、在庫、条件は商品ページで確認" /></label>
+            <label>投稿先<select value={campaignForm.channel} onChange={(event) => updateCampaignForm('channel', event.target.value)}><option>ROOM</option><option>SNS</option><option>ブログ</option></select></label>
+            <label>メモ<input value={campaignForm.note} onChange={(event) => updateCampaignForm('note', event.target.value)} placeholder="投稿時間、狙い、変更点" /></label>
+            <div className="campaign-form-actions">
+              <button type="submit">投稿案を保存</button>
+              <button type="button" onClick={loadDraftToCampaign}>下の投稿案を読み込む</button>
+              <button type="button" onClick={applyRakutenCampaignPreset}>楽天キャンペーン反映</button>
+            </div>
+          </form>
+
+          <aside className="campaign-preview">
+            <div className="preview-topline"><span>キャンペーン反映済み投稿文</span><strong>{campaignPreview.length}文字</strong></div>
+            <textarea readOnly value={campaignPreview} aria-label="キャンペーン反映済み投稿文" />
+            <div className="preview-actions">
+              <button type="button" onClick={copyCampaignPost}>投稿文をコピー</button>
+              <a href="https://event.rakuten.co.jp/" target="_blank" rel="noreferrer">楽天キャンペーン確認</a>
+            </div>
+            <p className="disclosure-note">
+              楽天のキャンペーン、割引、クーポンは頻繁に変わります。公式ページと商品ページで開催期間、エントリー条件、上限、対象商品を確認してから投稿します。
+            </p>
+          </aside>
+        </div>
+
+        <div className="campaign-message-row">
+          <button type="button" onClick={addClickImprovementTasks}>クリック改善タスクを自動追加</button>
+          {campaignMessage && <p role="status">{campaignMessage}</p>}
+        </div>
+
+        <div className="today-campaigns">
+          <div className="report-card-title">
+            <div>
+              <h3>今日投稿する3本</h3>
+              <span>スコアが高い未投稿案から順番に実行</span>
+            </div>
+          </div>
+          <div className="today-campaign-grid">
+            {todayCampaigns.map((campaign) => (
+              <article key={campaign.id}>
+                <span>{campaign.channel} / {clickCampaignScore(campaign)}/7</span>
+                <strong>{campaign.productName}</strong>
+                <p>{campaign.campaignName || campaign.discountHook || 'キャンペーン訴求未設定'}</p>
+                <button type="button" onClick={() => markCampaignPosted(campaign.id)}>投稿済みにする</button>
+              </article>
+            ))}
+            {todayCampaigns.length === 0 && <article><span>未投稿なし</span><strong>新しい商品別リンクを追加してください</strong><p>クリックがゼロなら、商品を変えるかキャンペーン訴求を変えて再テストします。</p></article>}
+          </div>
+        </div>
+
+        <div className="campaign-list">
+          {clickCampaigns.map((campaign) => {
+            const [verdict, tone] = clickCampaignVerdict(campaign)
+            return (
+              <article className={`campaign-card ${tone}`} key={campaign.id}>
+                <div>
+                  <span>{campaign.channel} / {campaign.status}</span>
+                  <h3>{campaign.productName}</h3>
+                  <p>{campaign.problem || campaign.benefit || campaign.note}</p>
+                  <small>{campaign.campaignName || 'キャンペーン未設定'} {campaign.discountHook ? `/ ${campaign.discountHook}` : ''}</small>
+                </div>
+                <div className="campaign-metrics">
+                  <label>24hクリック<input type="number" min="0" value={campaign.clicksAfter24h} onChange={(event) => updateCampaignMetric(campaign.id, 'clicksAfter24h', event.target.value)} /></label>
+                  <label>注文<input type="number" min="0" value={campaign.ordersAfter24h} onChange={(event) => updateCampaignMetric(campaign.id, 'ordersAfter24h', event.target.value)} /></label>
+                  <label>報酬<input type="number" min="0" value={campaign.rewardAfter24h} onChange={(event) => updateCampaignMetric(campaign.id, 'rewardAfter24h', event.target.value)} /></label>
+                </div>
+                <div className="campaign-card-actions">
+                  <strong>{verdict}</strong>
+                  <button type="button" onClick={() => markCampaignPosted(campaign.id)}>投稿済み</button>
+                  <button type="button" onClick={() => duplicateCampaign(campaign)}>改善案を複製</button>
+                  <button type="button" onClick={() => deleteCampaign(campaign.id)}>削除</button>
+                  <a className={!campaign.productLink ? 'disabled-link' : ''} href={campaign.productLink || undefined} target="_blank" rel="noreferrer sponsored">商品確認</a>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      <section className="diagnosis-section" aria-label="ゼロ報酬の原因分析">
+        <article className="diagnosis-main">
+          <div>
+            <p className="eyebrow">Cause analysis</p>
+            <h2>報酬ゼロの原因は、まずクリック不足です</h2>
+            <p>
+              スクリーンショットでは売上金額・成果報酬が0円で、クリックも一部の日に1件程度です。
+              この状態では、成約率改善より先に「商品別リンクへ移動する人」を増やす必要があります。
+            </p>
+          </div>
+          <div className={`diagnosis-status ${last7Reward === 0 ? 'critical' : ''}`}>
+            <span>{zeroRewardSeverity}</span>
+            <strong>{formatCurrency(last7Reward)}</strong>
+            <small>直近7日報酬 / クリック {formatNumber(last7Clicks)} / 売上件数 {formatNumber(last7Orders)}</small>
+          </div>
+        </article>
+
+        <div className="reason-grid">
+          {zeroRewardReasons.map((reason) => (
+            <article className={`reason-card ${reason.level}`} key={reason.title}>
+              <h3>{reason.title}</h3>
+              <p>{reason.body}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="rescue-actions">
+          <button type="button" onClick={runZeroRewardRescue}>対策タスクを自動追加</button>
+          <a href="#today-work">改善タスクを見る</a>
+          <a href="#click-acquisition">キャンペーン連動投稿を作る</a>
+          <a href="#click-studio">商品別投稿を作る</a>
+          <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">楽天レポートで確認</a>
+        </div>
+        {rescueMessage && <p className="rescue-message" role="status">{rescueMessage}</p>}
+      </section>
+
+      <section className="daily-report-section" aria-label="日報メール">
+        <article className="daily-report-panel">
+          <div>
+            <p className="eyebrow">Daily email</p>
+            <h2>1日1回、日報メールを作成</h2>
+            <p>
+              宛先は syunnda1@yahoo.co.jp です。ブラウザから無人送信はできないため、
+              日報本文を自動生成してメールアプリを開き、送信済み日付を管理します。
+            </p>
+            <span className={`daily-status ${dailyReportDue ? 'due' : ''}`}>
+              {dailyReportDue ? '本日の日報は未送信' : '本日の日報は送信済み'}
+            </span>
+          </div>
+          <form className="daily-report-form" onSubmit={saveDailyReport}>
+            <label>
+              宛先
+              <input
+                type="email"
+                value={dailyReport.recipient}
+                onChange={(event) => setDailyReport({ ...dailyReport, recipient: event.target.value })}
+              />
+            </label>
+            <label>
+              送信目安
+              <input
+                type="time"
+                value={dailyReport.sendTime}
+                onChange={(event) => setDailyReport({ ...dailyReport, sendTime: event.target.value })}
+              />
+            </label>
+            <label className="toggle-row">
+              <input
+                type="checkbox"
+                checked={dailyReport.enabled}
+                onChange={(event) => setDailyReport({ ...dailyReport, enabled: event.target.checked })}
+              />
+              日報を有効にする
+            </label>
+            <button type="submit">設定保存</button>
+            <a href={dailyReportMailto} onClick={markDailyReportSent}>日報メールを作成</a>
+          </form>
+        </article>
+        <textarea className="daily-report-preview" readOnly value={dailyReportBody} aria-label="日報プレビュー" />
+      </section>
+
+      <section className="report-page" id="report-page" aria-label="アフィリエイトレポートページ">
+        <div className="report-page-heading">
+          <div>
+            <p className="eyebrow">Report page</p>
+            <h2>いつでも見られる報酬レポート</h2>
+            <p>
+              メール送信を待たずに、このページを開くだけでクリック、売上、報酬、原因、今日やることを確認できます。
+            </p>
+          </div>
+          <div className={`report-health ${currentReportTone}`}>
+            <span>現在の状態</span>
+            <strong>{currentReportStatus}</strong>
+            <small>更新日 {todayKey()}</small>
+          </div>
+        </div>
+
+        <div className={`tool-health-summary ${toolHealthTone}`}>
+          <div>
+            <p className="eyebrow">Tool status</p>
+            <h3>ツール稼働状態: {toolHealthLabel}</h3>
+            <p>
+              {healthyChecks}/{toolHealthChecks.length}項目が正常です。自動診断、リンク、投稿準備、ROOMキュー、レポート更新を確認しています。
+            </p>
+          </div>
+          <div className="tool-health-grid">
+            {toolHealthChecks.map((check) => (
+              <article className={check.ok ? 'ok' : 'ng'} key={check.title}>
+                <span>{check.ok ? '正常' : '確認'}</span>
+                <strong>{check.title}</strong>
+                <small>{check.detail}</small>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className={`auto-improve-panel ${autoImprove.enabled ? 'running' : 'paused'}`}>
+          <div>
+            <p className="eyebrow">Auto improvement</p>
+            <h3>{autoImprove.enabled ? '自動改善処理は有効です' : '自動改善処理は停止中です'}</h3>
+            <p>
+              ページを開いた日に1回、報酬改善タスク、ROOM検証キュー、投稿ドラフト補完を自動実行します。
+              楽天ROOMへの最終投稿やいいね操作は手動確認です。
+            </p>
+            <span>{autoImprove.lastRunDate ? `最終実行: ${autoImprove.lastRunDate}` : 'まだ実行されていません'}</span>
+            <small>{autoImprove.lastResult}</small>
+          </div>
+          <div className="auto-improve-actions">
+            <label className="toggle-row">
+              <input
+                type="checkbox"
+                checked={autoImprove.enabled}
+                onChange={(event) => setAutoImprove({ ...autoImprove, enabled: event.target.checked })}
+              />
+              毎日自動で改善処理する
+            </label>
+            <button type="button" onClick={() => runImprovementProcessing('manual')}>今すぐ改善処理</button>
+          </div>
+        </div>
+
+        <div className="report-kpi-grid">
+          <article>
+            <span>直近7日クリック</span>
+            <strong>{formatNumber(last7Clicks)}</strong>
+            <small>{last7Clicks < 10 ? 'まずクリック数を増やす段階' : 'クリック導線あり'}</small>
+          </article>
+          <article>
+            <span>直近7日売上件数</span>
+            <strong>{formatNumber(last7Orders)}</strong>
+            <small>{last7Orders === 0 ? '商品選定と訴求を確認' : '購入発生あり'}</small>
+          </article>
+          <article>
+            <span>直近7日報酬</span>
+            <strong>{formatCurrency(last7Reward)}</strong>
+            <small>{last7Reward === 0 ? '対策タスクを実行' : '伸びた導線を横展開'}</small>
+          </article>
+          <article>
+            <span>投稿準備</span>
+            <strong>{postScore}/6</strong>
+            <small>{postScore < 5 ? '投稿ビルダーを埋める' : '投稿可能'}</small>
+          </article>
+          <article>
+            <span>クリック獲得運用</span>
+            <strong>{formatNumber(campaignStats.posted)}/{formatNumber(clickCampaigns.length)}</strong>
+            <small>投稿済み / 商品別キャンペーン。ゼロクリックは改善案へ複製します。</small>
+          </article>
+        </div>
+
+        <div className="weekly-performance">
+          <div className="report-card-title">
+            <div>
+              <h3>一週間前からのパフォーマンス改善</h3>
+              <span>直近7日と、その前の7日を比較</span>
+            </div>
+          </div>
+          <div className="weekly-grid">
+            {weeklyDeltas.map((item) => (
+              <article className={item.delta.direction} key={item.label}>
+                <span>{item.label}</span>
+                <strong>{item.format(item.current)}</strong>
+                <small>
+                  前週 {item.format(item.previous)} / {item.delta.direction === 'up' ? '+' : ''}{item.format(item.delta.amount)}
+                  {' '}({item.delta.direction === 'up' ? '+' : ''}{item.delta.percent.toFixed(0)}%)
+                </small>
+              </article>
+            ))}
+          </div>
+          {previous7Reports.length === 0 && (
+            <p className="weekly-note">前週データがまだありません。今日から記録すると、7日後に改善幅がより正確に見えます。</p>
+          )}
+        </div>
+
+        <div className="revenue-engine">
+          <div className="report-card-title">
+            <div>
+              <h3>報酬改善エンジン</h3>
+              <span>いま報酬に近づくための処理</span>
+            </div>
+            <button type="button" onClick={runRevenueBoost}>改善キューを作成</button>
+          </div>
+          <div className="revenue-action-grid">
+            {revenueActions.map((action) => (
+              <article key={action.title}>
+                <span>効果 {action.impact} / {action.channel}</span>
+                <strong>{action.title}</strong>
+                <p>{action.detail}</p>
+              </article>
+            ))}
+            {revenueActions.length === 0 && (
+              <article>
+                <span>改善継続</span>
+                <strong>大きな詰まりはありません</strong>
+                <p>記録を続け、成果が出た導線を別投稿と関連記事へ横展開してください。</p>
+              </article>
+            )}
+          </div>
+        </div>
+
+        <div className="report-board">
+          <article className="report-chart-card">
+            <div className="report-card-title">
+              <h3>日別クリックと報酬</h3>
+              <span>最大14件</span>
+            </div>
+            <div className="report-bars" aria-label="日別クリックと報酬グラフ">
+              {reportRows.length > 0 ? reportRows.map((report) => {
+                const clickHeight = Math.max(4, (toNumber(report.clicks) / reportMaxClicks) * 100)
+                const rewardHeight = Math.max(4, (toNumber(report.reward) / reportMaxReward) * 100)
+                return (
+                  <div className="report-day" key={report.id}>
+                    <div className="bar-pair">
+                      <i className="click-bar" style={{ height: `${clickHeight}%` }} />
+                      <i className="reward-bar" style={{ height: `${rewardHeight}%` }} />
+                    </div>
+                    <span>{report.date.slice(5).replace('-', '/')}</span>
+                  </div>
+                )
+              }) : <p className="empty-text">日次レポートを入力するとグラフが表示されます。</p>}
+            </div>
+            <div className="chart-legend">
+              <span><i className="click-bar" />クリック</span>
+              <span><i className="reward-bar" />報酬</span>
+            </div>
+          </article>
+
+          <article className="report-action-card">
+            <div className="report-card-title">
+              <h3>今日見るポイント</h3>
+              <span>{zeroRewardReasons.length}件</span>
+            </div>
+            <ul>
+              {zeroRewardReasons.map((reason) => (
+                <li key={reason.title}>
+                  <strong>{reason.title}</strong>
+                  <span>{reason.body}</span>
+                </li>
+              ))}
+              {zeroRewardReasons.length === 0 && <li><strong>異常なし</strong><span>記録を継続して、成果が出た導線を横展開してください。</span></li>}
+            </ul>
+          </article>
+        </div>
+
+        <div className="report-table-card">
+          <div className="report-card-title">
+            <h3>日別レポート履歴</h3>
+            <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">楽天公式レポート</a>
+          </div>
+          <div className="report-table">
+            <div className="report-table-head">
+              <span>日付</span>
+              <span>クリック</span>
+              <span>注文</span>
+              <span>売上</span>
+              <span>報酬</span>
+              <span>メモ</span>
+            </div>
+            {sortedReports.map((report) => (
+              <div className="report-table-row" key={report.id}>
+                <time>{report.date}</time>
+                <span>{formatNumber(toNumber(report.clicks))}</span>
+                <span>{formatNumber(toNumber(report.orders))}</span>
+                <span>{formatCurrency(toNumber(report.sales))}</span>
+                <strong>{formatCurrency(toNumber(report.reward))}</strong>
+                <span>{report.memo || '未入力'}</span>
+              </div>
+            ))}
+            {sortedReports.length === 0 && <p className="empty-text">まだレポート記録がありません。下の日次レポートから入力してください。</p>}
+          </div>
+        </div>
+      </section>
+
+      <section className="click-studio" id="click-studio">
+        <div className="studio-heading">
+          <div>
+            <p className="eyebrow">Zero click rescue</p>
+            <h2>クリックされるROOM投稿を作る</h2>
+            <p>商品別リンクと「誰の、どんな悩みを解決するか」を揃え、読む人が次の行動を判断できる投稿にします。</p>
+          </div>
+          <div className="post-score" aria-label={`投稿準備 ${postScore}項目完了`}>
+            <strong>{postScore}<span>/6</span></strong>
+            <small>{postScore >= 5 ? '投稿準備OK' : '不足項目を入力'}</small>
+          </div>
+        </div>
+
+        <div className="studio-grid">
+          <form className="post-builder" onSubmit={(event) => event.preventDefault()}>
+            <label>商品名<input value={postDraft.productName} onChange={(event) => updatePostDraft('productName', event.target.value)} placeholder="例: 軽量コードレス掃除機" /></label>
+            <label>商品別アフィリエイトURL<input type="url" value={postDraft.productLink} onChange={(event) => updatePostDraft('productLink', event.target.value)} placeholder="楽天の商品ページから作成したリンク" /></label>
+            {postLinkReady && isGenericRakutenLink(postDraft.productLink) && <p className="link-warning">楽天市場トップへの汎用リンクです。紹介する商品の個別ページからリンクを作り直してください。</p>}
+            <label>誰向け<input value={postDraft.audience} onChange={(event) => updatePostDraft('audience', event.target.value)} placeholder="例: 忙しい一人暮らしの方" /></label>
+            <label>悩み<input value={postDraft.problem} onChange={(event) => updatePostDraft('problem', event.target.value)} placeholder="例: 毎日の床掃除が面倒" /></label>
+            <label>使うメリット<textarea value={postDraft.benefit} onChange={(event) => updatePostDraft('benefit', event.target.value)} placeholder="例: 軽くて片手で扱え、気づいた時にすぐ掃除できます" /></label>
+            <label>実感・選んだ根拠<textarea value={postDraft.proof} onChange={(event) => updatePostDraft('proof', event.target.value)} placeholder="実際に確認できた仕様や、自分の正直な感想" /></label>
+            <label>価格・季節の一押し<input value={postDraft.priceHook} onChange={(event) => updatePostDraft('priceHook', event.target.value)} placeholder="例: クーポン対象。最新価格は商品ページで確認" /></label>
+            <label>ハッシュタグ<input value={postDraft.hashtags} onChange={(event) => updatePostDraft('hashtags', event.target.value)} /></label>
+          </form>
+
+          <aside className="post-preview">
+            <div className="preview-topline"><span>ROOM投稿プレビュー</span><strong>{generatedPost.length}文字</strong></div>
+            <textarea readOnly value={generatedPost} aria-label="生成されたROOM投稿文" />
+            <div className="preview-actions">
+              <button type="button" onClick={copyPost}>投稿文をコピー</button>
+              <a className={!postLinkReady ? 'disabled-link' : ''} href={postLinkReady ? postDraft.productLink : undefined} target="_blank" rel="noreferrer sponsored">商品リンクを確認</a>
+            </div>
+            {copyMessage && <p className="copy-message" role="status">{copyMessage}</p>}
+            <div className="post-checklist">
+              {postScoreItems.map(([done, label]) => <span className={done ? 'done' : ''} key={label}>{done ? '✓' : '○'} {label}</span>)}
+            </div>
+            <p className="disclosure-note">価格や在庫は変動します。未確認の効果を断定せず、実際に確認できた情報だけを使ってください。</p>
+          </aside>
+        </div>
+      </section>
+
+      <section className="automation-section" aria-label="半自動運用">
         <article className="automation-panel">
           <div>
-            <p className="eyebrow">Autopilot</p>
-            <h2>数字から改善タスクを自動で作る</h2>
+            <p className="eyebrow">Semi autopilot</p>
+            <h2>自動で診断し、実行は手動確認する</h2>
             <p>
               成約率、1クリックあたり報酬、成果が出ている記事、クリックだけ多い記事を見て、
-              今日やるべき改善を自動で未完了タスクへ追加します。
+              今日やるべき改善を未完了タスクへ追加します。楽天ROOMへの投稿、いいね、フォローは自動実行せず、あなたが確認して進めます。
             </p>
             <span className="automation-message">{automationMessage}</span>
           </div>
           <div className="automation-actions">
             <label className="toggle-row">
               <input type="checkbox" checked={autopilot} onChange={(event) => setAutopilot(event.target.checked)} />
-              自動運転をオンにする
+              半自動モードをオンにする
             </label>
             <button type="button" onClick={runAutomation}>今すぐ自動生成</button>
           </div>
@@ -537,6 +1821,19 @@ function App() {
             ))}
             {todayTasks.length === 0 && <li>未完了タスクはありません。自動生成を押すと候補を作れます。</li>}
           </ol>
+        </article>
+      </section>
+
+      <section className="automation-truth">
+        <article>
+          <span>自動で動く</span>
+          <strong>原因診断・タスク生成・投稿文作成・進捗管理</strong>
+          <p>入力されたレポート、投稿ビルダー、ROOMキューをもとに改善案を作ります。</p>
+        </article>
+        <article>
+          <span>手動確認が必要</span>
+          <strong>投稿公開・いいね・フォロー・商品購入ページ確認</strong>
+          <p>楽天側の操作を勝手に連打するRPAではありません。規約違反やアカウント制限を避けるため、最終操作は人が確認します。</p>
         </article>
       </section>
 
@@ -645,7 +1942,7 @@ function App() {
                 </button>
                 <div>
                   <strong>{task.title}</strong>
-                  <span>{task.channel} / 効果 {task.impact}{task.source === 'auto' ? ' / 自動' : ''}</span>
+                  <span>{task.channel} / 効果 {task.impact}{task.source ? ` / ${task.source === 'auto' ? '自動' : task.source === 'rescue' ? '対策' : task.source === 'boost' ? '改善' : task.source === 'auto-improve' ? '自動改善' : task.source === 'click-campaign' ? 'クリック獲得' : task.source}` : ''}</span>
                 </div>
                 <button type="button" className="delete-button" onClick={() => deleteTask(task.id)}>削除</button>
               </div>
