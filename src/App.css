@@ -82,7 +82,7 @@
 
 .briefing-list {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: 18px;
 }
@@ -619,6 +619,103 @@
 .calendar-card p {
   margin: 0;
   line-height: 1.6;
+}
+
+.point-up-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.point-up-label {
+  font-weight: 800;
+  color: #45505d;
+  font-size: 13px;
+}
+
+.point-up-chip {
+  border-radius: 999px;
+  background: #eff7f3;
+  color: #245848;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 10px;
+}
+
+.point-up-chip.today {
+  background: #245848;
+  color: #fff;
+}
+
+.point-up-row a {
+  margin-left: auto;
+  color: #a02b36;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.resurface-section,
+.link-check-section {
+  margin-top: 18px;
+}
+
+.resurface-list,
+.link-check-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.resurface-card,
+.link-check-card {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-left: 5px solid #8a6216;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 12px;
+}
+
+.resurface-days,
+.link-check-days {
+  width: fit-content;
+  border-radius: 999px;
+  background: #fff2d9;
+  color: #8a6216;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.resurface-card p {
+  margin: 0;
+  line-height: 1.6;
+  color: #45505d;
+}
+
+.resurface-card button,
+.link-check-card button {
+  justify-self: start;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #fff;
+  color: #a02b36;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 8px 12px;
+}
+
+.link-check-card a {
+  color: #a02b36;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .priority-ranking {
@@ -1346,15 +1443,23 @@
 .report-chart-card,
 .report-action-card,
 .report-table-card,
-.monthly-report {
+.monthly-report,
+.weekday-report {
   border: 1px solid rgba(23, 32, 42, 0.1);
   border-radius: 8px;
   background: #fbfcfb;
   padding: 16px;
 }
 
-.monthly-report {
+.monthly-report,
+.weekday-report {
   margin-top: 18px;
+}
+
+.weekday-insight {
+  margin: 10px 0 0;
+  color: #45505d;
+  line-height: 1.7;
 }
 
 .monthly-chart-grid {
@@ -1481,6 +1586,14 @@
 }
 
 .reward-bar {
+  background: #a02b36;
+}
+
+.weekday-click-bar {
+  background: #2a78d6;
+}
+
+.weekday-reward-bar {
   background: #a02b36;
 }
 
@@ -2280,7 +2393,9 @@ textarea {
   .calendar-list,
   .priority-list,
   .variation-list,
-  .monthly-chart-grid {
+  .monthly-chart-grid,
+  .resurface-list,
+  .link-check-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2397,6 +2512,8 @@ textarea {
   .priority-list,
   .variation-list,
   .monthly-chart-grid,
+  .resurface-list,
+  .link-check-list,
   .preview-actions {
     grid-template-columns: 1fr;
   }
