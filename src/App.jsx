@@ -433,6 +433,55 @@ function buildClickPost(campaign) {
   return lines.filter(Boolean).join('\n\n')
 }
 
+function buildClickPostVariations(campaign) {
+  const productLine = `【${campaign.productName || '商品名を入力'}】`
+  const problemLine = campaign.problem && campaign.audience
+    ? `${campaign.problem}と感じている${campaign.audience}向け。`
+    : campaign.problem || campaign.audience
+  const campaignHook = campaign.campaignName
+    ? `開催中/注目キャンペーン: ${campaign.campaignName}${campaign.discountHook ? ` (${campaign.discountHook})` : ''}`
+    : ''
+  const couponHook = campaign.couponUrl ? `クーポン確認: ${campaign.couponUrl}` : ''
+  const linkLine = campaign.productLink ? `商品リンク: ${campaign.productLink}` : ''
+  const disclaimer = '価格、在庫、ポイント、クーポン条件は楽天の商品ページで必ず確認してください。'
+
+  return [
+    {
+      key: 'problem',
+      label: '悩み解決訴求',
+      text: buildClickPost(campaign),
+    },
+    {
+      key: 'price',
+      label: '価格・キャンペーン訴求',
+      text: [
+        productLine,
+        campaignHook || campaign.priceHook || '今の価格・キャンペーンをチェック。',
+        couponHook,
+        campaign.priceHook,
+        problemLine,
+        campaign.benefit,
+        linkLine,
+        disclaimer,
+      ].filter(Boolean).join('\n\n'),
+    },
+    {
+      key: 'proof',
+      label: 'レビュー・根拠訴求',
+      text: [
+        productLine,
+        campaign.proof ? `選んだ理由: ${campaign.proof}` : '根拠・レビューを入力してください。',
+        campaign.benefit,
+        problemLine,
+        campaignHook,
+        couponHook,
+        linkLine,
+        disclaimer,
+      ].filter(Boolean).join('\n\n'),
+    },
+  ]
+}
+
 function clickCampaignScore(campaign) {
   return [
     campaign.productName,
@@ -946,6 +995,7 @@ function App() {
   ]
   const postScore = postScoreItems.filter(([done]) => done).length
   const campaignPreview = buildClickPost(campaignForm)
+  const campaignVariations = buildClickPostVariations(campaignForm)
   const campaignScore = clickCampaignScore(campaignForm)
   const campaignStats = useMemo(() => {
     const posted = clickCampaigns.filter((campaign) => campaign.status === 'posted' || campaign.status === 'winner' || campaign.status === 'failed')
@@ -1212,6 +1262,15 @@ function App() {
     try {
       await navigator.clipboard.writeText(campaignPreview)
       setCampaignMessage('キャンペーン反映済みの投稿文をコピーしました。')
+    } catch {
+      setCampaignMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
+
+  const copyCampaignVariation = async (label, text) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCampaignMessage(`${label}の投稿文をコピーしました。`)
     } catch {
       setCampaignMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
     }
@@ -1587,6 +1646,24 @@ function App() {
               楽天のキャンペーン、割引、クーポンは頻繁に変わります。公式ページと商品ページで開催期間、エントリー条件、上限、対象商品を確認してから投稿します。
             </p>
           </aside>
+        </div>
+
+        <div className="variation-section">
+          <div className="report-card-title">
+            <div>
+              <h3>訴求文バリエーション</h3>
+              <span>同じ商品を別の切り口でA/Bテストする</span>
+            </div>
+          </div>
+          <div className="variation-list">
+            {campaignVariations.map((variation) => (
+              <article className="variation-card" key={variation.key}>
+                <span className="variation-label">{variation.label}</span>
+                <p>{variation.text}</p>
+                <button type="button" onClick={() => copyCampaignVariation(variation.label, variation.text)}>この案をコピー</button>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className="campaign-message-row">

@@ -544,6 +544,56 @@
   line-height: 1.6;
 }
 
+.variation-section {
+  margin-top: 18px;
+}
+
+.variation-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.variation-card {
+  display: grid;
+  gap: 8px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 12px;
+}
+
+.variation-label {
+  width: fit-content;
+  border-radius: 999px;
+  background: #dcece5;
+  color: #245848;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.variation-card p {
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: #45505d;
+}
+
+.variation-card button {
+  justify-self: start;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #fff;
+  color: #a02b36;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 8px 12px;
+}
+
 .campaign-list {
   display: grid;
   gap: 10px;
@@ -2035,7 +2085,8 @@ textarea {
   .today-campaign-grid,
   .campaign-metrics,
   .calendar-list,
-  .priority-list {
+  .priority-list,
+  .variation-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2145,6 +2196,7 @@ textarea {
   .campaign-form,
   .calendar-list,
   .priority-list,
+  .variation-list,
   .preview-actions {
     grid-template-columns: 1fr;
   }
