@@ -1617,8 +1617,97 @@ function App() {
     })
   }
 
+  const topActiveCampaign = activeCampaignsToPost[0]
+  const topPriorityCampaign = priorityRanking[0]
+  const topDailyTask = todayTasks[0]
+  const briefingItems = [
+    {
+      key: 'daily-report',
+      label: '今日の数値を記録する',
+      detail: latestReport?.date === todayKey()
+        ? '本日分は記録済みです。'
+        : 'クリック・注文・売上・報酬を記録すると、診断とグラフが今日の分に更新されます。',
+      done: latestReport?.date === todayKey(),
+      href: '#today-work',
+    },
+    {
+      key: 'active-campaign',
+      label: '開催中キャンペーンを投稿する',
+      detail: topActiveCampaign
+        ? `${topActiveCampaign.campaignName || 'キャンペーン'} / ${topActiveCampaign.productName} が開催中でまだ未投稿です。`
+        : '開催中で未投稿のキャンペーンはありません。',
+      done: !topActiveCampaign,
+      href: '#click-acquisition',
+      quickAction: topActiveCampaign
+        ? { label: '投稿済みにする', onClick: () => markCampaignPosted(topActiveCampaign.id) }
+        : null,
+    },
+    {
+      key: 'priority-product',
+      label: '優先度が高い商品を投稿する',
+      detail: topPriorityCampaign
+        ? `「${topPriorityCampaign.productName}」が${topPriorityCampaign.priorityScore}ptで最優先です。`
+        : '下書き中の商品別キャンペーンがありません。',
+      done: !topPriorityCampaign,
+      href: '#click-acquisition',
+      quickAction: topPriorityCampaign
+        ? { label: '投稿済みにする', onClick: () => markCampaignPosted(topPriorityCampaign.id) }
+        : null,
+    },
+    {
+      key: 'top-task',
+      label: '今日の重要タスクを1つ実行する',
+      detail: topDailyTask ? topDailyTask.title : '未完了の重要タスクはありません。',
+      done: !topDailyTask,
+      href: '#today-work',
+      quickAction: topDailyTask
+        ? { label: '完了にする', onClick: () => toggleTask(topDailyTask.id) }
+        : null,
+    },
+    {
+      key: 'daily-email',
+      label: '日報メールを送る',
+      detail: dailyReportDue ? '本日分の日報がまだ送信されていません。' : '本日分の日報は送信済みです。',
+      done: !dailyReportDue,
+      href: dailyReportMailto,
+      isMailLink: true,
+    },
+  ]
+  const briefingDoneCount = briefingItems.filter((item) => item.done).length
+
   return (
     <main className="app-shell">
+      <section className="briefing-section" aria-label="今日のブリーフィング">
+        <div className="briefing-heading">
+          <div>
+            <p className="eyebrow">Today's briefing</p>
+            <h2>今日のブリーフィング</h2>
+            <p>毎日ここだけ確認すれば、やることを見落としません。</p>
+          </div>
+          <div className="briefing-progress">
+            <strong>{briefingDoneCount}/{briefingItems.length}</strong>
+            <span>完了</span>
+          </div>
+        </div>
+        <div className="briefing-list">
+          {briefingItems.map((item) => (
+            <article className={`briefing-item ${item.done ? 'done' : ''}`} key={item.key}>
+              <span className="briefing-status">{item.done ? '完了' : '未完了'}</span>
+              <strong>{item.label}</strong>
+              <p>{item.detail}</p>
+              <div className="briefing-actions">
+                {item.quickAction && (
+                  <button type="button" onClick={item.quickAction.onClick}>{item.quickAction.label}</button>
+                )}
+                <a href={item.href} onClick={item.isMailLink ? markDailyReportSent : undefined}>
+                  {item.isMailLink ? '日報を作成' : '詳細を見る'}
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="hero">
         <div>
           <p className="eyebrow">Rakuten affiliate growth</p>
