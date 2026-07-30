@@ -9,6 +9,7 @@
 .hero,
 .metric-grid,
 .diagnosis-section,
+.click-acquisition,
 .daily-report-section,
 .report-page,
 .click-studio,
@@ -239,6 +240,258 @@
 .metric-grid strong {
   font-size: 30px;
   line-height: 1;
+}
+
+.click-acquisition {
+  margin-bottom: 16px;
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+  padding: 24px;
+}
+
+.click-acquisition-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 126px;
+  gap: 20px;
+  align-items: start;
+}
+
+.click-acquisition-heading h2 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.25;
+}
+
+.click-acquisition-heading p {
+  max-width: 820px;
+  margin: 10px 0 0;
+  color: #45505d;
+  line-height: 1.75;
+}
+
+.campaign-score {
+  display: grid;
+  min-height: 92px;
+  place-items: center;
+  border-radius: 8px;
+  background: #17202a;
+  color: #fff;
+  padding: 12px;
+}
+
+.campaign-score strong {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.campaign-score span,
+.campaign-score small {
+  color: #cbd2d8;
+  font-size: 12px;
+}
+
+.campaign-kpi-grid,
+.today-campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.campaign-kpi-grid article,
+.today-campaign-grid article {
+  display: grid;
+  gap: 6px;
+  border-radius: 8px;
+  background: #f4f7f5;
+  padding: 16px;
+}
+
+.campaign-kpi-grid span,
+.campaign-kpi-grid small,
+.today-campaign-grid span,
+.today-campaign-grid p,
+.campaign-card span,
+.campaign-card p,
+.campaign-card small {
+  color: #65717e;
+}
+
+.campaign-kpi-grid strong {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.campaign-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.campaign-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.campaign-form label,
+.campaign-metrics label {
+  display: grid;
+  gap: 6px;
+  color: #45505d;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.campaign-form label:nth-of-type(2),
+.campaign-form label:nth-of-type(5),
+.campaign-form label:nth-of-type(6),
+.campaign-form label:nth-of-type(9),
+.campaign-form label:nth-of-type(10),
+.campaign-form label:nth-of-type(12),
+.campaign-form-actions {
+  grid-column: 1 / -1;
+}
+
+.campaign-form textarea {
+  min-height: 72px;
+}
+
+.campaign-form-actions,
+.campaign-message-row,
+.campaign-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.campaign-form-actions button,
+.campaign-message-row button,
+.today-campaign-grid button,
+.campaign-card-actions button,
+.campaign-card-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #a02b36;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 8px 12px;
+  text-decoration: none;
+}
+
+.campaign-form-actions button + button,
+.campaign-card-actions button + button,
+.campaign-card-actions a {
+  background: #fff;
+  color: #a02b36;
+}
+
+.campaign-preview {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: #f4f7f5;
+  padding: 16px;
+}
+
+.campaign-preview textarea {
+  min-height: 360px;
+  background: #fff;
+  line-height: 1.75;
+}
+
+.campaign-message-row {
+  margin-top: 14px;
+}
+
+.campaign-message-row p {
+  margin: 0;
+  color: #245848;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.today-campaigns {
+  margin-top: 18px;
+}
+
+.today-campaign-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.today-campaign-grid strong {
+  font-size: 18px;
+}
+
+.today-campaign-grid p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.campaign-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.campaign-card {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(260px, 0.75fr) minmax(240px, 0.85fr);
+  gap: 14px;
+  align-items: start;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-left: 5px solid #cbd2d8;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 14px;
+}
+
+.campaign-card.winner {
+  border-left-color: #245848;
+}
+
+.campaign-card.failed {
+  border-left-color: #a02b36;
+}
+
+.campaign-card.warm {
+  border-left-color: #8a6216;
+}
+
+.campaign-card h3 {
+  margin: 6px 0 0;
+  font-size: 20px;
+}
+
+.campaign-card p {
+  margin: 8px 0 0;
+  line-height: 1.6;
+}
+
+.campaign-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.campaign-card-actions {
+  justify-content: flex-start;
+}
+
+.campaign-card-actions strong {
+  flex-basis: 100%;
+  line-height: 1.45;
 }
 
 .diagnosis-section {
@@ -664,7 +917,7 @@
 
 .report-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 10px;
   margin-top: 18px;
 }
@@ -1591,6 +1844,9 @@ textarea {
 
 @media (max-width: 920px) {
   .hero,
+  .click-acquisition-heading,
+  .campaign-tools,
+  .campaign-card,
   .diagnosis-main,
   .daily-report-section,
   .report-page-heading,
@@ -1608,6 +1864,12 @@ textarea {
   }
 
   .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campaign-kpi-grid,
+  .today-campaign-grid,
+  .campaign-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1629,6 +1891,7 @@ textarea {
   }
 
   .report-form,
+  .campaign-form,
   .daily-report-form,
   .report-table-head,
   .report-table-row,
@@ -1642,6 +1905,11 @@ textarea {
   }
 
   .content-form button {
+    grid-column: 1 / -1;
+  }
+
+  .campaign-form label,
+  .campaign-form-actions {
     grid-column: 1 / -1;
   }
 
@@ -1673,6 +1941,7 @@ textarea {
 @media (max-width: 560px) {
   .hero,
   .metric-grid,
+  .click-acquisition,
   .diagnosis-section,
   .daily-report-section,
   .report-page,
@@ -1700,6 +1969,14 @@ textarea {
   .post-score { width: 100%; }
   .post-builder, .preview-actions { grid-template-columns: 1fr; }
   .post-builder label, .link-warning { grid-column: 1; }
+
+  .campaign-kpi-grid,
+  .today-campaign-grid,
+  .campaign-metrics,
+  .campaign-form,
+  .preview-actions {
+    grid-template-columns: 1fr;
+  }
 
   .metric-grid {
     grid-template-columns: 1fr;

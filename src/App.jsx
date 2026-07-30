@@ -10,6 +10,7 @@ const AFFILIATE_SETTINGS_KEY = 'task-dashboard.rakutenAffiliateSettings'
 const POST_DRAFT_KEY = 'task-dashboard.roomPostDraft'
 const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
 const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
+const CLICK_CAMPAIGNS_KEY = 'task-dashboard.clickCampaigns'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 
 const defaultReports = [
@@ -111,6 +112,49 @@ const defaultPostDraft = {
   priceHook: '',
   hashtags: '#楽天ROOM #買ってよかった',
 }
+
+const emptyClickCampaign = {
+  productName: '',
+  productLink: '',
+  audience: '',
+  problem: '',
+  benefit: '',
+  proof: '',
+  priceHook: '',
+  campaignName: '',
+  discountHook: '',
+  couponUrl: '',
+  channel: 'ROOM',
+  status: 'draft',
+  postedDate: '',
+  clicksAfter24h: '',
+  ordersAfter24h: '',
+  rewardAfter24h: '',
+  note: '',
+}
+
+const defaultClickCampaigns = [
+  {
+    id: 'campaign-starter-1',
+    productName: '商品別リンクを入れてください',
+    productLink: '',
+    audience: '買う前に失敗したくない人',
+    problem: '似た商品が多くて選べない',
+    benefit: '比較ポイントを短く見られる',
+    proof: 'レビュー数、価格、送料、クーポンを商品ページで確認',
+    priceHook: '最新価格は楽天の商品ページで確認',
+    campaignName: '楽天キャンペーン確認待ち',
+    discountHook: '買いまわり、ポイントアップ、クーポンを確認',
+    couponUrl: 'https://event.rakuten.co.jp/',
+    channel: 'ROOM',
+    status: 'draft',
+    postedDate: '',
+    clicksAfter24h: '',
+    ordersAfter24h: '',
+    rewardAfter24h: '',
+    note: 'まずは本当に紹介する商品の個別アフィリエイトリンクへ差し替えます。',
+  },
+]
 
 const defaultDailyReport = {
   enabled: true,
@@ -360,6 +404,69 @@ function buildRoomPost(draft) {
   ].filter(Boolean).join('\n\n')
 }
 
+function buildClickPost(campaign) {
+  const campaignHook = campaign.campaignName
+    ? `開催中/注目キャンペーン: ${campaign.campaignName}${campaign.discountHook ? ` (${campaign.discountHook})` : ''}`
+    : ''
+  const couponHook = campaign.couponUrl ? `クーポン確認: ${campaign.couponUrl}` : ''
+  const lines = [
+    `【${campaign.productName || '商品名を入力'}】`,
+    campaign.problem && campaign.audience
+      ? `${campaign.problem}と感じている${campaign.audience}向け。`
+      : campaign.problem || campaign.audience,
+    campaign.benefit,
+    campaign.proof ? `選んだ理由: ${campaign.proof}` : '',
+    campaign.priceHook,
+    campaignHook,
+    couponHook,
+    campaign.productLink ? `商品リンク: ${campaign.productLink}` : '',
+    '価格、在庫、ポイント、クーポン条件は楽天の商品ページで必ず確認してください。',
+  ]
+  return lines.filter(Boolean).join('\n\n')
+}
+
+function clickCampaignScore(campaign) {
+  return [
+    campaign.productName,
+    campaign.productLink?.startsWith('http') && !isGenericRakutenLink(campaign.productLink),
+    campaign.audience,
+    campaign.problem,
+    campaign.benefit,
+    campaign.proof,
+    campaign.campaignName || campaign.discountHook || campaign.couponUrl,
+  ].filter(Boolean).length
+}
+
+function clickCampaignVerdict(campaign) {
+  const clicks = toNumber(campaign.clicksAfter24h)
+  const orders = toNumber(campaign.ordersAfter24h)
+  const reward = toNumber(campaign.rewardAfter24h)
+  if (campaign.status !== 'posted' && campaign.status !== 'winner' && campaign.status !== 'failed') {
+    return ['未投稿: まず投稿して24時間後に数字を入れます', 'draft']
+  }
+  if (reward > 0 || orders > 0) return ['勝ち商品: 同じ切り口で別商品へ横展開', 'winner']
+  if (clicks > 0) return ['クリックあり: 商品条件、価格、クーポン訴求を改善', 'warm']
+  return ['クリック0: 1行目、商品、キャンペーン訴求を変えて再投稿', 'failed']
+}
+
+function normalizeCampaign(campaign) {
+  return {
+    ...emptyClickCampaign,
+    ...campaign,
+    productName: campaign.productName?.trim() ?? '',
+    productLink: campaign.productLink?.trim() ?? '',
+    audience: campaign.audience?.trim() ?? '',
+    problem: campaign.problem?.trim() ?? '',
+    benefit: campaign.benefit?.trim() ?? '',
+    proof: campaign.proof?.trim() ?? '',
+    priceHook: campaign.priceHook?.trim() ?? '',
+    campaignName: campaign.campaignName?.trim() ?? '',
+    discountHook: campaign.discountHook?.trim() ?? '',
+    couponUrl: campaign.couponUrl?.trim() ?? '',
+    note: campaign.note?.trim() ?? '',
+  }
+}
+
 function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, zeroRewardReasons, todayTasks, postScore, roomStats, affiliateSettings }) {
   const reasonLines = zeroRewardReasons.length > 0
     ? zeroRewardReasons.map((reason, index) => `${index + 1}. ${reason.title}: ${reason.body}`).join('\n')
@@ -541,9 +648,12 @@ function App() {
   const [roomForm, setRoomForm] = useState(emptyRoomFlow)
   const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
   const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
+  const [campaignForm, setCampaignForm] = useState(emptyClickCampaign)
+  const [clickCampaigns, setClickCampaigns] = useState(() => readStorage(CLICK_CAMPAIGNS_KEY, defaultClickCampaigns))
   const [dailyReport, setDailyReport] = useState(() => readStorage(DAILY_REPORT_KEY, defaultDailyReport))
   const [autoImprove, setAutoImprove] = useState(() => readStorage(AUTO_IMPROVE_KEY, defaultAutoImprove))
   const [copyMessage, setCopyMessage] = useState('')
+  const [campaignMessage, setCampaignMessage] = useState('')
   const [rescueMessage, setRescueMessage] = useState('')
   const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
 
@@ -580,6 +690,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem(POST_DRAFT_KEY, JSON.stringify(postDraft))
   }, [postDraft])
+
+  useEffect(() => {
+    localStorage.setItem(CLICK_CAMPAIGNS_KEY, JSON.stringify(clickCampaigns))
+  }, [clickCampaigns])
 
   useEffect(() => {
     localStorage.setItem(DAILY_REPORT_KEY, JSON.stringify(dailyReport))
@@ -658,6 +772,25 @@ function App() {
     [Boolean(postDraft.proof.trim()), '実感・根拠'],
   ]
   const postScore = postScoreItems.filter(([done]) => done).length
+  const campaignPreview = buildClickPost(campaignForm)
+  const campaignScore = clickCampaignScore(campaignForm)
+  const campaignStats = useMemo(() => {
+    const posted = clickCampaigns.filter((campaign) => campaign.status === 'posted' || campaign.status === 'winner' || campaign.status === 'failed')
+    const winners = clickCampaigns.filter((campaign) => clickCampaignVerdict(campaign)[1] === 'winner')
+    const zeroClick = clickCampaigns.filter((campaign) => clickCampaignVerdict(campaign)[1] === 'failed')
+    const totalClicks = clickCampaigns.reduce((sum, campaign) => sum + toNumber(campaign.clicksAfter24h), 0)
+    return {
+      drafts: clickCampaigns.length - posted.length,
+      posted: posted.length,
+      winners: winners.length,
+      zeroClick: zeroClick.length,
+      totalClicks,
+    }
+  }, [clickCampaigns])
+  const todayCampaigns = clickCampaigns
+    .filter((campaign) => campaign.status === 'draft')
+    .sort((a, b) => clickCampaignScore(b) - clickCampaignScore(a))
+    .slice(0, 3)
   const last7Reports = recentReports(reports, 7)
   const previous7Reports = reportsInDayRange(reports, 7, 14)
   const last7Summary = sumReports(last7Reports)
@@ -845,6 +978,126 @@ function App() {
     } catch {
       setCopyMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
     }
+  }
+
+  const updateCampaignForm = (field, value) => {
+    setCampaignForm((current) => ({ ...current, [field]: value }))
+    setCampaignMessage('')
+  }
+
+  const saveClickCampaign = (event) => {
+    event.preventDefault()
+    const nextCampaign = normalizeCampaign(campaignForm)
+    if (!nextCampaign.productName || !nextCampaign.productLink) {
+      setCampaignMessage('商品名と商品別アフィリエイトURLを入れてください。')
+      return
+    }
+    setClickCampaigns((current) => [{ id: crypto.randomUUID(), ...nextCampaign }, ...current])
+    setCampaignForm(emptyClickCampaign)
+    setCampaignMessage('クリック獲得キャンペーンを保存しました。今日の投稿候補に入ります。')
+  }
+
+  const loadDraftToCampaign = () => {
+    setCampaignForm((current) => ({
+      ...current,
+      productName: postDraft.productName,
+      productLink: postDraft.productLink,
+      audience: postDraft.audience,
+      problem: postDraft.problem,
+      benefit: postDraft.benefit,
+      proof: postDraft.proof,
+      priceHook: postDraft.priceHook,
+      channel: 'ROOM',
+    }))
+    setCampaignMessage('下の投稿ビルダーの内容をキャンペーン作成欄へ読み込みました。')
+  }
+
+  const applyRakutenCampaignPreset = () => {
+    setCampaignForm((current) => ({
+      ...current,
+      campaignName: current.campaignName || '楽天お買い物マラソン / ポイントアップ確認',
+      discountHook: current.discountHook || 'エントリー、買いまわり、クーポン、ポイント倍率を商品ページで確認',
+      couponUrl: current.couponUrl || 'https://event.rakuten.co.jp/campaign/point-up/marathon/',
+      priceHook: current.priceHook || 'クーポンやポイント倍率は開催期間で変わるため、最新条件を商品ページで確認してください。',
+    }))
+    setCampaignMessage('楽天キャンペーン訴求を投稿案へ反映しました。開催中かどうかは公式ページで確認してください。')
+  }
+
+  const copyCampaignPost = async () => {
+    try {
+      await navigator.clipboard.writeText(campaignPreview)
+      setCampaignMessage('キャンペーン反映済みの投稿文をコピーしました。')
+    } catch {
+      setCampaignMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
+
+  const markCampaignPosted = (campaignId) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) =>
+        campaign.id === campaignId
+          ? { ...campaign, status: 'posted', postedDate: todayKey() }
+          : campaign,
+      ),
+    )
+  }
+
+  const updateCampaignMetric = (campaignId, field, value) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) => {
+        if (campaign.id !== campaignId) return campaign
+        const nextCampaign = { ...campaign, [field]: value }
+        const [, tone] = clickCampaignVerdict(nextCampaign)
+        return {
+          ...nextCampaign,
+          status: tone === 'winner' ? 'winner' : tone === 'failed' ? 'failed' : nextCampaign.status,
+        }
+      }),
+    )
+  }
+
+  const duplicateCampaign = (campaign) => {
+    setClickCampaigns((current) => [
+      {
+        ...campaign,
+        id: crypto.randomUUID(),
+        status: 'draft',
+        postedDate: '',
+        clicksAfter24h: '',
+        ordersAfter24h: '',
+        rewardAfter24h: '',
+        productName: `${campaign.productName} 改善案`,
+        note: '前回結果を見て、1行目・商品条件・キャンペーン訴求を変えて再投稿します。',
+      },
+      ...current,
+    ])
+  }
+
+  const deleteCampaign = (campaignId) => {
+    setClickCampaigns((current) => current.filter((campaign) => campaign.id !== campaignId))
+  }
+
+  const addClickImprovementTasks = () => {
+    const targetCampaigns = clickCampaigns.filter((campaign) => clickCampaignVerdict(campaign)[1] === 'failed')
+    const nextTasks = targetCampaigns.length > 0
+      ? targetCampaigns.map((campaign) => ({
+          id: crypto.randomUUID(),
+          title: `${campaign.productName} の1行目、商品条件、クーポン訴求を変えて再投稿する`,
+          channel: campaign.channel,
+          impact: '高',
+          done: false,
+          source: 'click-campaign',
+        }))
+      : [{
+          id: crypto.randomUUID(),
+          title: '商品別リンク、キャンペーン名、クーポンURL入りの投稿案を3本作る',
+          channel: 'ROOM',
+          impact: '高',
+          done: false,
+          source: 'click-campaign',
+        }]
+    setTasks((current) => [...uniqueTasks(current, nextTasks), ...current])
+    setCampaignMessage(`${nextTasks.length}件のクリック改善タスクを追加しました。`)
   }
 
   const runAutomation = () => {
@@ -1052,6 +1305,7 @@ function App() {
             大きな一発狙いではなく、昨日より1つ良くするためのダッシュボードです。
           </p>
           <div className="hero-actions">
+            <a href="#click-acquisition">クリック獲得ツールへ</a>
             <a href="#report-page">レポートを見る</a>
             <a href="#click-studio">クリック投稿を作る</a>
             <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">
@@ -1089,6 +1343,117 @@ function App() {
         </article>
       </section>
 
+      <section className="click-acquisition" id="click-acquisition" aria-label="クリック獲得ツール">
+        <div className="click-acquisition-heading">
+          <div>
+            <p className="eyebrow">Click acquisition</p>
+            <h2>商品別リンクと楽天キャンペーンでクリックを作る</h2>
+            <p>
+              報酬はまずクリックが発生しないと始まりません。商品ごとに「誰のどんな悩みに効くか」
+              「今のキャンペーン/クーポンで何が得か」を入れて、投稿、24時間後のクリック確認、改善まで回します。
+            </p>
+          </div>
+          <div className="campaign-score">
+            <strong>{campaignScore}<span>/7</span></strong>
+            <small>{campaignScore >= 6 ? '投稿準備OK' : '不足項目あり'}</small>
+          </div>
+        </div>
+
+        <div className="campaign-kpi-grid">
+          <article><span>保存投稿案</span><strong>{formatNumber(clickCampaigns.length)}</strong><small>商品別キャンペーン</small></article>
+          <article><span>投稿済み</span><strong>{formatNumber(campaignStats.posted)}</strong><small>24時間後に数字確認</small></article>
+          <article><span>24hクリック</span><strong>{formatNumber(campaignStats.totalClicks)}</strong><small>商品別入力の合計</small></article>
+          <article><span>勝ち商品</span><strong>{formatNumber(campaignStats.winners)}</strong><small>注文/報酬あり</small></article>
+        </div>
+
+        <div className="campaign-tools">
+          <form className="campaign-form" onSubmit={saveClickCampaign}>
+            <label>商品名<input value={campaignForm.productName} onChange={(event) => updateCampaignForm('productName', event.target.value)} placeholder="例: 軽量コードレス掃除機" /></label>
+            <label>商品別アフィリエイトURL<input type="url" value={campaignForm.productLink} onChange={(event) => updateCampaignForm('productLink', event.target.value)} placeholder="楽天の商品ページで作った商品別リンク" /></label>
+            <label>誰向け<input value={campaignForm.audience} onChange={(event) => updateCampaignForm('audience', event.target.value)} placeholder="例: 忙しい一人暮らしの人" /></label>
+            <label>悩み<input value={campaignForm.problem} onChange={(event) => updateCampaignForm('problem', event.target.value)} placeholder="例: 掃除機を出すのが面倒" /></label>
+            <label>使うメリット<textarea value={campaignForm.benefit} onChange={(event) => updateCampaignForm('benefit', event.target.value)} placeholder="例: 軽くてすぐ使えるので床のホコリをためにくい" /></label>
+            <label>選んだ根拠<textarea value={campaignForm.proof} onChange={(event) => updateCampaignForm('proof', event.target.value)} placeholder="レビュー、仕様、送料、クーポンなど確認できる根拠" /></label>
+            <label>楽天キャンペーン名<input value={campaignForm.campaignName} onChange={(event) => updateCampaignForm('campaignName', event.target.value)} placeholder="例: お買い物マラソン / 5と0のつく日" /></label>
+            <label>割引・ポイント訴求<input value={campaignForm.discountHook} onChange={(event) => updateCampaignForm('discountHook', event.target.value)} placeholder="例: エントリー、買いまわり、ポイントアップ対象" /></label>
+            <label>クーポン/キャンペーンURL<input type="url" value={campaignForm.couponUrl} onChange={(event) => updateCampaignForm('couponUrl', event.target.value)} placeholder="公式キャンペーンやクーポンページURL" /></label>
+            <label>価格・注意点<input value={campaignForm.priceHook} onChange={(event) => updateCampaignForm('priceHook', event.target.value)} placeholder="価格、在庫、条件は商品ページで確認" /></label>
+            <label>投稿先<select value={campaignForm.channel} onChange={(event) => updateCampaignForm('channel', event.target.value)}><option>ROOM</option><option>SNS</option><option>ブログ</option></select></label>
+            <label>メモ<input value={campaignForm.note} onChange={(event) => updateCampaignForm('note', event.target.value)} placeholder="投稿時間、狙い、変更点" /></label>
+            <div className="campaign-form-actions">
+              <button type="submit">投稿案を保存</button>
+              <button type="button" onClick={loadDraftToCampaign}>下の投稿案を読み込む</button>
+              <button type="button" onClick={applyRakutenCampaignPreset}>楽天キャンペーン反映</button>
+            </div>
+          </form>
+
+          <aside className="campaign-preview">
+            <div className="preview-topline"><span>キャンペーン反映済み投稿文</span><strong>{campaignPreview.length}文字</strong></div>
+            <textarea readOnly value={campaignPreview} aria-label="キャンペーン反映済み投稿文" />
+            <div className="preview-actions">
+              <button type="button" onClick={copyCampaignPost}>投稿文をコピー</button>
+              <a href="https://event.rakuten.co.jp/" target="_blank" rel="noreferrer">楽天キャンペーン確認</a>
+            </div>
+            <p className="disclosure-note">
+              楽天のキャンペーン、割引、クーポンは頻繁に変わります。公式ページと商品ページで開催期間、エントリー条件、上限、対象商品を確認してから投稿します。
+            </p>
+          </aside>
+        </div>
+
+        <div className="campaign-message-row">
+          <button type="button" onClick={addClickImprovementTasks}>クリック改善タスクを自動追加</button>
+          {campaignMessage && <p role="status">{campaignMessage}</p>}
+        </div>
+
+        <div className="today-campaigns">
+          <div className="report-card-title">
+            <div>
+              <h3>今日投稿する3本</h3>
+              <span>スコアが高い未投稿案から順番に実行</span>
+            </div>
+          </div>
+          <div className="today-campaign-grid">
+            {todayCampaigns.map((campaign) => (
+              <article key={campaign.id}>
+                <span>{campaign.channel} / {clickCampaignScore(campaign)}/7</span>
+                <strong>{campaign.productName}</strong>
+                <p>{campaign.campaignName || campaign.discountHook || 'キャンペーン訴求未設定'}</p>
+                <button type="button" onClick={() => markCampaignPosted(campaign.id)}>投稿済みにする</button>
+              </article>
+            ))}
+            {todayCampaigns.length === 0 && <article><span>未投稿なし</span><strong>新しい商品別リンクを追加してください</strong><p>クリックがゼロなら、商品を変えるかキャンペーン訴求を変えて再テストします。</p></article>}
+          </div>
+        </div>
+
+        <div className="campaign-list">
+          {clickCampaigns.map((campaign) => {
+            const [verdict, tone] = clickCampaignVerdict(campaign)
+            return (
+              <article className={`campaign-card ${tone}`} key={campaign.id}>
+                <div>
+                  <span>{campaign.channel} / {campaign.status}</span>
+                  <h3>{campaign.productName}</h3>
+                  <p>{campaign.problem || campaign.benefit || campaign.note}</p>
+                  <small>{campaign.campaignName || 'キャンペーン未設定'} {campaign.discountHook ? `/ ${campaign.discountHook}` : ''}</small>
+                </div>
+                <div className="campaign-metrics">
+                  <label>24hクリック<input type="number" min="0" value={campaign.clicksAfter24h} onChange={(event) => updateCampaignMetric(campaign.id, 'clicksAfter24h', event.target.value)} /></label>
+                  <label>注文<input type="number" min="0" value={campaign.ordersAfter24h} onChange={(event) => updateCampaignMetric(campaign.id, 'ordersAfter24h', event.target.value)} /></label>
+                  <label>報酬<input type="number" min="0" value={campaign.rewardAfter24h} onChange={(event) => updateCampaignMetric(campaign.id, 'rewardAfter24h', event.target.value)} /></label>
+                </div>
+                <div className="campaign-card-actions">
+                  <strong>{verdict}</strong>
+                  <button type="button" onClick={() => markCampaignPosted(campaign.id)}>投稿済み</button>
+                  <button type="button" onClick={() => duplicateCampaign(campaign)}>改善案を複製</button>
+                  <button type="button" onClick={() => deleteCampaign(campaign.id)}>削除</button>
+                  <a className={!campaign.productLink ? 'disabled-link' : ''} href={campaign.productLink || undefined} target="_blank" rel="noreferrer sponsored">商品確認</a>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
       <section className="diagnosis-section" aria-label="ゼロ報酬の原因分析">
         <article className="diagnosis-main">
           <div>
@@ -1118,6 +1483,7 @@ function App() {
         <div className="rescue-actions">
           <button type="button" onClick={runZeroRewardRescue}>対策タスクを自動追加</button>
           <a href="#today-work">改善タスクを見る</a>
+          <a href="#click-acquisition">キャンペーン連動投稿を作る</a>
           <a href="#click-studio">商品別投稿を作る</a>
           <a href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02" target="_blank" rel="noreferrer">楽天レポートで確認</a>
         </div>
@@ -1248,6 +1614,11 @@ function App() {
             <span>投稿準備</span>
             <strong>{postScore}/6</strong>
             <small>{postScore < 5 ? '投稿ビルダーを埋める' : '投稿可能'}</small>
+          </article>
+          <article>
+            <span>クリック獲得運用</span>
+            <strong>{formatNumber(campaignStats.posted)}/{formatNumber(clickCampaigns.length)}</strong>
+            <small>投稿済み / 商品別キャンペーン。ゼロクリックは改善案へ複製します。</small>
           </article>
         </div>
 
@@ -1571,7 +1942,7 @@ function App() {
                 </button>
                 <div>
                   <strong>{task.title}</strong>
-                  <span>{task.channel} / 効果 {task.impact}{task.source ? ` / ${task.source === 'auto' ? '自動' : task.source === 'rescue' ? '対策' : task.source === 'boost' ? '改善' : task.source}` : ''}</span>
+                  <span>{task.channel} / 効果 {task.impact}{task.source ? ` / ${task.source === 'auto' ? '自動' : task.source === 'rescue' ? '対策' : task.source === 'boost' ? '改善' : task.source === 'auto-improve' ? '自動改善' : task.source === 'click-campaign' ? 'クリック獲得' : task.source}` : ''}</span>
                 </div>
                 <button type="button" className="delete-button" onClick={() => deleteTask(task.id)}>削除</button>
               </div>
