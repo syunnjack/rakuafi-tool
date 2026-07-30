@@ -11,6 +11,7 @@ const POST_DRAFT_KEY = 'task-dashboard.roomPostDraft'
 const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
 const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
 const CLICK_CAMPAIGNS_KEY = 'task-dashboard.clickCampaigns'
+const LINE_SYNC_KEY = 'task-dashboard.lineSyncSettings'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 
 const defaultReports = [
@@ -179,6 +180,14 @@ const defaultAutoImprove = {
   enabled: true,
   lastRunDate: '',
   lastResult: 'まだ自動改善処理は実行されていません。',
+}
+
+const defaultLineSync = {
+  enabled: false,
+  endpointUrl: '',
+  syncToken: '',
+  lastSyncedAt: '',
+  lastSyncStatus: '',
 }
 
 function readStorage(key, fallback) {
@@ -712,6 +721,32 @@ function buildResurfaceCandidates(clickCampaigns) {
     .sort((a, b) => b.daysSincePost - a.daysSincePost)
 }
 
+async function syncReportsToLine(lineSync, reports) {
+  if (!lineSync.enabled || !lineSync.endpointUrl.trim()) return null
+  const payload = {
+    reports: reports.slice(0, 90).map((report) => ({
+      date: report.date,
+      clicks: toNumber(report.clicks),
+      orders: toNumber(report.orders),
+      sales: toNumber(report.sales),
+      reward: toNumber(report.reward),
+    })),
+  }
+  try {
+    const response = await fetch(lineSync.endpointUrl.trim(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Sync-Token': lineSync.syncToken,
+      },
+      body: JSON.stringify(payload),
+    })
+    return response.ok ? 'success' : 'error'
+  } catch {
+    return 'error'
+  }
+}
+
 function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, zeroRewardReasons, todayTasks, postScore, roomStats, affiliateSettings }) {
   const reasonLines = zeroRewardReasons.length > 0
     ? zeroRewardReasons.map((reason, index) => `${index + 1}. ${reason.title}: ${reason.body}`).join('\n')
@@ -1034,6 +1069,7 @@ function App() {
   const [clickCampaigns, setClickCampaigns] = useState(() => readStorage(CLICK_CAMPAIGNS_KEY, defaultClickCampaigns))
   const [dailyReport, setDailyReport] = useState(() => readStorage(DAILY_REPORT_KEY, defaultDailyReport))
   const [autoImprove, setAutoImprove] = useState(() => readStorage(AUTO_IMPROVE_KEY, defaultAutoImprove))
+  const [lineSync, setLineSync] = useState(() => readStorage(LINE_SYNC_KEY, defaultLineSync))
   const [copyMessage, setCopyMessage] = useState('')
   const [campaignMessage, setCampaignMessage] = useState('')
   const [rescueMessage, setRescueMessage] = useState('')
@@ -1084,6 +1120,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem(AUTO_IMPROVE_KEY, JSON.stringify(autoImprove))
   }, [autoImprove])
+
+  useEffect(() => {
+    localStorage.setItem(LINE_SYNC_KEY, JSON.stringify(lineSync))
+  }, [lineSync])
 
   const sortedReports = useMemo(
     () => [...reports].sort((a, b) => b.date.localeCompare(a.date)),
@@ -1600,7 +1640,8 @@ function App() {
       reward: toNumber(reportForm.reward),
       memo: reportForm.memo.trim(),
     }
-    setReports((current) => [nextReport, ...current])
+    const nextReports = [nextReport, ...reports]
+    setReports(nextReports)
     if (autopilot) {
       const nextAutoTasks = createAutoTasks({
         totals,
@@ -1612,6 +1653,19 @@ function App() {
       setAutomationMessage('レポート入力に合わせて改善タスクを自動更新しました。')
     }
     setReportForm(emptyReport)
+    syncReportsToLine(lineSync, nextReports).then((status) => {
+      if (!status) return
+      setLineSync((current) => ({ ...current, lastSyncedAt: formatLocalDateKey(new Date()), lastSyncStatus: status }))
+    })
+  }
+
+  const saveLineSync = (event) => {
+    event.preventDefault()
+    setLineSync((current) => ({
+      ...current,
+      endpointUrl: current.endpointUrl.trim(),
+      syncToken: current.syncToken.trim(),
+    }))
   }
 
   const addTask = (event) => {
@@ -2214,6 +2268,50 @@ function App() {
           </form>
         </article>
         <textarea className="daily-report-preview" readOnly value={dailyReportBody} aria-label="日報プレビュー" />
+      </section>
+
+      <section className="line-sync-section" aria-label="LINE自動レポート設定">
+        <p className="eyebrow">LINE auto report</p>
+        <h2>毎朝LINEへ自動レポート</h2>
+        <p>
+          レポートを保存するたびに、レンタルサーバーに設置した受信エンドポイントへ数値を送信します。
+          実際の毎朝の送信自体はサーバー側のcronが行うため、設置手順は
+          <code>server/line-report/README.md</code> を参照してください。
+        </p>
+        <form className="daily-report-form" onSubmit={saveLineSync}>
+          <label className="wide-field">
+            同期先URL
+            <input
+              type="url"
+              value={lineSync.endpointUrl}
+              onChange={(event) => setLineSync({ ...lineSync, endpointUrl: event.target.value })}
+              placeholder="https://your-domain/rakuafi-report/api.php"
+            />
+          </label>
+          <label className="wide-field">
+            共有シークレット
+            <input
+              type="password"
+              value={lineSync.syncToken}
+              onChange={(event) => setLineSync({ ...lineSync, syncToken: event.target.value })}
+              placeholder="config.phpのsync_shared_secretと同じ値"
+            />
+          </label>
+          <label className="toggle-row">
+            <input
+              type="checkbox"
+              checked={lineSync.enabled}
+              onChange={(event) => setLineSync({ ...lineSync, enabled: event.target.checked })}
+            />
+            LINE同期を有効にする
+          </label>
+          <button type="submit">設定保存</button>
+        </form>
+        <p className="line-sync-status">
+          {lineSync.lastSyncedAt
+            ? `最終同期: ${lineSync.lastSyncedAt} (${lineSync.lastSyncStatus === 'success' ? '成功' : '失敗'})`
+            : 'まだ同期されていません。レポートを保存すると同期を試みます。'}
+        </p>
       </section>
 
       <section className="report-page" id="report-page" aria-label="アフィリエイトレポートページ">

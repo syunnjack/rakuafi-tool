@@ -1,0 +1,21 @@
+<?php
+// Copy this file to config.php and fill in real values.
+// config.php must never be committed to git or placed anywhere publicly downloadable.
+
+return [
+    // Shared secret the browser app must send in the X-Sync-Token header.
+    // Rotate this (and update the app's sync settings) if it ever leaks.
+    'sync_shared_secret' => 'CHANGE_ME',
+
+    // Only requests from this origin are allowed to call api.php.
+    'allowed_origin' => 'https://syunnjack.github.io',
+
+    // LINE Developers Console > your Messaging API channel > Channel access token (long-lived).
+    'line_channel_access_token' => 'CHANGE_ME',
+
+    // Your own LINE userId (the account that should receive the push message).
+    'line_user_id' => 'CHANGE_ME',
+
+    // Only override for local testing; production always uses the real LINE endpoint.
+    'line_api_base' => 'https://api.line.me',
+];
