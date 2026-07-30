@@ -351,8 +351,8 @@
 .campaign-form label:nth-of-type(5),
 .campaign-form label:nth-of-type(6),
 .campaign-form label:nth-of-type(9),
-.campaign-form label:nth-of-type(10),
 .campaign-form label:nth-of-type(12),
+.campaign-form label:nth-of-type(14),
 .campaign-form-actions {
   grid-column: 1 / -1;
 }
@@ -436,6 +436,73 @@
 }
 
 .today-campaign-grid p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.campaign-calendar {
+  margin-top: 18px;
+}
+
+.calendar-alert {
+  margin: 10px 0 0;
+  border-radius: 8px;
+  background: #fffaf0;
+  color: #8a6216;
+  font-weight: 800;
+  padding: 10px 12px;
+}
+
+.calendar-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.calendar-card {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-left: 5px solid #cbd2d8;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 12px;
+}
+
+.calendar-card.active {
+  border-left-color: #245848;
+}
+
+.calendar-card.upcoming {
+  border-left-color: #8a6216;
+}
+
+.calendar-card.ended {
+  border-left-color: #9aa4ac;
+}
+
+.calendar-status {
+  width: fit-content;
+  border-radius: 999px;
+  background: #dcece5;
+  color: #245848;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.calendar-card.upcoming .calendar-status {
+  background: #fff2d9;
+  color: #8a6216;
+}
+
+.calendar-card.ended .calendar-status {
+  background: #eceff1;
+  color: #65717e;
+}
+
+.calendar-card p {
   margin: 0;
   line-height: 1.6;
 }
@@ -1929,7 +1996,8 @@ textarea {
 
   .campaign-kpi-grid,
   .today-campaign-grid,
-  .campaign-metrics {
+  .campaign-metrics,
+  .calendar-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2037,6 +2105,7 @@ textarea {
   .today-campaign-grid,
   .campaign-metrics,
   .campaign-form,
+  .calendar-list,
   .preview-actions {
     grid-template-columns: 1fr;
   }

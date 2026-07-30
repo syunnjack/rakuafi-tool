@@ -127,6 +127,8 @@ const emptyClickCampaign = {
   channel: 'ROOM',
   status: 'draft',
   postedDate: '',
+  startDate: '',
+  endDate: '',
   clicksAfter24h: '',
   ordersAfter24h: '',
   rewardAfter24h: '',
@@ -149,6 +151,8 @@ const defaultClickCampaigns = [
     channel: 'ROOM',
     status: 'draft',
     postedDate: '',
+    startDate: '',
+    endDate: '',
     clicksAfter24h: '',
     ordersAfter24h: '',
     rewardAfter24h: '',
@@ -463,8 +467,37 @@ function normalizeCampaign(campaign) {
     campaignName: campaign.campaignName?.trim() ?? '',
     discountHook: campaign.discountHook?.trim() ?? '',
     couponUrl: campaign.couponUrl?.trim() ?? '',
+    startDate: campaign.startDate?.trim() ?? '',
+    endDate: campaign.endDate?.trim() ?? '',
     note: campaign.note?.trim() ?? '',
   }
+}
+
+function campaignScheduleStatus(campaign, today) {
+  if (!campaign.startDate && !campaign.endDate) return 'no-date'
+  if (campaign.startDate && daysBetween(campaign.startDate, today) < 0) return 'upcoming'
+  if (campaign.endDate && daysBetween(campaign.endDate, today) > 0) return 'ended'
+  return 'active'
+}
+
+function campaignScheduleLabel(scheduleStatus) {
+  return {
+    'no-date': ['日付未設定', 'no-date'],
+    upcoming: ['開始前', 'upcoming'],
+    active: ['開催中', 'active'],
+    ended: ['終了', 'ended'],
+  }[scheduleStatus]
+}
+
+function buildCampaignCalendar(clickCampaigns) {
+  const today = todayKey()
+  return clickCampaigns
+    .filter((campaign) => campaign.startDate || campaign.endDate)
+    .map((campaign) => ({
+      ...campaign,
+      scheduleStatus: campaignScheduleStatus(campaign, today),
+    }))
+    .sort((a, b) => (a.startDate || a.endDate).localeCompare(b.startDate || b.endDate))
 }
 
 function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, zeroRewardReasons, todayTasks, postScore, roomStats, affiliateSettings }) {
@@ -977,6 +1010,10 @@ function App() {
   const productRoi = useMemo(() => buildProductRoi(clickCampaigns), [clickCampaigns])
   const channelRoi = useMemo(() => buildChannelRoi(clickCampaigns, contents), [clickCampaigns, contents])
   const roiInsight = useMemo(() => buildRoiInsight(productRoi, channelRoi), [productRoi, channelRoi])
+  const campaignCalendar = useMemo(() => buildCampaignCalendar(clickCampaigns), [clickCampaigns])
+  const activeCampaignsToPost = campaignCalendar.filter(
+    (campaign) => campaign.scheduleStatus === 'active' && campaign.status === 'draft',
+  )
 
   const runImprovementProcessing = useCallback((mode = 'manual') => {
     const boostTasks = revenueActions.map((action) => ({
@@ -1457,6 +1494,8 @@ function App() {
             <label>楽天キャンペーン名<input value={campaignForm.campaignName} onChange={(event) => updateCampaignForm('campaignName', event.target.value)} placeholder="例: お買い物マラソン / 5と0のつく日" /></label>
             <label>割引・ポイント訴求<input value={campaignForm.discountHook} onChange={(event) => updateCampaignForm('discountHook', event.target.value)} placeholder="例: エントリー、買いまわり、ポイントアップ対象" /></label>
             <label>クーポン/キャンペーンURL<input type="url" value={campaignForm.couponUrl} onChange={(event) => updateCampaignForm('couponUrl', event.target.value)} placeholder="公式キャンペーンやクーポンページURL" /></label>
+            <label>キャンペーン開始日<input type="date" value={campaignForm.startDate} onChange={(event) => updateCampaignForm('startDate', event.target.value)} /></label>
+            <label>キャンペーン終了日<input type="date" value={campaignForm.endDate} onChange={(event) => updateCampaignForm('endDate', event.target.value)} /></label>
             <label>価格・注意点<input value={campaignForm.priceHook} onChange={(event) => updateCampaignForm('priceHook', event.target.value)} placeholder="価格、在庫、条件は商品ページで確認" /></label>
             <label>投稿先<select value={campaignForm.channel} onChange={(event) => updateCampaignForm('channel', event.target.value)}><option>ROOM</option><option>SNS</option><option>ブログ</option></select></label>
             <label>メモ<input value={campaignForm.note} onChange={(event) => updateCampaignForm('note', event.target.value)} placeholder="投稿時間、狙い、変更点" /></label>
@@ -1502,6 +1541,36 @@ function App() {
               </article>
             ))}
             {todayCampaigns.length === 0 && <article><span>未投稿なし</span><strong>新しい商品別リンクを追加してください</strong><p>クリックがゼロなら、商品を変えるかキャンペーン訴求を変えて再テストします。</p></article>}
+          </div>
+        </div>
+
+        <div className="campaign-calendar">
+          <div className="report-card-title">
+            <div>
+              <h3>投稿カレンダー</h3>
+              <span>{campaignCalendar.length}件の日程登録</span>
+            </div>
+          </div>
+          {activeCampaignsToPost.length > 0 && (
+            <p className="calendar-alert">
+              今日開催中で未投稿のキャンペーンが{activeCampaignsToPost.length}件あります。優先して投稿してください。
+            </p>
+          )}
+          <div className="calendar-list">
+            {campaignCalendar.map((campaign) => {
+              const [scheduleLabel, scheduleTone] = campaignScheduleLabel(campaign.scheduleStatus)
+              return (
+                <article className={`calendar-card ${scheduleTone}`} key={campaign.id}>
+                  <span className="calendar-status">{scheduleLabel}</span>
+                  <strong>{campaign.campaignName || 'キャンペーン名未設定'}</strong>
+                  <p>{campaign.productName}</p>
+                  <small>{campaign.startDate || '開始日未設定'} 〜 {campaign.endDate || '終了日未設定'}</small>
+                </article>
+              )
+            })}
+            {campaignCalendar.length === 0 && (
+              <p className="empty-text">キャンペーンの開始日・終了日を入力すると、投稿カレンダーに表示されます。</p>
+            )}
           </div>
         </div>
 
