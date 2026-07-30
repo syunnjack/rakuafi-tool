@@ -8,6 +8,7 @@
 
 .hero,
 .metric-grid,
+.briefing-section,
 .diagnosis-section,
 .click-acquisition,
 .daily-report-section,
@@ -31,6 +32,119 @@
   gap: 28px;
   align-items: end;
   padding: 48px 0 24px;
+}
+
+.briefing-section {
+  margin-top: 24px;
+  border: 1px solid rgba(23, 32, 42, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+  padding: 24px;
+}
+
+.briefing-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.briefing-heading h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.briefing-heading p {
+  margin: 8px 0 0;
+  color: #45505d;
+  line-height: 1.7;
+}
+
+.briefing-progress {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  border-radius: 8px;
+  background: #eff7f3;
+  color: #245848;
+  padding: 12px 18px;
+}
+
+.briefing-progress strong {
+  font-size: 22px;
+}
+
+.briefing-progress span {
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.briefing-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.briefing-item {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-left: 5px solid #a02b36;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 12px;
+}
+
+.briefing-item.done {
+  border-left-color: #245848;
+}
+
+.briefing-status {
+  width: fit-content;
+  border-radius: 999px;
+  background: #fff2f0;
+  color: #a02b36;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.briefing-item.done .briefing-status {
+  background: #dcece5;
+  color: #245848;
+}
+
+.briefing-item p {
+  margin: 0;
+  color: #45505d;
+  line-height: 1.6;
+  min-height: 40px;
+}
+
+.briefing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.briefing-actions button,
+.briefing-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #a02b36;
+  border-radius: 8px;
+  background: #fff;
+  color: #a02b36;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 6px 10px;
+  text-decoration: none;
 }
 
 .click-studio {
@@ -2152,6 +2266,14 @@ textarea {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .briefing-heading {
+    flex-wrap: wrap;
+  }
+
+  .briefing-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .campaign-kpi-grid,
   .today-campaign-grid,
   .campaign-metrics,
@@ -2232,6 +2354,7 @@ textarea {
 @media (max-width: 560px) {
   .hero,
   .metric-grid,
+  .briefing-section,
   .click-acquisition,
   .diagnosis-section,
   .daily-report-section,
@@ -2247,6 +2370,10 @@ textarea {
   .content-section,
   .history-section {
     width: min(100% - 24px, 1180px);
+  }
+
+  .briefing-list {
+    grid-template-columns: 1fr;
   }
 
   .hero {
