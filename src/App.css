@@ -1231,11 +1231,82 @@
 
 .report-chart-card,
 .report-action-card,
-.report-table-card {
+.report-table-card,
+.monthly-report {
   border: 1px solid rgba(23, 32, 42, 0.1);
   border-radius: 8px;
   background: #fbfcfb;
   padding: 16px;
+}
+
+.monthly-report {
+  margin-top: 18px;
+}
+
+.monthly-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.monthly-chart {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(23, 32, 42, 0.08);
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+}
+
+.monthly-chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.monthly-chart-head h4 {
+  margin: 0;
+  font-size: 13px;
+  color: #45505d;
+}
+
+.monthly-chart-head strong {
+  font-size: 16px;
+}
+
+.monthly-chart svg {
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+}
+
+.monthly-chart-axis {
+  stroke: #c3c2b7;
+  stroke-width: 1;
+}
+
+.monthly-chart-crosshair {
+  stroke: #9aa4ac;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.monthly-chart-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  color: #898781;
+  font-size: 11px;
+}
+
+.monthly-chart-tooltip {
+  flex: 1;
+  text-align: center;
+  color: #45505d;
+  font-weight: 800;
 }
 
 .report-card-title {
@@ -2086,7 +2157,8 @@ textarea {
   .campaign-metrics,
   .calendar-list,
   .priority-list,
-  .variation-list {
+  .variation-list,
+  .monthly-chart-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2197,6 +2269,7 @@ textarea {
   .calendar-list,
   .priority-list,
   .variation-list,
+  .monthly-chart-grid,
   .preview-actions {
     grid-template-columns: 1fr;
   }
