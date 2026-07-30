@@ -134,6 +134,8 @@ const emptyClickCampaign = {
   clicksAfter24h: '',
   ordersAfter24h: '',
   rewardAfter24h: '',
+  lastCheckedDate: '',
+  lastResurfacedDate: '',
   note: '',
 }
 
@@ -160,6 +162,8 @@ const defaultClickCampaigns = [
     clicksAfter24h: '',
     ordersAfter24h: '',
     rewardAfter24h: '',
+    lastCheckedDate: '',
+    lastResurfacedDate: '',
     note: 'まずは本当に紹介する商品の個別アフィリエイトリンクへ差し替えます。',
   },
 ]
@@ -207,6 +211,13 @@ function formatTime(date) {
 
 function todayKey() {
   return new Date().toISOString().slice(0, 10)
+}
+
+function formatLocalDateKey(date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
 function toNumber(value) {
@@ -257,7 +268,7 @@ function buildMonthlySeries(reports, days = 30) {
   const today = new Date()
   const series = []
   for (let offset = days - 1; offset >= 0; offset -= 1) {
-    const date = new Date(today.getTime() - offset * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+    const date = formatLocalDateKey(new Date(today.getFullYear(), today.getMonth(), today.getDate() - offset))
     const report = byDate.get(date)
     series.push({
       date,
@@ -628,6 +639,77 @@ function buildPriorityRanking(clickCampaigns, categoryPerformance) {
       priorityReasons: buildPriorityReasons(campaign, categoryPerformance),
     }))
     .sort((a, b) => b.priorityScore - a.priorityScore)
+}
+
+const LINK_RECHECK_DAYS = 14
+
+function buildLinkCheckReminders(clickCampaigns) {
+  const today = todayKey()
+  return clickCampaigns
+    .filter((campaign) => campaign.status !== 'draft' && campaign.productLink)
+    .map((campaign) => {
+      const baseline = campaign.lastCheckedDate || campaign.postedDate || campaign.startDate
+      const daysSinceCheck = baseline ? daysBetween(baseline, today) : Infinity
+      return { ...campaign, daysSinceCheck }
+    })
+    .filter((campaign) => campaign.daysSinceCheck >= LINK_RECHECK_DAYS)
+    .sort((a, b) => b.daysSinceCheck - a.daysSinceCheck)
+}
+
+function recurringPointUpLabels(date) {
+  const day = date.getDate()
+  const labels = []
+  if (day === 1) labels.push('ワンダフルデー(毎月1日)')
+  if (day % 5 === 0) labels.push('5と0のつく日')
+  return labels
+}
+
+function buildUpcomingPointUpDays(days = 7) {
+  const today = new Date()
+  const result = []
+  for (let offset = 0; offset < days; offset += 1) {
+    const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + offset)
+    const labels = recurringPointUpLabels(date)
+    if (labels.length > 0) {
+      result.push({
+        date: formatLocalDateKey(date),
+        labels,
+        isToday: offset === 0,
+      })
+    }
+  }
+  return result
+}
+
+const weekdayLabels = ['日', '月', '火', '水', '木', '金', '土']
+
+function buildWeekdayPerformance(reports) {
+  const totals = weekdayLabels.map((label, index) => ({ index, label, clicks: 0, orders: 0, reward: 0 }))
+  reports.forEach((report) => {
+    const day = new Date(`${report.date}T00:00:00`).getDay()
+    totals[day].clicks += toNumber(report.clicks)
+    totals[day].orders += toNumber(report.orders)
+    totals[day].reward += toNumber(report.reward)
+  })
+  return totals.map((item) => ({
+    ...item,
+    rewardPerClick: item.clicks ? item.reward / item.clicks : 0,
+  }))
+}
+
+const RESURFACE_DAYS = 14
+
+function buildResurfaceCandidates(clickCampaigns) {
+  const today = todayKey()
+  return clickCampaigns
+    .filter((campaign) => clickCampaignVerdict(campaign)[1] === 'winner')
+    .map((campaign) => {
+      const baseline = campaign.lastResurfacedDate || campaign.postedDate
+      const daysSincePost = baseline ? daysBetween(baseline, today) : Infinity
+      return { ...campaign, daysSincePost }
+    })
+    .filter((campaign) => campaign.daysSincePost >= RESURFACE_DAYS)
+    .sort((a, b) => b.daysSincePost - a.daysSincePost)
 }
 
 function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, zeroRewardReasons, todayTasks, postScore, roomStats, affiliateSettings }) {
@@ -1211,6 +1293,18 @@ function App() {
     () => buildPriorityRanking(clickCampaigns, categoryPerformance).slice(0, 5),
     [clickCampaigns, categoryPerformance],
   )
+  const linkCheckReminders = useMemo(() => buildLinkCheckReminders(clickCampaigns), [clickCampaigns])
+  const upcomingPointUpDays = useMemo(() => buildUpcomingPointUpDays(7), [])
+  const weekdayPerformance = useMemo(() => buildWeekdayPerformance(reports), [reports])
+  const weekdayMaxClicks = Math.max(1, ...weekdayPerformance.map((day) => day.clicks))
+  const weekdayMaxReward = Math.max(1, ...weekdayPerformance.map((day) => day.reward))
+  const weekdayInsight = useMemo(() => {
+    const withData = weekdayPerformance.filter((day) => day.clicks > 0 || day.reward > 0)
+    if (withData.length === 0) return '曜日別の傾向を見るには、まず日次レポートを数日分記録してください。'
+    const best = [...withData].sort((a, b) => b.reward - a.reward || b.rewardPerClick - a.rewardPerClick)[0]
+    return `${best.label}曜日の報酬合計が最も高い傾向です(${formatCurrency(best.reward)})。投稿量をこの曜日に厚めに配分してみてください。`
+  }, [weekdayPerformance])
+  const resurfaceCandidates = useMemo(() => buildResurfaceCandidates(clickCampaigns), [clickCampaigns])
 
   const runImprovementProcessing = useCallback((mode = 'manual') => {
     const boostTasks = revenueActions.map((action) => ({
@@ -1361,6 +1455,22 @@ function App() {
         campaign.id === campaignId
           ? { ...campaign, status: 'posted', postedDate: todayKey() }
           : campaign,
+      ),
+    )
+  }
+
+  const markLinkChecked = (campaignId) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) =>
+        campaign.id === campaignId ? { ...campaign, lastCheckedDate: todayKey() } : campaign,
+      ),
+    )
+  }
+
+  const markResurfaced = (campaignId) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) =>
+        campaign.id === campaignId ? { ...campaign, lastResurfacedDate: todayKey() } : campaign,
       ),
     )
   }
@@ -1620,6 +1730,8 @@ function App() {
   const topActiveCampaign = activeCampaignsToPost[0]
   const topPriorityCampaign = priorityRanking[0]
   const topDailyTask = todayTasks[0]
+  const topLinkCheck = linkCheckReminders[0]
+  const topResurface = resurfaceCandidates[0]
   const briefingItems = [
     {
       key: 'daily-report',
@@ -1671,6 +1783,30 @@ function App() {
       done: !dailyReportDue,
       href: dailyReportMailto,
       isMailLink: true,
+    },
+    {
+      key: 'link-check',
+      label: 'リンク・在庫を再確認する',
+      detail: topLinkCheck
+        ? `「${topLinkCheck.productName}」が${LINK_RECHECK_DAYS}日以上未確認です。`
+        : '再確認が必要なリンクはありません。',
+      done: !topLinkCheck,
+      href: '#click-acquisition',
+      quickAction: topLinkCheck
+        ? { label: '確認済みにする', onClick: () => markLinkChecked(topLinkCheck.id) }
+        : null,
+    },
+    {
+      key: 'resurface',
+      label: '成果記事を再投稿する',
+      detail: topResurface
+        ? `「${topResurface.productName}」を${formatNumber(topResurface.daysSincePost)}日間再投稿していません。`
+        : '再掘り起こし対象の勝ち商品はありません。',
+      done: !topResurface,
+      href: '#click-acquisition',
+      quickAction: topResurface
+        ? { label: '再投稿づみにする', onClick: () => markResurfaced(topResurface.id) }
+        : null,
     },
   ]
   const briefingDoneCount = briefingItems.filter((item) => item.done).length
@@ -1885,6 +2021,64 @@ function App() {
             })}
             {campaignCalendar.length === 0 && (
               <p className="empty-text">キャンペーンの開始日・終了日を入力すると、投稿カレンダーに表示されます。</p>
+            )}
+          </div>
+          <div className="point-up-row">
+            <span className="point-up-label">楽天ポイントアップ日(目安)</span>
+            {upcomingPointUpDays.length > 0 ? upcomingPointUpDays.map((day) => (
+              <span className={`point-up-chip ${day.isToday ? 'today' : ''}`} key={day.date}>
+                {day.date.slice(5).replace('-', '/')} {day.labels.join(' / ')}
+              </span>
+            )) : <span className="point-up-chip">今後7日に対象日はありません</span>}
+            <a href="https://event.rakuten.co.jp/" target="_blank" rel="noreferrer">公式で条件を確認</a>
+          </div>
+          <p className="disclosure-note">
+            対象条件、倍率、上限は時期により変わります。投稿・購入前に必ず公式ページで最新条件を確認してください。
+          </p>
+        </div>
+
+        <div className="resurface-section">
+          <div className="report-card-title">
+            <div>
+              <h3>成果記事の再掘り起こし</h3>
+              <span>勝ち商品を{RESURFACE_DAYS}日以上再投稿していない案件</span>
+            </div>
+          </div>
+          <div className="resurface-list">
+            {resurfaceCandidates.map((campaign) => (
+              <article className="resurface-card" key={campaign.id}>
+                <span className="resurface-days">{formatNumber(campaign.daysSincePost)}日経過</span>
+                <strong>{campaign.productName}</strong>
+                <p>{campaign.campaignName || 'キャンペーン未設定'} / {campaign.channel}</p>
+                <button type="button" onClick={() => markResurfaced(campaign.id)}>再投稿づみにする</button>
+              </article>
+            ))}
+            {resurfaceCandidates.length === 0 && (
+              <p className="empty-text">再掘り起こし対象の勝ち商品はありません。</p>
+            )}
+          </div>
+        </div>
+
+        <div className="link-check-section">
+          <div className="report-card-title">
+            <div>
+              <h3>リンク・在庫の再確認</h3>
+              <span>投稿から{LINK_RECHECK_DAYS}日以上リンク未確認の案件</span>
+            </div>
+          </div>
+          <div className="link-check-list">
+            {linkCheckReminders.map((campaign) => (
+              <article className="link-check-card" key={campaign.id}>
+                <span className="link-check-days">
+                  {campaign.daysSinceCheck === Infinity ? '未確認' : `${formatNumber(campaign.daysSinceCheck)}日未確認`}
+                </span>
+                <strong>{campaign.productName}</strong>
+                <a href={campaign.productLink || undefined} target="_blank" rel="noreferrer sponsored">商品ページを開く</a>
+                <button type="button" onClick={() => markLinkChecked(campaign.id)}>確認済みにする</button>
+              </article>
+            ))}
+            {linkCheckReminders.length === 0 && (
+              <p className="empty-text">再確認が必要なリンクはありません。</p>
             )}
           </div>
         </div>
@@ -2213,6 +2407,33 @@ function App() {
             <MonthlyLineChart title="注文" data={monthlySeries} valueKey="orders" color="#1baf7a" formatValue={formatNumber} />
             <MonthlyLineChart title="売上" data={monthlySeries} valueKey="sales" color="#eda100" formatValue={formatCurrency} />
             <MonthlyLineChart title="報酬" data={monthlySeries} valueKey="reward" color="#a02b36" formatValue={formatCurrency} />
+          </div>
+        </div>
+
+        <div className="weekday-report">
+          <div className="report-card-title">
+            <h3>曜日別パフォーマンス</h3>
+            <span>全期間のレポート集計</span>
+          </div>
+          <p className="weekday-insight">{weekdayInsight}</p>
+          <div className="report-bars" aria-label="曜日別クリックと報酬グラフ">
+            {weekdayPerformance.map((day) => {
+              const clickHeight = Math.max(4, (day.clicks / weekdayMaxClicks) * 100)
+              const rewardHeight = Math.max(4, (day.reward / weekdayMaxReward) * 100)
+              return (
+                <div className="report-day" key={day.index}>
+                  <div className="bar-pair">
+                    <i className="weekday-click-bar" style={{ height: `${clickHeight}%` }} />
+                    <i className="weekday-reward-bar" style={{ height: `${rewardHeight}%` }} />
+                  </div>
+                  <span>{day.label}</span>
+                </div>
+              )
+            })}
+          </div>
+          <div className="chart-legend">
+            <span><i className="weekday-click-bar" />クリック</span>
+            <span><i className="weekday-reward-bar" />報酬</span>
           </div>
         </div>
 
