@@ -252,6 +252,24 @@ function sumReports(reports) {
   }
 }
 
+function buildMonthlySeries(reports, days = 30) {
+  const byDate = new Map(reports.map((report) => [report.date, report]))
+  const today = new Date()
+  const series = []
+  for (let offset = days - 1; offset >= 0; offset -= 1) {
+    const date = new Date(today.getTime() - offset * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+    const report = byDate.get(date)
+    series.push({
+      date,
+      clicks: toNumber(report?.clicks),
+      orders: toNumber(report?.orders),
+      sales: toNumber(report?.sales),
+      reward: toNumber(report?.reward),
+    })
+  }
+  return series
+}
+
 function deltaValue(current, previous) {
   if (previous === 0 && current === 0) return { amount: 0, percent: 0, direction: 'flat' }
   if (previous === 0) return { amount: current, percent: 100, direction: 'up' }
@@ -855,6 +873,66 @@ function defaultImprovementDraft() {
   }
 }
 
+function MonthlyLineChart({ title, data, valueKey, color, formatValue }) {
+  const [hoverIndex, setHoverIndex] = useState(null)
+  const width = 320
+  const height = 140
+  const paddingX = 10
+  const paddingY = 18
+  const maxValue = Math.max(1, ...data.map((point) => point[valueKey]))
+  const stepX = (width - paddingX * 2) / (data.length - 1)
+  const points = data.map((point, index) => ({
+    x: paddingX + index * stepX,
+    y: height - paddingY - (point[valueKey] / maxValue) * (height - paddingY * 2),
+    value: point[valueKey],
+    date: point.date,
+  }))
+  const linePath = points.map((point, index) => `${index === 0 ? 'M' : 'L'}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ')
+  const baseline = (height - paddingY).toFixed(1)
+  const areaPath = `${linePath} L${points[points.length - 1].x.toFixed(1)},${baseline} L${points[0].x.toFixed(1)},${baseline} Z`
+  const latest = points[points.length - 1]
+  const hovered = hoverIndex !== null ? points[hoverIndex] : null
+
+  const handleMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const relativeX = ((event.clientX - rect.left) / rect.width) * width
+    const index = Math.round((relativeX - paddingX) / stepX)
+    setHoverIndex(Math.min(points.length - 1, Math.max(0, index)))
+  }
+
+  return (
+    <article className="monthly-chart">
+      <div className="monthly-chart-head">
+        <h4>{title}</h4>
+        <strong>{formatValue(latest.value)}</strong>
+      </div>
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        role="img"
+        aria-label={`${title}の過去${data.length}日推移`}
+        onMouseMove={handleMove}
+        onMouseLeave={() => setHoverIndex(null)}
+      >
+        <line x1={paddingX} y1={baseline} x2={width - paddingX} y2={baseline} className="monthly-chart-axis" />
+        <path d={areaPath} fill={color} opacity="0.14" stroke="none" />
+        <path d={linePath} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx={latest.x} cy={latest.y} r="4" fill={color} />
+        {hovered && (
+          <>
+            <line x1={hovered.x} y1={paddingY / 2} x2={hovered.x} y2={baseline} className="monthly-chart-crosshair" />
+            <circle cx={hovered.x} cy={hovered.y} r="4" fill={color} stroke="#fff" strokeWidth="1.5" />
+          </>
+        )}
+      </svg>
+      <div className="monthly-chart-foot">
+        <span>{data[0].date.slice(5).replace('-', '/')}</span>
+        <span className="monthly-chart-tooltip">{hovered ? `${hovered.date.slice(5).replace('-', '/')} ・ ${formatValue(hovered.value)}` : ''}</span>
+        <span>{data[data.length - 1].date.slice(5).replace('-', '/')}</span>
+      </div>
+    </article>
+  )
+}
+
 function App() {
   const [reports, setReports] = useState(readReports)
   const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
@@ -1097,6 +1175,7 @@ function App() {
   const reportRows = [...sortedReports].reverse().slice(-14)
   const reportMaxClicks = Math.max(1, ...reportRows.map((report) => toNumber(report.clicks)))
   const reportMaxReward = Math.max(1, ...reportRows.map((report) => toNumber(report.reward)))
+  const monthlySeries = useMemo(() => buildMonthlySeries(reports), [reports])
   const [currentReportStatus, currentReportTone] = reportStatus({ last7Clicks, last7Reward, postScore })
   const toolHealthChecks = buildToolHealthChecks({
     autopilot,
@@ -2033,6 +2112,19 @@ function App() {
               {zeroRewardReasons.length === 0 && <li><strong>異常なし</strong><span>記録を継続して、成果が出た導線を横展開してください。</span></li>}
             </ul>
           </article>
+        </div>
+
+        <div className="monthly-report">
+          <div className="report-card-title">
+            <h3>過去30日の推移</h3>
+            <span>クリック・注文・売上・報酬</span>
+          </div>
+          <div className="monthly-chart-grid">
+            <MonthlyLineChart title="クリック" data={monthlySeries} valueKey="clicks" color="#2a78d6" formatValue={formatNumber} />
+            <MonthlyLineChart title="注文" data={monthlySeries} valueKey="orders" color="#1baf7a" formatValue={formatNumber} />
+            <MonthlyLineChart title="売上" data={monthlySeries} valueKey="sales" color="#eda100" formatValue={formatCurrency} />
+            <MonthlyLineChart title="報酬" data={monthlySeries} valueKey="reward" color="#a02b36" formatValue={formatCurrency} />
+          </div>
         </div>
 
         <div className="report-table-card">
