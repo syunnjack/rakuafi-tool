@@ -12,6 +12,7 @@
 .diagnosis-section,
 .click-acquisition,
 .daily-report-section,
+.line-sync-section,
 .report-page,
 .roi-section,
 .click-studio,
@@ -995,11 +996,23 @@
 }
 
 .daily-report-panel,
-.daily-report-preview {
+.daily-report-preview,
+.line-sync-section {
   border: 1px solid rgba(23, 32, 42, 0.12);
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 16px 42px rgba(39, 52, 66, 0.08);
+}
+
+.line-sync-section {
+  margin-bottom: 16px;
+  padding: 24px;
+}
+
+.line-sync-status {
+  margin: 14px 0 0;
+  color: #45505d;
+  line-height: 1.7;
 }
 
 .daily-report-panel {
@@ -2473,6 +2486,7 @@ textarea {
   .click-acquisition,
   .diagnosis-section,
   .daily-report-section,
+  .line-sync-section,
   .report-page,
   .roi-section,
   .click-studio,

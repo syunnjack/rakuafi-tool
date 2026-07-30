@@ -25,3 +25,7 @@ dist-ssr
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# LINE daily report secrets/data (never commit real tokens or synced data)
+server/line-report/config.php
+server/line-report/data/
