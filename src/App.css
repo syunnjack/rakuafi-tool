@@ -348,11 +348,11 @@
 }
 
 .campaign-form label:nth-of-type(2),
-.campaign-form label:nth-of-type(5),
-.campaign-form label:nth-of-type(6),
-.campaign-form label:nth-of-type(9),
-.campaign-form label:nth-of-type(12),
+.campaign-form label:nth-of-type(7),
+.campaign-form label:nth-of-type(8),
+.campaign-form label:nth-of-type(11),
 .campaign-form label:nth-of-type(14),
+.campaign-form label:nth-of-type(16),
 .campaign-form-actions {
   grid-column: 1 / -1;
 }
@@ -504,6 +504,43 @@
 
 .calendar-card p {
   margin: 0;
+  line-height: 1.6;
+}
+
+.priority-ranking {
+  margin-top: 18px;
+}
+
+.priority-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.priority-card {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 12px;
+}
+
+.priority-rank {
+  width: fit-content;
+  border-radius: 999px;
+  background: #dcece5;
+  color: #245848;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.priority-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #45505d;
   line-height: 1.6;
 }
 
@@ -1997,7 +2034,8 @@ textarea {
   .campaign-kpi-grid,
   .today-campaign-grid,
   .campaign-metrics,
-  .calendar-list {
+  .calendar-list,
+  .priority-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2106,6 +2144,7 @@ textarea {
   .campaign-metrics,
   .campaign-form,
   .calendar-list,
+  .priority-list,
   .preview-actions {
     grid-template-columns: 1fr;
   }

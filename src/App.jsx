@@ -116,6 +116,8 @@ const defaultPostDraft = {
 const emptyClickCampaign = {
   productName: '',
   productLink: '',
+  price: '',
+  category: '',
   audience: '',
   problem: '',
   benefit: '',
@@ -140,6 +142,8 @@ const defaultClickCampaigns = [
     id: 'campaign-starter-1',
     productName: '商品別リンクを入れてください',
     productLink: '',
+    price: '',
+    category: '',
     audience: '買う前に失敗したくない人',
     problem: '似た商品が多くて選べない',
     benefit: '比較ポイントを短く見られる',
@@ -459,6 +463,7 @@ function normalizeCampaign(campaign) {
     ...campaign,
     productName: campaign.productName?.trim() ?? '',
     productLink: campaign.productLink?.trim() ?? '',
+    category: campaign.category?.trim() ?? '',
     audience: campaign.audience?.trim() ?? '',
     problem: campaign.problem?.trim() ?? '',
     benefit: campaign.benefit?.trim() ?? '',
@@ -498,6 +503,64 @@ function buildCampaignCalendar(clickCampaigns) {
       scheduleStatus: campaignScheduleStatus(campaign, today),
     }))
     .sort((a, b) => (a.startDate || a.endDate).localeCompare(b.startDate || b.endDate))
+}
+
+function buildCategoryPerformance(clickCampaigns) {
+  const totals = new Map()
+  clickCampaigns.forEach((campaign) => {
+    if (!campaign.category) return
+    const clicks = toNumber(campaign.clicksAfter24h)
+    const reward = toNumber(campaign.rewardAfter24h)
+    if (clicks === 0 && reward === 0) return
+    const current = totals.get(campaign.category) ?? { category: campaign.category, clicks: 0, reward: 0 }
+    current.clicks += clicks
+    current.reward += reward
+    totals.set(campaign.category, current)
+  })
+  return [...totals.values()].map((item) => ({
+    ...item,
+    rewardPerClick: item.clicks ? item.reward / item.clicks : 0,
+  }))
+}
+
+function priceTierScore(price) {
+  const value = toNumber(price)
+  if (value >= 10000) return 3
+  if (value >= 3000) return 2
+  if (value > 0) return 1
+  return 0
+}
+
+function categoryTierScore(campaign, categoryPerformance) {
+  if (!campaign.category) return 1
+  const match = categoryPerformance.find((item) => item.category === campaign.category)
+  if (!match) return 1
+  const overallAvg = categoryPerformance.reduce((sum, item) => sum + item.rewardPerClick, 0) / categoryPerformance.length
+  if (overallAvg === 0) return 1
+  return match.rewardPerClick >= overallAvg ? 2 : 0
+}
+
+function buildPriorityReasons(campaign, categoryPerformance) {
+  const price = toNumber(campaign.price)
+  const priceLabel = price > 0 ? `単価${formatCurrency(price)}` : '単価未入力'
+  const match = categoryPerformance.find((item) => item.category === campaign.category)
+  const categoryLabel = campaign.category
+    ? match
+      ? `${campaign.category}実績: 1クリック${formatCurrency(match.rewardPerClick)}`
+      : `${campaign.category}: 実績データなし`
+    : 'カテゴリ未入力'
+  return [priceLabel, categoryLabel, `投稿準備${clickCampaignScore(campaign)}/7`]
+}
+
+function buildPriorityRanking(clickCampaigns, categoryPerformance) {
+  return clickCampaigns
+    .filter((campaign) => campaign.status === 'draft')
+    .map((campaign) => ({
+      ...campaign,
+      priorityScore: priceTierScore(campaign.price) * 2 + categoryTierScore(campaign, categoryPerformance) * 2 + clickCampaignScore(campaign),
+      priorityReasons: buildPriorityReasons(campaign, categoryPerformance),
+    }))
+    .sort((a, b) => b.priorityScore - a.priorityScore)
 }
 
 function buildDailyReportBody({ totals, last7Clicks, last7Orders, last7Reward, zeroRewardReasons, todayTasks, postScore, roomStats, affiliateSettings }) {
@@ -1014,6 +1077,11 @@ function App() {
   const activeCampaignsToPost = campaignCalendar.filter(
     (campaign) => campaign.scheduleStatus === 'active' && campaign.status === 'draft',
   )
+  const categoryPerformance = useMemo(() => buildCategoryPerformance(clickCampaigns), [clickCampaigns])
+  const priorityRanking = useMemo(
+    () => buildPriorityRanking(clickCampaigns, categoryPerformance).slice(0, 5),
+    [clickCampaigns, categoryPerformance],
+  )
 
   const runImprovementProcessing = useCallback((mode = 'manual') => {
     const boostTasks = revenueActions.map((action) => ({
@@ -1487,6 +1555,8 @@ function App() {
           <form className="campaign-form" onSubmit={saveClickCampaign}>
             <label>商品名<input value={campaignForm.productName} onChange={(event) => updateCampaignForm('productName', event.target.value)} placeholder="例: 軽量コードレス掃除機" /></label>
             <label>商品別アフィリエイトURL<input type="url" value={campaignForm.productLink} onChange={(event) => updateCampaignForm('productLink', event.target.value)} placeholder="楽天の商品ページで作った商品別リンク" /></label>
+            <label>単価(円)<input type="number" min="0" value={campaignForm.price} onChange={(event) => updateCampaignForm('price', event.target.value)} placeholder="例: 5980" /></label>
+            <label>カテゴリ<input value={campaignForm.category} onChange={(event) => updateCampaignForm('category', event.target.value)} placeholder="例: 家電、日用品、美容" /></label>
             <label>誰向け<input value={campaignForm.audience} onChange={(event) => updateCampaignForm('audience', event.target.value)} placeholder="例: 忙しい一人暮らしの人" /></label>
             <label>悩み<input value={campaignForm.problem} onChange={(event) => updateCampaignForm('problem', event.target.value)} placeholder="例: 掃除機を出すのが面倒" /></label>
             <label>使うメリット<textarea value={campaignForm.benefit} onChange={(event) => updateCampaignForm('benefit', event.target.value)} placeholder="例: 軽くてすぐ使えるので床のホコリをためにくい" /></label>
@@ -1570,6 +1640,29 @@ function App() {
             })}
             {campaignCalendar.length === 0 && (
               <p className="empty-text">キャンペーンの開始日・終了日を入力すると、投稿カレンダーに表示されます。</p>
+            )}
+          </div>
+        </div>
+
+        <div className="priority-ranking">
+          <div className="report-card-title">
+            <div>
+              <h3>商品優先度スコア</h3>
+              <span>単価・カテゴリ実績・投稿準備から算出した、下書きの投稿優先度</span>
+            </div>
+          </div>
+          <div className="priority-list">
+            {priorityRanking.map((campaign, index) => (
+              <article className="priority-card" key={campaign.id}>
+                <span className="priority-rank">{index + 1}位 / {campaign.priorityScore}pt</span>
+                <strong>{campaign.productName}</strong>
+                <ul>
+                  {campaign.priorityReasons.map((reason) => <li key={reason}>{reason}</li>)}
+                </ul>
+              </article>
+            ))}
+            {priorityRanking.length === 0 && (
+              <p className="empty-text">下書き中の商品別キャンペーンがありません。商品を追加すると優先度が表示されます。</p>
             )}
           </div>
         </div>
