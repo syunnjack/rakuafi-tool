@@ -431,6 +431,136 @@ function readReports() {
   return readStorage(REPORTS_KEY, defaultReports).filter((report) => !String(report.id).startsWith('sample-'))
 }
 
+// 楽天アフィリエイトのレポートCSVはShift-JISで出力される。ブラウザのTextDecoderで
+// 直接デコードし、文字化けを避ける(UTF-8で読むと日本語ヘッダーが壊れるため)。
+async function decodeCsvFile(file) {
+  const buffer = await file.arrayBuffer()
+  try {
+    const decoded = new TextDecoder('shift-jis').decode(buffer)
+    if (!decoded.includes('�')) return decoded
+  } catch {
+    // Shift-JISデコーダが使えない環境ではUTF-8にフォールバック
+  }
+  return new TextDecoder('utf-8').decode(buffer)
+}
+
+function splitCsvLine(line) {
+  const cells = []
+  let current = ''
+  let inQuotes = false
+  for (let i = 0; i < line.length; i += 1) {
+    const char = line[i]
+    if (char === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"'
+        i += 1
+      } else {
+        inQuotes = !inQuotes
+      }
+    } else if (char === ',' && !inQuotes) {
+      cells.push(current)
+      current = ''
+    } else {
+      current += char
+    }
+  }
+  cells.push(current)
+  return cells.map((cell) => cell.trim())
+}
+
+function toIsoDate(value) {
+  const trimmed = value.trim()
+  const match = trimmed.match(/^(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})/)
+  if (!match) return null
+  const [, year, month, day] = match
+  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+}
+
+function toPlainNumber(value) {
+  const cleaned = String(value ?? '').replace(/[¥,\s]/g, '')
+  const parsed = Number(cleaned)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+const CSV_COLUMN_ALIASES = {
+  date: ['発生日', '対象期間', 'date'],
+  reward: ['確定報酬', '報酬', 'rewards', 'reward'],
+  clicks: ['クリック数', 'クリック', 'clicks'],
+  orders: ['売上件数', '成果件数', 'sales'],
+  sales: ['売上金額', '金額', 'amount'],
+}
+
+function findColumnIndex(headerCells, aliases) {
+  return headerCells.findIndex((cell) => aliases.some((alias) => cell.includes(alias)))
+}
+
+/**
+ * 楽天アフィリエイトの成果レポートCSVをパースする。
+ * タイトル行・空行・列名が特定できない行は無視し、日付を持つ行だけをレポートとして返す。
+ */
+function parseRakutenReportCsv(text) {
+  const lines = text.split(/\r\n|\n|\r/).filter((line) => line.trim() !== '')
+  let headerIndex = -1
+  let columns = null
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const cells = splitCsvLine(lines[i])
+    const dateIndex = findColumnIndex(cells, CSV_COLUMN_ALIASES.date)
+    if (dateIndex === -1) continue
+    columns = {
+      date: dateIndex,
+      reward: findColumnIndex(cells, CSV_COLUMN_ALIASES.reward),
+      clicks: findColumnIndex(cells, CSV_COLUMN_ALIASES.clicks),
+      orders: findColumnIndex(cells, CSV_COLUMN_ALIASES.orders),
+      sales: findColumnIndex(cells, CSV_COLUMN_ALIASES.sales),
+    }
+    headerIndex = i
+    break
+  }
+
+  if (headerIndex === -1 || !columns) {
+    return { rows: [], skipped: 0, headerFound: false }
+  }
+
+  const rows = []
+  let skipped = 0
+  for (let i = headerIndex + 1; i < lines.length; i += 1) {
+    const cells = splitCsvLine(lines[i])
+    const isoDate = toIsoDate(cells[columns.date] ?? '')
+    if (!isoDate) {
+      skipped += 1
+      continue
+    }
+    rows.push({
+      date: isoDate,
+      clicks: columns.clicks >= 0 ? toPlainNumber(cells[columns.clicks]) : 0,
+      orders: columns.orders >= 0 ? toPlainNumber(cells[columns.orders]) : 0,
+      sales: columns.sales >= 0 ? toPlainNumber(cells[columns.sales]) : 0,
+      reward: columns.reward >= 0 ? toPlainNumber(cells[columns.reward]) : 0,
+    })
+  }
+
+  return { rows, skipped, headerFound: true }
+}
+
+/** CSVで取り込んだ行を既存レポートへマージする。同じ日付があれば上書き、無ければ追加。 */
+function mergeReportsFromCsv(currentReports, csvRows) {
+  const byDate = new Map(currentReports.map((report) => [report.date, report]))
+  for (const row of csvRows) {
+    const existing = byDate.get(row.date)
+    byDate.set(row.date, {
+      id: existing?.id ?? crypto.randomUUID(),
+      date: row.date,
+      clicks: row.clicks,
+      orders: row.orders,
+      sales: row.sales,
+      reward: row.reward,
+      memo: existing?.memo ?? '',
+    })
+  }
+  return [...byDate.values()].sort((a, b) => b.date.localeCompare(a.date))
+}
+
 function isGenericRakutenLink(link) {
   const value = link.toLowerCase()
   return value.includes('page%22%3a%22shop') || value.includes('"page":"shop"')
@@ -1073,6 +1203,7 @@ function App() {
   const [copyMessage, setCopyMessage] = useState('')
   const [campaignMessage, setCampaignMessage] = useState('')
   const [rescueMessage, setRescueMessage] = useState('')
+  const [csvImportMessage, setCsvImportMessage] = useState('')
   const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
 
   useEffect(() => {
@@ -1657,6 +1788,51 @@ function App() {
       if (!status) return
       setLineSync((current) => ({ ...current, lastSyncedAt: formatLocalDateKey(new Date()), lastSyncStatus: status }))
     })
+  }
+
+  const importReportsCsv = async (event) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+
+    setCsvImportMessage('読み込み中…')
+    try {
+      const text = await decodeCsvFile(file)
+      const { rows, skipped, headerFound } = parseRakutenReportCsv(text)
+
+      if (!headerFound) {
+        setCsvImportMessage('列名(発生日など)が見つかりませんでした。楽天アフィリエイトの成果レポートCSVか確認してください。')
+        return
+      }
+      if (rows.length === 0) {
+        setCsvImportMessage('取り込める行がありませんでした(対象期間にデータがない可能性があります)。')
+        return
+      }
+
+      const nextReports = mergeReportsFromCsv(reports, rows)
+      setReports(nextReports)
+      setCsvImportMessage(
+        `${rows.length}件を取り込みました${skipped > 0 ? `(${skipped}行はスキップ)` : ''}。`
+      )
+
+      if (autopilot) {
+        const latestImported = [...rows].sort((a, b) => b.date.localeCompare(a.date))[0]
+        const nextAutoTasks = createAutoTasks({
+          totals,
+          bestContent,
+          weakestContent,
+          latestReport: latestImported,
+        })
+        setTasks((current) => [...uniqueTasks(current, nextAutoTasks), ...current])
+      }
+
+      syncReportsToLine(lineSync, nextReports).then((status) => {
+        if (!status) return
+        setLineSync((current) => ({ ...current, lastSyncedAt: formatLocalDateKey(new Date()), lastSyncStatus: status }))
+      })
+    } catch {
+      setCsvImportMessage('CSVの読み込みに失敗しました。ファイル形式を確認してください。')
+    }
   }
 
   const saveLineSync = (event) => {
@@ -2778,6 +2954,11 @@ function App() {
             <p className="eyebrow">Daily report</p>
             <h2>日次レポートを記録</h2>
           </div>
+          <label className="csv-import">
+            楽天アフィリエイトのCSVを取り込む
+            <input type="file" accept=".csv,text/csv" onChange={importReportsCsv} />
+          </label>
+          {csvImportMessage && <p className="form-status" role="status">{csvImportMessage}</p>}
           <form className="report-form" onSubmit={addReport}>
             <label>
               日付

@@ -1990,6 +1990,24 @@
   letter-spacing: 0;
 }
 
+.csv-import {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px dashed #c7cfd8;
+  border-radius: 10px;
+  color: #45505d;
+  font-size: 13px;
+  font-weight: 800;
+  background: #f7f9fb;
+}
+
+.csv-import input[type='file'] {
+  font-weight: 500;
+}
+
 .report-form,
 .content-form {
   display: grid;
