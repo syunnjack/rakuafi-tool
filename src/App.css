@@ -1015,6 +1015,23 @@
   line-height: 1.7;
 }
 
+.line-sync-status.ready,
+.line-sync-status.blocked {
+  border-radius: 8px;
+  font-weight: 800;
+  padding: 12px 14px;
+}
+
+.line-sync-status.ready {
+  background: #eff7f3;
+  color: #245848;
+}
+
+.line-sync-status.blocked {
+  background: #fff2f0;
+  color: #a02b36;
+}
+
 .daily-report-panel {
   padding: 22px;
 }

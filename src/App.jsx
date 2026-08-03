@@ -852,7 +852,7 @@ function buildResurfaceCandidates(clickCampaigns) {
 }
 
 async function syncReportsToLine(lineSync, reports) {
-  if (!lineSync.enabled || !lineSync.endpointUrl.trim()) return null
+  if (!lineSync.enabled || !lineSync.endpointUrl.trim() || !lineSync.syncToken.trim()) return null
   const payload = {
     reports: reports.slice(0, 90).map((report) => ({
       date: report.date,
@@ -1425,6 +1425,12 @@ function App() {
   const dailyReportSubject = `楽天アフィリエイト日報 ${todayKey()}`
   const dailyReportDue = dailyReport.enabled && dailyReport.lastSentDate !== todayKey()
   const dailyReportMailto = `mailto:${encodeURIComponent(dailyReport.recipient)}?subject=${encodeURIComponent(dailyReportSubject)}&body=${encodeURIComponent(dailyReportBody)}`
+  const lineSyncConfigured = lineSync.enabled && lineSync.endpointUrl.trim().startsWith('http') && lineSync.syncToken.trim().length > 0
+  const lineSyncStatusText = lineSync.lastSyncedAt
+    ? `最終同期: ${lineSync.lastSyncedAt} (${lineSync.lastSyncStatus === 'success' ? '成功' : '失敗'})`
+    : lineSyncConfigured
+      ? '設定は保存済みです。日次レポートを保存すると、Xサーバーの受信エンドポイントへ同期を試します。'
+      : '未設定です。Xサーバーのapi.php URL、共有トークン、cron、LINE Messaging API設定が揃うまでLINE通知は届きません。'
   const reportRows = [...sortedReports].reverse().slice(-14)
   const reportMaxClicks = Math.max(1, ...reportRows.map((report) => toNumber(report.clicks)))
   const reportMaxReward = Math.max(1, ...reportRows.map((report) => toNumber(report.reward)))
@@ -2448,11 +2454,11 @@ function App() {
 
       <section className="line-sync-section" aria-label="LINE自動レポート設定">
         <p className="eyebrow">LINE auto report</p>
-        <h2>毎朝LINEへ自動レポート</h2>
+        <h2>LINE通知は外部設定が完了して初めて届きます</h2>
         <p>
-          レポートを保存するたびに、レンタルサーバーに設置した受信エンドポイントへ数値を送信します。
-          実際の毎朝の送信自体はサーバー側のcronが行うため、設置手順は
-          <code>server/line-report/README.md</code> を参照してください。
+          このページだけではLINEやメールを自動送信できません。日次レポートをLINEへ届けるには、
+          Xサーバーへ <code>server/line-report/</code> をアップロードし、<code>config.php</code> にLINE Messaging APIの
+          アクセストークン、送信先userId、共有トークンを設定し、cronで <code>send-line-report.php</code> を毎日実行してください。
         </p>
         <form className="daily-report-form" onSubmit={saveLineSync}>
           <label className="wide-field">
@@ -2483,10 +2489,8 @@ function App() {
           </label>
           <button type="submit">設定保存</button>
         </form>
-        <p className="line-sync-status">
-          {lineSync.lastSyncedAt
-            ? `最終同期: ${lineSync.lastSyncedAt} (${lineSync.lastSyncStatus === 'success' ? '成功' : '失敗'})`
-            : 'まだ同期されていません。レポートを保存すると同期を試みます。'}
+        <p className={`line-sync-status ${lineSyncConfigured ? 'ready' : 'blocked'}`}>
+          {lineSyncStatusText}
         </p>
       </section>
 
