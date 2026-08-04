@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/fetch-fanza-data.mjs",
     "build": "vite build",
     "lint": "oxlint",
+    "perf": "node scripts/benchmark-storage.mjs",
+    "test": "node --test",
     "preview": "vite preview"
   },
   "dependencies": {
