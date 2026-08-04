@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 33898)
-Total output lines: 3146
-
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { scheduleStorageWrite } from './lib/storage.js'
@@ -1586,7 +1583,449 @@ function App() {
   }
 
   const markLinkChecked = (campaignId) => {
-    setClickCampaign…3898 tokens truncated…
+    setClickCampaigns((current) =>
+      current.map((campaign) =>
+        campaign.id === campaignId ? { ...campaign, lastCheckedDate: todayKey() } : campaign,
+      ),
+    )
+  }
+
+  const markResurfaced = (campaignId) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) =>
+        campaign.id === campaignId ? { ...campaign, lastResurfacedDate: todayKey() } : campaign,
+      ),
+    )
+  }
+
+  const updateCampaignMetric = (campaignId, field, value) => {
+    setClickCampaigns((current) =>
+      current.map((campaign) => {
+        if (campaign.id !== campaignId) return campaign
+        const nextCampaign = { ...campaign, [field]: value }
+        const [, tone] = clickCampaignVerdict(nextCampaign)
+        return {
+          ...nextCampaign,
+          status: tone === 'winner' ? 'winner' : tone === 'failed' ? 'failed' : nextCampaign.status,
+        }
+      }),
+    )
+  }
+
+  const duplicateCampaign = (campaign) => {
+    setClickCampaigns((current) => [
+      {
+        ...campaign,
+        id: crypto.randomUUID(),
+        status: 'draft',
+        postedDate: '',
+        clicksAfter24h: '',
+        ordersAfter24h: '',
+        rewardAfter24h: '',
+        productName: `${campaign.productName} 改善案`,
+        note: '前回結果を見て、1行目・商品条件・キャンペーン訴求を変えて再投稿します。',
+      },
+      ...current,
+    ])
+  }
+
+  const deleteCampaign = (campaignId) => {
+    setClickCampaigns((current) => current.filter((campaign) => campaign.id !== campaignId))
+  }
+
+  const addClickImprovementTasks = () => {
+    const targetCampaigns = clickCampaigns.filter((campaign) => clickCampaignVerdict(campaign)[1] === 'failed')
+    const nextTasks = targetCampaigns.length > 0
+      ? targetCampaigns.map((campaign) => ({
+          id: crypto.randomUUID(),
+          title: `${campaign.productName} の1行目、商品条件、クーポン訴求を変えて再投稿する`,
+          channel: campaign.channel,
+          impact: '高',
+          done: false,
+          source: 'click-campaign',
+        }))
+      : [{
+          id: crypto.randomUUID(),
+          title: '商品別リンク、キャンペーン名、クーポンURL入りの投稿案を3本作る',
+          channel: 'ROOM',
+          impact: '高',
+          done: false,
+          source: 'click-campaign',
+        }]
+    setTasks((current) => [...uniqueTasks(current, nextTasks), ...current])
+    setCampaignMessage(`${nextTasks.length}件のクリック改善タスクを追加しました。`)
+  }
+
+  const runAutomation = () => {
+    setTasks((current) => {
+      const nextTasks = uniqueTasks(current, autoTaskCandidates)
+      setAutomationMessage(
+        nextTasks.length > 0
+          ? `${nextTasks.length}件の改善タスクを自動追加しました。`
+          : '追加できる新しい自動タスクはありません。既存タスクを進めましょう。',
+      )
+      return [...nextTasks, ...current]
+    })
+  }
+
+  const runZeroRewardRescue = () => {
+    const rescueTasks = createZeroRewardTasks({
+      totals,
+      affiliateSettings,
+      postScore,
+      roomStats,
+    })
+    setTasks((current) => {
+      const nextTasks = uniqueTasks(current, rescueTasks)
+      const message = nextTasks.length > 0
+        ? `${nextTasks.length}件の対策タスクを追加しました。下の改善タスクに反映されています。`
+        : '追加できる新しい対策タスクはありません。既存の改善タスクを進めてください。'
+      setRescueMessage(message)
+      setAutomationMessage(message)
+      return [...nextTasks, ...current]
+    })
+    window.setTimeout(() => {
+      document.querySelector('#today-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
+  }
+
+  const runRevenueBoost = () => {
+    runImprovementProcessing('manual')
+    window.setTimeout(() => {
+      document.querySelector('#today-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
+  }
+
+  const saveDailyReport = (event) => {
+    event.preventDefault()
+    setDailyReport((current) => ({
+      ...current,
+      recipient: dailyReport.recipient.trim() || defaultDailyReport.recipient,
+      sendTime: dailyReport.sendTime || defaultDailyReport.sendTime,
+    }))
+  }
+
+  const markDailyReportSent = () => {
+    setDailyReport((current) => ({
+      ...current,
+      lastSentDate: todayKey(),
+    }))
+  }
+
+  const addReport = (event) => {
+    event.preventDefault()
+    const nextReport = {
+      id: crypto.randomUUID(),
+      date: reportForm.date,
+      clicks: toNumber(reportForm.clicks),
+      orders: toNumber(reportForm.orders),
+      sales: toNumber(reportForm.sales),
+      reward: toNumber(reportForm.reward),
+      memo: reportForm.memo.trim(),
+    }
+    const nextReports = [nextReport, ...reports]
+    setReports(nextReports)
+    if (autopilot) {
+      const nextAutoTasks = createAutoTasks({
+        totals,
+        bestContent,
+        weakestContent,
+        latestReport: nextReport,
+      })
+      setTasks((current) => [...uniqueTasks(current, nextAutoTasks), ...current])
+      setAutomationMessage('レポート入力に合わせて改善タスクを自動更新しました。')
+    }
+    setReportForm(emptyReport)
+    syncReportsToLine(lineSync, nextReports).then((status) => {
+      if (!status) return
+      setLineSync((current) => ({ ...current, lastSyncedAt: formatLocalDateKey(new Date()), lastSyncStatus: status }))
+    })
+  }
+
+  const importReportsCsv = async (event) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+
+    setCsvImportMessage('読み込み中…')
+    try {
+      const text = await decodeCsvFile(file)
+      const { rows, skipped, headerFound } = parseRakutenReportCsv(text)
+
+      if (!headerFound) {
+        setCsvImportMessage('列名(発生日など)が見つかりませんでした。楽天アフィリエイトの成果レポートCSVか確認してください。')
+        return
+      }
+      if (rows.length === 0) {
+        setCsvImportMessage('取り込める行がありませんでした(対象期間にデータがない可能性があります)。')
+        return
+      }
+
+      const nextReports = mergeReportsFromCsv(reports, rows)
+      setReports(nextReports)
+      setCsvImportMessage(
+        `${rows.length}件を取り込みました${skipped > 0 ? `(${skipped}行はスキップ)` : ''}。`
+      )
+
+      if (autopilot) {
+        const latestImported = [...rows].sort((a, b) => b.date.localeCompare(a.date))[0]
+        const nextAutoTasks = createAutoTasks({
+          totals,
+          bestContent,
+          weakestContent,
+          latestReport: latestImported,
+        })
+        setTasks((current) => [...uniqueTasks(current, nextAutoTasks), ...current])
+      }
+
+      syncReportsToLine(lineSync, nextReports).then((status) => {
+        if (!status) return
+        setLineSync((current) => ({ ...current, lastSyncedAt: formatLocalDateKey(new Date()), lastSyncStatus: status }))
+      })
+    } catch {
+      setCsvImportMessage('CSVの読み込みに失敗しました。ファイル形式を確認してください。')
+    }
+  }
+
+  const saveLineSync = (event) => {
+    event.preventDefault()
+    setLineSync((current) => ({
+      ...current,
+      endpointUrl: current.endpointUrl.trim(),
+      syncToken: current.syncToken.trim(),
+    }))
+  }
+
+  const addTask = (event) => {
+    event.preventDefault()
+    if (!taskForm.title.trim()) return
+    setTasks((current) => [
+      { id: crypto.randomUUID(), ...taskForm, title: taskForm.title.trim(), done: false },
+      ...current,
+    ])
+    setTaskForm(emptyTask)
+  }
+
+  const addContent = (event) => {
+    event.preventDefault()
+    if (!contentForm.name.trim()) return
+    setContents((current) => [
+      {
+        id: crypto.randomUUID(),
+        name: contentForm.name.trim(),
+        channel: contentForm.channel,
+        clicks: toNumber(contentForm.clicks),
+        reward: toNumber(contentForm.reward),
+        idea: contentForm.idea.trim(),
+      },
+      ...current,
+    ])
+    setContentForm(emptyContent)
+  }
+
+  const addRoomFlow = (event) => {
+    event.preventDefault()
+    if (!roomForm.keyword.trim()) return
+    setRoomFlows((current) => [
+      {
+        id: crypto.randomUUID(),
+        ...roomForm,
+        keyword: roomForm.keyword.trim(),
+        maxActions: toNumber(roomForm.maxActions),
+        spanMinutes: toNumber(roomForm.spanMinutes),
+        doneCount: 0,
+        status: 'ready',
+        nextAt: formatTime(new Date()),
+        memo: roomForm.memo.trim(),
+      },
+      ...current,
+    ])
+    setRoomForm(emptyRoomFlow)
+  }
+
+  const startRoomFlow = (flowId) => {
+    setRoomFlows((current) =>
+      current.map((flow) =>
+        flow.id === flowId
+          ? {
+              ...flow,
+              status: 'running',
+              nextAt: formatTime(new Date(Date.now() + toNumber(flow.spanMinutes) * 60 * 1000)),
+            }
+          : flow,
+      ),
+    )
+  }
+
+  const pauseRoomFlow = (flowId) => {
+    setRoomFlows((current) =>
+      current.map((flow) => (flow.id === flowId ? { ...flow, status: 'paused' } : flow)),
+    )
+  }
+
+  const completeRoomStep = (flowId) => {
+    setRoomFlows((current) =>
+      current.map((flow) => {
+        if (flow.id !== flowId) return flow
+        const nextDoneCount = Math.min(toNumber(flow.doneCount) + 1, toNumber(flow.maxActions))
+        return {
+          ...flow,
+          doneCount: nextDoneCount,
+          status: nextDoneCount >= toNumber(flow.maxActions) ? 'done' : flow.status,
+          nextAt: formatTime(new Date(Date.now() + toNumber(flow.spanMinutes) * 60 * 1000)),
+        }
+      }),
+    )
+  }
+
+  const deleteRoomFlow = (flowId) => {
+    setRoomFlows((current) => current.filter((flow) => flow.id !== flowId))
+  }
+
+  const toggleTask = (taskId) => {
+    setTasks((current) =>
+      current.map((task) => (task.id === taskId ? { ...task, done: !task.done } : task)),
+    )
+  }
+
+  const deleteReport = (reportId) => {
+    setReports((current) => current.filter((report) => report.id !== reportId))
+  }
+
+  const deleteTask = (taskId) => {
+    setTasks((current) => current.filter((task) => task.id !== taskId))
+  }
+
+  const deleteContent = (contentId) => {
+    setContents((current) => current.filter((content) => content.id !== contentId))
+  }
+
+  const saveAffiliateSettings = (event) => {
+    event.preventDefault()
+    setAffiliateSettings({
+      affiliateLink: affiliateForm.affiliateLink.trim(),
+      campaignName: affiliateForm.campaignName.trim() || '楽天ROOM導線',
+      targetMemo: affiliateForm.targetMemo.trim(),
+    })
+  }
+
+  const topActiveCampaign = activeCampaignsToPost[0]
+  const topPriorityCampaign = priorityRanking[0]
+  const topDailyTask = todayTasks[0]
+  const topLinkCheck = linkCheckReminders[0]
+  const topResurface = resurfaceCandidates[0]
+  const briefingItems = [
+    {
+      key: 'daily-report',
+      label: '今日の数値を記録する',
+      detail: latestReport?.date === todayKey()
+        ? '本日分は記録済みです。'
+        : 'クリック・注文・売上・報酬を記録すると、診断とグラフが今日の分に更新されます。',
+      done: latestReport?.date === todayKey(),
+      href: '#today-work',
+    },
+    {
+      key: 'active-campaign',
+      label: '開催中キャンペーンを投稿する',
+      detail: topActiveCampaign
+        ? `${topActiveCampaign.campaignName || 'キャンペーン'} / ${topActiveCampaign.productName} が開催中でまだ未投稿です。`
+        : '開催中で未投稿のキャンペーンはありません。',
+      done: !topActiveCampaign,
+      href: '#click-acquisition',
+      quickAction: topActiveCampaign
+        ? { label: '投稿済みにする', onClick: () => markCampaignPosted(topActiveCampaign.id) }
+        : null,
+    },
+    {
+      key: 'priority-product',
+      label: '優先度が高い商品を投稿する',
+      detail: topPriorityCampaign
+        ? `「${topPriorityCampaign.productName}」が${topPriorityCampaign.priorityScore}ptで最優先です。`
+        : '下書き中の商品別キャンペーンがありません。',
+      done: !topPriorityCampaign,
+      href: '#click-acquisition',
+      quickAction: topPriorityCampaign
+        ? { label: '投稿済みにする', onClick: () => markCampaignPosted(topPriorityCampaign.id) }
+        : null,
+    },
+    {
+      key: 'top-task',
+      label: '今日の重要タスクを1つ実行する',
+      detail: topDailyTask ? topDailyTask.title : '未完了の重要タスクはありません。',
+      done: !topDailyTask,
+      href: '#today-work',
+      quickAction: topDailyTask
+        ? { label: '完了にする', onClick: () => toggleTask(topDailyTask.id) }
+        : null,
+    },
+    {
+      key: 'daily-email',
+      label: '日報メールを送る',
+      detail: dailyReportDue ? '本日分の日報がまだ送信されていません。' : '本日分の日報は送信済みです。',
+      done: !dailyReportDue,
+      href: dailyReportMailto,
+      isMailLink: true,
+    },
+    {
+      key: 'link-check',
+      label: 'リンク・在庫を再確認する',
+      detail: topLinkCheck
+        ? `「${topLinkCheck.productName}」が${LINK_RECHECK_DAYS}日以上未確認です。`
+        : '再確認が必要なリンクはありません。',
+      done: !topLinkCheck,
+      href: '#click-acquisition',
+      quickAction: topLinkCheck
+        ? { label: '確認済みにする', onClick: () => markLinkChecked(topLinkCheck.id) }
+        : null,
+    },
+    {
+      key: 'resurface',
+      label: '成果記事を再投稿する',
+      detail: topResurface
+        ? `「${topResurface.productName}」を${formatNumber(topResurface.daysSincePost)}日間再投稿していません。`
+        : '再掘り起こし対象の勝ち商品はありません。',
+      done: !topResurface,
+      href: '#click-acquisition',
+      quickAction: topResurface
+        ? { label: '再投稿づみにする', onClick: () => markResurfaced(topResurface.id) }
+        : null,
+    },
+  ]
+  const briefingDoneCount = briefingItems.filter((item) => item.done).length
+
+  return (
+    <main className="app-shell">
+      <section className="briefing-section" aria-label="今日のブリーフィング">
+        <div className="briefing-heading">
+          <div>
+            <p className="eyebrow">Today's briefing</p>
+            <h2>今日のブリーフィング</h2>
+            <p>毎日ここだけ確認すれば、やることを見落としません。</p>
+          </div>
+          <div className="briefing-progress">
+            <strong>{briefingDoneCount}/{briefingItems.length}</strong>
+            <span>完了</span>
+          </div>
+        </div>
+        <div className="briefing-list">
+          {briefingItems.map((item) => (
+            <article className={`briefing-item ${item.done ? 'done' : ''}`} key={item.key}>
+              <span className="briefing-status">{item.done ? '完了' : '未完了'}</span>
+              <strong>{item.label}</strong>
+              <p>{item.detail}</p>
+              <div className="briefing-actions">
+                {item.quickAction && (
+                  <button type="button" onClick={item.quickAction.onClick}>{item.quickAction.label}</button>
+                )}
+                <a href={item.href} onClick={item.isMailLink ? markDailyReportSent : undefined}>
+                  {item.isMailLink ? '日報を作成' : '詳細を見る'}
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="hero">
         <div>
           <p className="eyebrow">Rakuten affiliate growth</p>
