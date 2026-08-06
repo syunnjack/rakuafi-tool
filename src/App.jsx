@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
+import { scheduleStorageWrite } from './lib/storage.js'
 
 const REPORTS_KEY = 'task-dashboard.rakutenReports'
 const TASKS_KEY = 'task-dashboard.rakutenTasks'
@@ -15,23 +16,12 @@ const LINE_SYNC_KEY = 'task-dashboard.lineSyncSettings'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 
 const defaultReports = [
-  { id: 'sample-1', date: '2026-07-15', clicks: 42, orders: 2, sales: 8600, reward: 172, memo: 'レビュー記事から初成果。商品ボタンを上部にも追加。' },
-  { id: 'sample-2', date: '2026-07-16', clicks: 58, orders: 3, sales: 12600, reward: 252, memo: 'SNS投稿後にクリック増。夜の投稿が反応よし。' },
-  { id: 'sample-3', date: '2026-07-17', clicks: 64, orders: 2, sales: 9800, reward: 196, memo: '比較表に公式リンクを追記。' },
+  { id: 'verified-30-days-2026-08-04', date: '2026-08-04', clicks: 9, orders: 0, sales: 0, reward: 0, memo: '確認済みの直近30日集計。CVR 0.00%。' },
 ]
 
-const defaultTasks = [
-  { id: 'task-1', title: '成果が出た記事の冒頭に楽天リンクを1つ追加', channel: 'ブログ', impact: '高', done: false },
-  { id: 'task-2', title: 'クリックが多い商品を3つ比較表にする', channel: 'ブログ', impact: '高', done: false },
-  { id: 'task-3', title: '昨日の売れた商品をSNSで再紹介する', channel: 'SNS', impact: '中', done: true },
-  { id: 'task-4', title: '楽天レポートのクリック上位ページを確認', channel: '分析', impact: '中', done: false },
-]
+const defaultTasks = []
 
-const defaultContent = [
-  { id: 'content-1', name: '買ってよかった日用品まとめ', channel: 'ブログ', clicks: 38, reward: 118, idea: '季節ワードをタイトルに追加' },
-  { id: 'content-2', name: '週末セール告知ポスト', channel: 'SNS', clicks: 21, reward: 64, idea: '投稿時間を21時に固定して検証' },
-  { id: 'content-3', name: '家電の比較ページ', channel: 'ブログ', clicks: 12, reward: 0, idea: '価格帯別のおすすめを追記' },
-]
+const defaultContent = []
 
 const roomModes = [
   { value: 'favorite', label: 'いいね候補', hint: '商品や投稿を確認して、よいものだけ手動で反応' },
@@ -41,30 +31,7 @@ const roomModes = [
   { value: 'kore-delete', label: 'これ削除候補', hint: '古い投稿や成果が弱い投稿を整理する' },
 ]
 
-const defaultRoomFlows = [
-  {
-    id: 'room-1',
-    mode: 'favorite',
-    keyword: '日用品 セール',
-    maxActions: 20,
-    spanMinutes: 8,
-    doneCount: 4,
-    status: 'running',
-    nextAt: '21:00',
-    memo: '成果記事と相性がよい商品だけ確認',
-  },
-  {
-    id: 'room-2',
-    mode: 'kore',
-    keyword: '買ってよかった 家電',
-    maxActions: 8,
-    spanMinutes: 20,
-    doneCount: 1,
-    status: 'ready',
-    nextAt: '22:10',
-    memo: '投稿文は手で確認してから公開',
-  },
-]
+const defaultRoomFlows = []
 
 const emptyReport = {
   date: new Date().toISOString().slice(0, 10),
@@ -140,44 +107,17 @@ const emptyClickCampaign = {
   note: '',
 }
 
-const defaultClickCampaigns = [
-  {
-    id: 'campaign-starter-1',
-    productName: '商品別リンクを入れてください',
-    productLink: '',
-    price: '',
-    category: '',
-    audience: '買う前に失敗したくない人',
-    problem: '似た商品が多くて選べない',
-    benefit: '比較ポイントを短く見られる',
-    proof: 'レビュー数、価格、送料、クーポンを商品ページで確認',
-    priceHook: '最新価格は楽天の商品ページで確認',
-    campaignName: '楽天キャンペーン確認待ち',
-    discountHook: '買いまわり、ポイントアップ、クーポンを確認',
-    couponUrl: 'https://event.rakuten.co.jp/',
-    channel: 'ROOM',
-    status: 'draft',
-    postedDate: '',
-    startDate: '',
-    endDate: '',
-    clicksAfter24h: '',
-    ordersAfter24h: '',
-    rewardAfter24h: '',
-    lastCheckedDate: '',
-    lastResurfacedDate: '',
-    note: 'まずは本当に紹介する商品の個別アフィリエイトリンクへ差し替えます。',
-  },
-]
+const defaultClickCampaigns = []
 
 const defaultDailyReport = {
-  enabled: true,
-  recipient: 'syunnda1@yahoo.co.jp',
+  enabled: false,
+  recipient: '',
   sendTime: '09:00',
   lastSentDate: '',
 }
 
 const defaultAutoImprove = {
-  enabled: true,
+  enabled: false,
   lastRunDate: '',
   lastResult: 'まだ自動改善処理は実行されていません。',
 }
@@ -428,7 +368,13 @@ function roomModeLabel(mode) {
 }
 
 function readReports() {
-  return readStorage(REPORTS_KEY, defaultReports).filter((report) => !String(report.id).startsWith('sample-'))
+  const stored = readStorage(REPORTS_KEY, defaultReports)
+  const verified = stored.filter((report) => !String(report.id).startsWith('sample-'))
+  return verified.length ? verified : defaultReports
+}
+
+function readListWithoutDemoData(key, fallback, demoIdPattern) {
+  return readStorage(key, fallback).filter((item) => !demoIdPattern.test(String(item.id)))
 }
 
 // 楽天アフィリエイトのレポートCSVはShift-JISで出力される。ブラウザのTextDecoderで
@@ -1182,9 +1128,9 @@ function MonthlyLineChart({ title, data, valueKey, color, formatValue }) {
 
 function App() {
   const [reports, setReports] = useState(readReports)
-  const [tasks, setTasks] = useState(() => readStorage(TASKS_KEY, defaultTasks))
-  const [contents, setContents] = useState(() => readStorage(CONTENT_KEY, defaultContent))
-  const [roomFlows, setRoomFlows] = useState(() => readStorage(ROOM_FLOWS_KEY, defaultRoomFlows))
+  const [tasks, setTasks] = useState(() => readListWithoutDemoData(TASKS_KEY, defaultTasks, /^task-[1-4]$/))
+  const [contents, setContents] = useState(() => readListWithoutDemoData(CONTENT_KEY, defaultContent, /^content-[1-3]$/))
+  const [roomFlows, setRoomFlows] = useState(() => readListWithoutDemoData(ROOM_FLOWS_KEY, defaultRoomFlows, /^room-[1-2]$/))
   const [affiliateSettings, setAffiliateSettings] = useState(() =>
     readStorage(AFFILIATE_SETTINGS_KEY, defaultAffiliateSettings),
   )
@@ -1196,7 +1142,7 @@ function App() {
   const [affiliateForm, setAffiliateForm] = useState(affiliateSettings)
   const [postDraft, setPostDraft] = useState(() => readStorage(POST_DRAFT_KEY, defaultPostDraft))
   const [campaignForm, setCampaignForm] = useState(emptyClickCampaign)
-  const [clickCampaigns, setClickCampaigns] = useState(() => readStorage(CLICK_CAMPAIGNS_KEY, defaultClickCampaigns))
+  const [clickCampaigns, setClickCampaigns] = useState(() => readListWithoutDemoData(CLICK_CAMPAIGNS_KEY, defaultClickCampaigns, /^campaign-starter-/))
   const [dailyReport, setDailyReport] = useState(() => readStorage(DAILY_REPORT_KEY, defaultDailyReport))
   const [autoImprove, setAutoImprove] = useState(() => readStorage(AUTO_IMPROVE_KEY, defaultAutoImprove))
   const [lineSync, setLineSync] = useState(() => readStorage(LINE_SYNC_KEY, defaultLineSync))
@@ -1207,23 +1153,23 @@ function App() {
   const [automationMessage, setAutomationMessage] = useState('半自動モードはオンです。数字を入れると改善タスクを自動で作ります。')
 
   useEffect(() => {
-    localStorage.setItem(REPORTS_KEY, JSON.stringify(reports))
+    scheduleStorageWrite(REPORTS_KEY, reports)
   }, [reports])
 
   useEffect(() => {
-    localStorage.setItem(TASKS_KEY, JSON.stringify(tasks))
+    scheduleStorageWrite(TASKS_KEY, tasks)
   }, [tasks])
 
   useEffect(() => {
-    localStorage.setItem(CONTENT_KEY, JSON.stringify(contents))
+    scheduleStorageWrite(CONTENT_KEY, contents)
   }, [contents])
 
   useEffect(() => {
-    localStorage.setItem(ROOM_FLOWS_KEY, JSON.stringify(roomFlows))
+    scheduleStorageWrite(ROOM_FLOWS_KEY, roomFlows)
   }, [roomFlows])
 
   useEffect(() => {
-    localStorage.setItem(AFFILIATE_SETTINGS_KEY, JSON.stringify(affiliateSettings))
+    scheduleStorageWrite(AFFILIATE_SETTINGS_KEY, affiliateSettings)
   }, [affiliateSettings])
 
   useEffect(() => {
@@ -1233,27 +1179,27 @@ function App() {
   }, [affiliateSettings.affiliateLink])
 
   useEffect(() => {
-    localStorage.setItem(AUTOPILOT_KEY, JSON.stringify(autopilot))
+    scheduleStorageWrite(AUTOPILOT_KEY, autopilot)
   }, [autopilot])
 
   useEffect(() => {
-    localStorage.setItem(POST_DRAFT_KEY, JSON.stringify(postDraft))
+    scheduleStorageWrite(POST_DRAFT_KEY, postDraft)
   }, [postDraft])
 
   useEffect(() => {
-    localStorage.setItem(CLICK_CAMPAIGNS_KEY, JSON.stringify(clickCampaigns))
+    scheduleStorageWrite(CLICK_CAMPAIGNS_KEY, clickCampaigns)
   }, [clickCampaigns])
 
   useEffect(() => {
-    localStorage.setItem(DAILY_REPORT_KEY, JSON.stringify(dailyReport))
+    scheduleStorageWrite(DAILY_REPORT_KEY, dailyReport)
   }, [dailyReport])
 
   useEffect(() => {
-    localStorage.setItem(AUTO_IMPROVE_KEY, JSON.stringify(autoImprove))
+    scheduleStorageWrite(AUTO_IMPROVE_KEY, autoImprove)
   }, [autoImprove])
 
   useEffect(() => {
-    localStorage.setItem(LINE_SYNC_KEY, JSON.stringify(lineSync))
+    scheduleStorageWrite(LINE_SYNC_KEY, lineSync)
   }, [lineSync])
 
   const sortedReports = useMemo(
