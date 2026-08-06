@@ -106,9 +106,25 @@
       }
       .demo-link-btn {
         display: inline-flex; align-items: center; border-radius: 8px; background: #a02b36; color: #fff;
-        font-weight: 800; font-size: 13px; padding: 10px 16px; text-decoration: none;
+        font-weight: 800; font-size: 13px; padding: 10px 16px; text-decoration: none; border: none; cursor: pointer;
       }
+      .demo-link-btn.secondary { background: #fff; color: #a02b36; border: 1px solid #a02b36; }
       .demo-note { margin: 12px 0 0; color: #65717e; font-size: 12px; }
+      .demo-widget {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      }
+      .demo-widget-form, .demo-widget-preview { padding: 22px; }
+      .demo-widget-form { border-right: 1px solid rgba(23,32,42,.08); display: grid; gap: 12px; align-content: start; }
+      .demo-widget-form label { display: grid; gap: 6px; font-size: 12px; font-weight: 800; color: #45505d; }
+      .demo-widget-form input, .demo-widget-form textarea {
+        border: 1px solid #c7cfd8; border-radius: 8px; padding: 9px 10px; font-size: 13px; font-family: inherit;
+      }
+      .demo-widget-form textarea { min-height: 60px; resize: vertical; }
+      .demo-widget-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+      @media (max-width: 720px) {
+        .demo-widget { grid-template-columns: 1fr; }
+        .demo-widget-form { border-right: none; border-bottom: 1px solid rgba(23,32,42,.08); }
+      }
     </style>
   </head>
   <body>
@@ -133,27 +149,11 @@
     </section>
 
     <section class="demo-section wrap">
-      <h2>投稿文はこう作られます</h2>
-      <p class="section-lead">商品名・悩み・メリットを入力すると、ROOMにそのまま貼り付けられる投稿文と商品リンクが自動でそろいます（実際の生成例）。</p>
+      <h2>実際に操作して試せます</h2>
+      <p class="section-lead">商品名・悩み・メリットを書き換えると、投稿文がその場で再生成されます。購入前に操作感を確かめてください（ここで作った文章はそのままコピーできます）。</p>
       <div class="demo-window">
-        <div class="demo-bar"><i></i><i></i><i></i><span>ROOM投稿プレビュー</span></div>
-        <div class="demo-body">
-          <div class="demo-thumb">先生のためのAI＆ICT<br />働き方革命術</div>
-          <div>
-            <p class="demo-text-label">生成された投稿文</p>
-            <p class="demo-post">【先生のためのAI＆ICT働き方革命術】
-
-授業準備や校務に時間を取られて困っている先生へ。
-
-AIやICTを使って、今日からすぐ取り組める働き方の見直し方をまとめた一冊です。
-実際に読んで、明日から真似できる手順が多く実用的でした。
-
-気になる方は、商品ページで詳細と最新価格をチェックしてみてください。
-#教員 #働き方改革 #AI活用</p>
-            <a class="demo-link-btn" href="https://hb.afl.rakuten.co.jp/ichiba/13fba47f.1dc69ed6.13fba480.86b918ae/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F17900720%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjAsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="noreferrer sponsored">商品ページを見る ↗</a>
-            <p class="demo-note">上記は実際にツールで生成した投稿文と商品リンクの例です。ツール内では「コピーしてROOMを開く」ボタン一つで、この内容をそのまま貼り付けに進めます。</p>
-          </div>
-        </div>
+        <div class="demo-bar"><i></i><i></i><i></i><span>ROOM投稿プレビュー（体験版）</span></div>
+        <div id="demo-root"></div>
       </div>
     </section>
 
@@ -220,5 +220,6 @@ AIやICTを使って、今日からすぐ取り組める働き方の見直し方
     </section>
 
     <footer>© 2026 極（KIWAMI）</footer>
+    <script type="module" src="/src/landing-main.jsx"></script>
   </body>
 </html>

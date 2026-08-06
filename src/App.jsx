@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
+import { buildRoomPost } from './lib/postBuilder.js'
 
 const REPORTS_KEY = 'task-dashboard.rakutenReports'
 const TASKS_KEY = 'task-dashboard.rakutenTasks'
@@ -567,20 +568,6 @@ function mergeReportsFromCsv(currentReports, csvRows) {
 function isGenericRakutenLink(link) {
   const value = link.toLowerCase()
   return value.includes('page%22%3a%22shop') || value.includes('"page":"shop"')
-}
-
-function buildRoomPost(draft) {
-  const opening = draft.audience && draft.problem
-    ? `${draft.problem}で困っている${draft.audience}へ。`
-    : draft.problem || `${draft.productName}を探している方へ。`
-  const details = [draft.benefit, draft.proof, draft.priceHook].filter(Boolean)
-  return [
-    `【${draft.productName || '商品名を入力'}】`,
-    opening,
-    ...details,
-    '気になる方は、商品ページで詳細と最新価格をチェックしてみてください。',
-    draft.hashtags,
-  ].filter(Boolean).join('\n\n')
 }
 
 function buildClickPost(campaign) {
