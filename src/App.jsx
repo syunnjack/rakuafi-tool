@@ -13,6 +13,7 @@ const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
 const CLICK_CAMPAIGNS_KEY = 'task-dashboard.clickCampaigns'
 const LINE_SYNC_KEY = 'task-dashboard.lineSyncSettings'
 const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/ichiba/13fba47f.1dc69ed6.13fba480.86b918ae/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F17900720%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjAsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D'
+const ROOM_POST_URL = 'https://room.rakuten.co.jp/'
 
 const defaultReports = [
   { id: 'sample-1', date: '2026-07-15', clicks: 42, orders: 2, sales: 8600, reward: 172, memo: 'レビュー記事から初成果。商品ボタンを上部にも追加。' },
@@ -1565,6 +1566,16 @@ function App() {
     }
   }
 
+  const copyPostAndOpenRoom = async () => {
+    window.open(ROOM_POST_URL, '_blank', 'noopener')
+    try {
+      await navigator.clipboard.writeText(generatedPost)
+      setCopyMessage('投稿文をコピーしました。開いたROOMのタブに貼り付けて投稿してください。')
+    } catch {
+      setCopyMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
+
   const updateCampaignForm = (field, value) => {
     setCampaignForm((current) => ({ ...current, [field]: value }))
     setCampaignMessage('')
@@ -1617,10 +1628,30 @@ function App() {
     }
   }
 
+  const copyCampaignPostAndOpenRoom = async () => {
+    window.open(ROOM_POST_URL, '_blank', 'noopener')
+    try {
+      await navigator.clipboard.writeText(campaignPreview)
+      setCampaignMessage('投稿文をコピーしました。開いたROOMのタブに貼り付けて投稿してください。')
+    } catch {
+      setCampaignMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
+
   const copyCampaignVariation = async (label, text) => {
     try {
       await navigator.clipboard.writeText(text)
       setCampaignMessage(`${label}の投稿文をコピーしました。`)
+    } catch {
+      setCampaignMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
+    }
+  }
+
+  const copyCampaignVariationAndOpenRoom = async (label, text) => {
+    window.open(ROOM_POST_URL, '_blank', 'noopener')
+    try {
+      await navigator.clipboard.writeText(text)
+      setCampaignMessage(`${label}の投稿文をコピーしました。開いたROOMのタブに貼り付けて投稿してください。`)
     } catch {
       setCampaignMessage('コピーできませんでした。投稿文を選択してコピーしてください。')
     }
@@ -2180,6 +2211,7 @@ function App() {
             <textarea readOnly value={campaignPreview} aria-label="キャンペーン反映済み投稿文" />
             <div className="preview-actions">
               <button type="button" onClick={copyCampaignPost}>投稿文をコピー</button>
+              <button type="button" className="primary-action" onClick={copyCampaignPostAndOpenRoom}>コピーしてROOMを開く</button>
               <a href="https://event.rakuten.co.jp/" target="_blank" rel="noreferrer">楽天キャンペーン確認</a>
             </div>
             <p className="disclosure-note">
@@ -2201,6 +2233,7 @@ function App() {
                 <span className="variation-label">{variation.label}</span>
                 <p>{variation.text}</p>
                 <button type="button" onClick={() => copyCampaignVariation(variation.label, variation.text)}>この案をコピー</button>
+                <button type="button" className="primary-action" onClick={() => copyCampaignVariationAndOpenRoom(variation.label, variation.text)}>コピーしてROOMを開く</button>
               </article>
             ))}
           </div>
@@ -2849,6 +2882,7 @@ function App() {
             <textarea readOnly value={generatedPost} aria-label="生成されたROOM投稿文" />
             <div className="preview-actions">
               <button type="button" onClick={copyPost}>投稿文をコピー</button>
+              <button type="button" className="primary-action" onClick={copyPostAndOpenRoom}>コピーしてROOMを開く</button>
               <a className={!postLinkReady ? 'disabled-link' : ''} href={postLinkReady ? postDraft.productLink : undefined} target="_blank" rel="noreferrer sponsored">商品リンクを確認</a>
             </div>
             {copyMessage && <p className="copy-message" role="status">{copyMessage}</p>}
@@ -2958,10 +2992,21 @@ function App() {
             <p className="eyebrow">Daily report</p>
             <h2>日次レポートを記録</h2>
           </div>
-          <label className="csv-import">
-            楽天アフィリエイトのCSVを取り込む
-            <input type="file" accept=".csv,text/csv" onChange={importReportsCsv} />
-          </label>
+          <div className="csv-import-row">
+            <a
+              className="csv-source-link"
+              href="https://affiliate.rakuten.co.jp/report/summary?l-id=af_header_mypage_02"
+              target="_blank"
+              rel="noreferrer"
+            >
+              楽天レポートを開いてCSVを出力 ↗
+            </a>
+            <label className="csv-import">
+              出力したCSVを取り込む
+              <input type="file" accept=".csv,text/csv" onChange={importReportsCsv} />
+            </label>
+          </div>
+          <p className="form-hint">楽天側のレポート画面で期間を指定してCSV出力し、そのファイルをここへ選択すると自動で反映されます。</p>
           {csvImportMessage && <p className="form-status" role="status">{csvImportMessage}</p>}
           <form className="report-form" onSubmit={addReport}>
             <label>

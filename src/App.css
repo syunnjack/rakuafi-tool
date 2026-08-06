@@ -215,7 +215,7 @@
 
 .preview-topline { display: flex; justify-content: space-between; color: #45505d; font-size: 12px; font-weight: 800; }
 .post-preview textarea { min-height: 290px; background: #fff; line-height: 1.75; }
-.preview-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.preview-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
 
 .preview-actions button, .preview-actions a {
   display: inline-flex;
@@ -804,6 +804,11 @@
   cursor: pointer;
   font-weight: 800;
   padding: 8px 12px;
+}
+
+.variation-card button.primary-action {
+  background: #a02b36;
+  color: #fff;
 }
 
 .campaign-list {
@@ -2007,11 +2012,32 @@
   letter-spacing: 0;
 }
 
+.csv-import-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.csv-source-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #a02b36;
+  border-radius: 10px;
+  padding: 12px;
+  color: #a02b36;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
 .csv-import {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 6px;
-  margin-top: 16px;
   padding: 12px;
   border: 1px dashed #c7cfd8;
   border-radius: 10px;
@@ -2023,6 +2049,13 @@
 
 .csv-import input[type='file'] {
   font-weight: 500;
+}
+
+.form-hint {
+  margin: 8px 0 0;
+  color: #65717e;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 .report-form,
