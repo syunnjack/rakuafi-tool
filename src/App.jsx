@@ -12,7 +12,7 @@ const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
 const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
 const CLICK_CAMPAIGNS_KEY = 'task-dashboard.clickCampaigns'
 const LINE_SYNC_KEY = 'task-dashboard.lineSyncSettings'
-const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
+const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/ichiba/13fba47f.1dc69ed6.13fba480.86b918ae/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F17900720%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjAsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D'
 
 const defaultReports = [
   { id: 'sample-1', date: '2026-07-15', clicks: 42, orders: 2, sales: 8600, reward: 172, memo: 'レビュー記事から初成果。商品ボタンを上部にも追加。' },
