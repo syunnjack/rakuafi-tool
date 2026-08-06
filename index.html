@@ -4,12 +4,221 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="楽天ROOM投稿文の作成、商品別リンク確認、クリック・成果報酬の改善をまとめて行う運用ツールです。" />
+    <meta name="description" content="極（きわみ）は、楽天ROOM投稿文の作成、商品別リンクのチェック、クリック・成果報酬の改善タスクを1画面でまとめて行う、楽天アフィリエイト運用ツールです。" />
     <meta name="theme-color" content="#a02b36" />
+    <link rel="canonical" href="https://syunnjack.github.io/rakuafi-tool/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="極" />
+    <meta property="og:title" content="極 | 楽天ROOMクリック改善ツール" />
+    <meta property="og:description" content="投稿文の作成、商品別リンクの健全性チェック、報酬ゼロ診断、CSV取り込みまで。楽天ROOM運用をブラウザ1つで回すツールです。" />
+    <meta name="twitter:card" content="summary" />
     <title>極 | 楽天ROOMクリック改善ツール</title>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VT3RZQM9VX"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VT3RZQM9VX');</script></head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VT3RZQM9VX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VT3RZQM9VX');
+    </script>
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+        color: #17202a;
+        background: #f7f9fb;
+        line-height: 1.7;
+      }
+      a { color: inherit; }
+      .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+      header.site {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 18px 20px; max-width: 960px; margin: 0 auto;
+      }
+      .brand { font-weight: 800; font-size: 18px; }
+      .brand span { color: #a02b36; }
+      .nav-cta {
+        display: inline-flex; align-items: center; border-radius: 999px;
+        background: #a02b36; color: #fff; font-weight: 800; font-size: 13px;
+        padding: 8px 16px; text-decoration: none;
+      }
+      .hero {
+        background: #17202a; color: #fff; padding: 64px 20px 72px;
+      }
+      .hero-inner { max-width: 960px; margin: 0 auto; }
+      .eyebrow { color: #ff8a93; font-weight: 800; font-size: 13px; letter-spacing: .04em; margin: 0 0 12px; }
+      .hero h1 { font-size: clamp(30px, 5vw, 46px); margin: 0 0 18px; }
+      .hero p.lead { color: #c7cfd8; font-size: 16px; max-width: 620px; margin: 0 0 28px; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+      .button {
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 10px; font-weight: 800; padding: 14px 24px; text-decoration: none;
+        font-size: 15px;
+      }
+      .button.primary { background: #a02b36; color: #fff; }
+      .button.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.4); }
+      section { padding: 56px 0; }
+      h2 { font-size: 26px; margin: 0 0 8px; }
+      .section-lead { color: #45505d; margin: 0 0 32px; max-width: 620px; }
+      .feature-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;
+      }
+      .feature-card {
+        background: #fff; border: 1px solid rgba(23,32,42,.08); border-radius: 12px; padding: 20px;
+      }
+      .feature-card span { display: inline-block; background: #f4e2e4; color: #a02b36; font-weight: 800; font-size: 12px; border-radius: 999px; padding: 4px 10px; margin-bottom: 10px; }
+      .feature-card h3 { margin: 0 0 8px; font-size: 16px; }
+      .feature-card p { margin: 0; color: #45505d; font-size: 14px; }
+      .pricing {
+        background: #fff; border: 1px solid rgba(23,32,42,.08); border-radius: 16px; padding: 32px;
+        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;
+      }
+      .price-value { font-size: 40px; font-weight: 800; }
+      .price-value small { font-size: 15px; font-weight: 600; color: #65717e; }
+      .pricing ul { margin: 0; padding-left: 18px; color: #45505d; font-size: 14px; }
+      .disclosure {
+        background: #f4f7f5; border-radius: 12px; padding: 20px; color: #45505d; font-size: 13px;
+      }
+      footer { padding: 32px 0 60px; color: #65717e; font-size: 12px; text-align: center; }
+      .demo-section { background: #fff; }
+      .demo-window {
+        border: 1px solid rgba(23,32,42,.1); border-radius: 14px; overflow: hidden;
+        box-shadow: 0 24px 60px rgba(23,32,42,.08);
+      }
+      .demo-bar {
+        display: flex; align-items: center; gap: 6px; background: #f4f7f5;
+        padding: 10px 14px; border-bottom: 1px solid rgba(23,32,42,.08);
+      }
+      .demo-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d7dee3; display: inline-block; }
+      .demo-bar span { margin-left: 8px; color: #65717e; font-size: 12px; font-weight: 700; }
+      .demo-body { padding: 22px; display: grid; grid-template-columns: 96px 1fr; gap: 16px; }
+      .demo-thumb {
+        width: 96px; height: 96px; border-radius: 10px; background: #f4e2e4; color: #a02b36;
+        display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;
+        text-align: center; padding: 6px;
+      }
+      .demo-text-label { color: #65717e; font-size: 11px; font-weight: 800; margin: 0 0 6px; }
+      .demo-post {
+        white-space: pre-wrap; background: #f7f9fb; border: 1px dashed #c7cfd8; border-radius: 8px;
+        padding: 14px; font-size: 13px; color: #17202a; margin: 0 0 14px;
+      }
+      .demo-link-btn {
+        display: inline-flex; align-items: center; border-radius: 8px; background: #a02b36; color: #fff;
+        font-weight: 800; font-size: 13px; padding: 10px 16px; text-decoration: none;
+      }
+      .demo-note { margin: 12px 0 0; color: #65717e; font-size: 12px; }
+    </style>
+  </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <header class="site">
+      <div class="brand">極 <span>KIWAMI</span></div>
+      <a class="nav-cta" href="#purchase">購入する</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">楽天ROOM運用ツール</p>
+        <h1>投稿づくりから報酬改善まで、<br />ブラウザ1つで回す。</h1>
+        <p class="lead">
+          極（きわみ）は、楽天ROOM投稿文の自動生成、商品別リンクの健全性チェック、
+          クリック・成約データの記録、報酬ゼロの原因診断までをまとめた個人アフィリエイター向けツールです。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#purchase">価格を見る</a>
+          <a class="button secondary" href="#features">できることを見る</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section wrap">
+      <h2>投稿文はこう作られます</h2>
+      <p class="section-lead">商品名・悩み・メリットを入力すると、ROOMにそのまま貼り付けられる投稿文と商品リンクが自動でそろいます（実際の生成例）。</p>
+      <div class="demo-window">
+        <div class="demo-bar"><i></i><i></i><i></i><span>ROOM投稿プレビュー</span></div>
+        <div class="demo-body">
+          <div class="demo-thumb">先生のためのAI＆ICT<br />働き方革命術</div>
+          <div>
+            <p class="demo-text-label">生成された投稿文</p>
+            <p class="demo-post">【先生のためのAI＆ICT働き方革命術】
+
+授業準備や校務に時間を取られて困っている先生へ。
+
+AIやICTを使って、今日からすぐ取り組める働き方の見直し方をまとめた一冊です。
+実際に読んで、明日から真似できる手順が多く実用的でした。
+
+気になる方は、商品ページで詳細と最新価格をチェックしてみてください。
+#教員 #働き方改革 #AI活用</p>
+            <a class="demo-link-btn" href="https://hb.afl.rakuten.co.jp/ichiba/13fba47f.1dc69ed6.13fba480.86b918ae/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F17900720%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjAsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="noreferrer sponsored">商品ページを見る ↗</a>
+            <p class="demo-note">上記は実際にツールで生成した投稿文と商品リンクの例です。ツール内では「コピーしてROOMを開く」ボタン一つで、この内容をそのまま貼り付けに進めます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="wrap">
+      <h2>できること</h2>
+      <p class="section-lead">ROOM運用でつまずきやすい「何を投稿すればいいか分からない」「なぜ報酬が出ないか分からない」を仕組みで解決します。</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span>投稿サポート</span>
+          <h3>ワンタップでコピー＆ROOMを開く</h3>
+          <p>商品名・悩み・メリットを入れるだけで投稿文を自動生成。ボタン一つでコピーしてROOMを新しいタブで開けます。</p>
+        </div>
+        <div class="feature-card">
+          <span>リンク診断</span>
+          <h3>商品別リンクかどうかを自動チェック</h3>
+          <p>ショップトップ向けの汎用リンクを検知して警告。成約につながりやすい商品別リンクへの差し替えを促します。</p>
+        </div>
+        <div class="feature-card">
+          <span>報酬ゼロ診断</span>
+          <h3>止まっている原因を自動で言語化</h3>
+          <p>クリック数、投稿材料の充実度、ROOM運用量から、今やるべき改善タスクを自動で提案します。</p>
+        </div>
+        <div class="feature-card">
+          <span>レポート管理</span>
+          <h3>CSV取り込み＋日々の記録</h3>
+          <p>楽天アフィリエイトのCSVをそのまま取り込み。クリック・注文・売上・報酬の推移をグラフで確認できます。</p>
+        </div>
+        <div class="feature-card">
+          <span>キャンペーン活用</span>
+          <h3>訴求文のA/Bバリエーション生成</h3>
+          <p>同じ商品を「悩み訴求」「価格訴求」「根拠訴求」の3パターンで自動作成。反応の良い切り口を試せます。</p>
+        </div>
+        <div class="feature-card">
+          <span>データは自分の端末に</span>
+          <h3>サーバー送信なしで安心</h3>
+          <p>入力したレポートやリンクはブラウザ内（localStorage）に保存。外部サーバーへ自動送信されません。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="purchase" class="wrap">
+      <h2>価格</h2>
+      <p class="section-lead">買い切り・追加課金なしです。購入後にツールを開くための合言葉をお伝えします。</p>
+      <div class="pricing">
+        <div>
+          <div class="price-value">¥2,480 <small>買い切り</small></div>
+        </div>
+        <ul>
+          <li>ツール本体（永続利用）</li>
+          <li>購入者専用アクセス用の合言葉</li>
+          <li>アップデート無料反映</li>
+        </ul>
+        <a class="button primary" href="#" data-purchase-link>BOOTHで購入する ↗</a>
+      </div>
+      <p class="already-purchased"><a href="./app/">購入済みの方はこちら（ツールを開く）→</a></p>
+    </section>
+
+    <section class="wrap">
+      <h2>ご利用にあたって</h2>
+      <div class="disclosure">
+        <p>本ツールは投稿文の作成とデータ整理を支援するものであり、クリック・成約・報酬の発生を保証するものではありません。実際の投稿・運用はご自身で行っていただく必要があります。</p>
+        <p>楽天、楽天ROOM、楽天アフィリエイトは楽天グループ株式会社の商標です。本ツールは楽天グループ株式会社が提供・監修する公式サービスではありません。</p>
+      </div>
+    </section>
+
+    <footer>© 2026 極（KIWAMI）</footer>
   </body>
 </html>
