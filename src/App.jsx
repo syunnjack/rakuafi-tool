@@ -12,7 +12,9 @@ const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
 const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
 const CLICK_CAMPAIGNS_KEY = 'task-dashboard.clickCampaigns'
 const LINE_SYNC_KEY = 'task-dashboard.lineSyncSettings'
-const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/ichiba/13fba47f.1dc69ed6.13fba480.86b918ae/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F17900720%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjAsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D'
+// 販売・共有用の共通ビルドのため、開発者個人のリンクは埋め込まない。
+// 各利用者が「アフィリエイトリンク設定」フォームから自分のリンクを登録する。
+const USER_RAKUTEN_AFFILIATE_LINK = ''
 const ROOM_POST_URL = 'https://room.rakuten.co.jp/'
 
 const defaultReports = [
