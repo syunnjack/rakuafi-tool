@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './Gate.css'
 
-const UNLOCK_KEY = 'kiwami.unlocked'
-const ACCESS_PIN = 'KIWAMI2026'
+const UNLOCK_KEY = 'room-tool.unlocked'
+const ACCESS_PIN = 'ROOMTOOL2026'
 
 export default function Gate({ children }) {
   const [unlocked, setUnlocked] = useState(() => localStorage.getItem(UNLOCK_KEY) === '1')
@@ -24,7 +24,7 @@ export default function Gate({ children }) {
   return (
     <div className="gate-screen">
       <form className="gate-form" onSubmit={handleSubmit}>
-        <p className="gate-eyebrow">極 / 楽天ROOMクリック改善ツール</p>
+        <p className="gate-eyebrow">楽天ROOMクリック改善ツール</p>
         <h1>合言葉を入力してください</h1>
         <p className="gate-lead">購入者専用ツールです。購入時にお伝えした合言葉を入力すると、この端末では次回から自動的に開きます。</p>
         <input
