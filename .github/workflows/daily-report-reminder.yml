@@ -1,0 +1,80 @@
+name: Daily affiliate report reminder
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the public site
+        id: site
+        shell: bash
+        run: |
+          status="$(curl --location --silent --output /dev/null --write-out '%{http_code}' --max-time 20 'https://syunnjack.github.io/rakuafi-tool/')"
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+
+      - name: Post the daily reminder
+        uses: actions/github-script@v7
+        env:
+          SITE_STATUS: ${{ steps.site.outputs.status }}
+        with:
+          script: |
+            const formatter = new Intl.DateTimeFormat('ja-JP', {
+              timeZone: 'Asia/Tokyo',
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            });
+            const today = new Date();
+            const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+            const reportDate = formatter.format(yesterday);
+            const siteOk = process.env.SITE_STATUS === '200';
+            const title = 'rakuafi-tool 日次通知';
+            const body = [
+              `## ${formatter.format(today)} の確認`,
+              '',
+              `- 公開サイト: ${siteOk ? '正常' : `異常 (HTTP ${process.env.SITE_STATUS || '不明'})`}`,
+              `- [rakuafi-toolを開く](https://syunnjack.github.io/rakuafi-tool/#report-page)`,
+              `- ${reportDate}までの楽天レポートを入力またはCSV取り込みする`,
+              '- クリック・売上・報酬がゼロなら、商品別リンク、楽天キャンペーン、クーポン訴求入りの投稿を3本作る',
+              '- LINE通知はXサーバーのconfig.phpとcron、またはLINE用の認証情報を設定するまで届かない',
+              '',
+              '成果は保証されません。入力、投稿、24時間後の数値記録までを今日の作業にしてください。',
+            ].join('\n');
+
+            const { owner, repo } = context.repo;
+            const issues = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: 'open',
+              creator: 'app/github-actions',
+              per_page: 100,
+            });
+            const existing = issues.data.find((issue) => issue.title === title);
+
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body,
+              });
+              core.info(`Updated daily notification issue #${existing.number}`);
+              return;
+            }
+
+            const created = await github.rest.issues.create({
+              owner,
+              repo,
+              title,
+              body,
+              assignees: [owner],
+            });
+            core.info(`Created daily notification issue #${created.data.number}`);
