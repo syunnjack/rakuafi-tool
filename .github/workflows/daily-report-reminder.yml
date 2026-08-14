@@ -41,7 +41,7 @@ jobs:
               `## ${formatter.format(today)} の確認`,
               '',
               `- 公開サイト: ${siteOk ? '正常' : `異常 (HTTP ${process.env.SITE_STATUS || '不明'})`}`,
-              `- [rakuafi-toolを開く](https://syunnjack.github.io/rakuafi-tool/#report-page)`,
+              `- [rakuafi-toolのレポートを開く](https://syunnjack.github.io/rakuafi-tool/app/#report-page)`,
               `- ${reportDate}までの楽天レポートを入力またはCSV取り込みする`,
               '- クリック・売上・報酬がゼロなら、商品別リンク、楽天キャンペーン、クーポン訴求入りの投稿を3本作る',
               '- LINE通知はXサーバーのconfig.phpとcron、またはLINE用の認証情報を設定するまで届かない',
