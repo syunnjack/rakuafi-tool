@@ -13,9 +13,7 @@ const DAILY_REPORT_KEY = 'task-dashboard.dailyEmailReport'
 const AUTO_IMPROVE_KEY = 'task-dashboard.autoImprove'
 const CLICK_CAMPAIGNS_KEY = 'task-dashboard.clickCampaigns'
 const LINE_SYNC_KEY = 'task-dashboard.lineSyncSettings'
-// 販売・共有用の共通ビルドのため、開発者個人のリンクは埋め込まない。
-// 各利用者が「アフィリエイトリンク設定」フォームから自分のリンクを登録する。
-const USER_RAKUTEN_AFFILIATE_LINK = ''
+const USER_RAKUTEN_AFFILIATE_LINK = 'https://hb.afl.rakuten.co.jp/hsc/55d66bbd.abc43fa6.152c70c7.a660e6e7/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6MTkwMTUsImFtcCI6ZmFsc2V9'
 const ROOM_POST_URL = 'https://room.rakuten.co.jp/'
 
 const defaultReports = [
@@ -1779,7 +1777,7 @@ function App() {
     }))
   }
 
-  const markDailyReportSent = () => {
+  const markDailyReportPrepared = () => {
     setDailyReport((current) => ({
       ...current,
       lastSentDate: todayKey(),
@@ -2034,8 +2032,8 @@ function App() {
     },
     {
       key: 'daily-email',
-      label: '日報メールを送る',
-      detail: dailyReportDue ? '本日分の日報がまだ送信されていません。' : '本日分の日報は送信済みです。',
+      label: '日報メールを作成する',
+      detail: dailyReportDue ? '本日分の日報メールがまだ作成されていません。' : '本日分の日報メールは作成済みです。送信結果はメールアプリで確認してください。',
       done: !dailyReportDue,
       href: dailyReportMailto,
       isMailLink: true,
@@ -2091,7 +2089,7 @@ function App() {
                 {item.quickAction && (
                   <button type="button" onClick={item.quickAction.onClick}>{item.quickAction.label}</button>
                 )}
-                <a href={item.href} onClick={item.isMailLink ? markDailyReportSent : undefined}>
+                <a href={item.href} onClick={item.isMailLink ? markDailyReportPrepared : undefined}>
                   {item.isMailLink ? '日報を作成' : '詳細を見る'}
                 </a>
               </div>
@@ -2439,7 +2437,7 @@ function App() {
               日報本文を自動生成してメールアプリを開き、送信済み日付を管理します。
             </p>
             <span className={`daily-status ${dailyReportDue ? 'due' : ''}`}>
-              {dailyReportDue ? '本日の日報は未送信' : '本日の日報は送信済み'}
+              {dailyReportDue ? '本日の日報メールは未作成' : '本日の日報メールは作成済み'}
             </span>
           </div>
           <form className="daily-report-form" onSubmit={saveDailyReport}>
@@ -2468,7 +2466,7 @@ function App() {
               日報を有効にする
             </label>
             <button type="submit">設定保存</button>
-            <a href={dailyReportMailto} onClick={markDailyReportSent}>日報メールを作成</a>
+            <a href={dailyReportMailto} onClick={markDailyReportPrepared}>日報メールを作成（手動送信）</a>
           </form>
         </article>
         <textarea className="daily-report-preview" readOnly value={dailyReportBody} aria-label="日報プレビュー" />
